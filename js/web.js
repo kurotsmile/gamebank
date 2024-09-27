@@ -1,6 +1,6 @@
 class Web{
 
-    ver="0.12";
+    ver="0.16";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -10,8 +10,10 @@ class Web{
         cr.get_json("config.json",(config_data)=>{
             cr_firestore.id_project = config_data.id_project;
             cr_firestore.api_key = config_data.api_key;
-            cr_user.id_collection="member";
+            cr.site_url=config_data.site_url;
 
+            cr_user.id_collection="member";
+            
             if(localStorage.getItem("user")!=null) w.user_login=JSON.parse(localStorage.getItem("user"));
             w.update_info_user_login();
 
@@ -67,8 +69,9 @@ class Web{
         if(id=="telegram") cr.change_title("Liên Kết Telegram","?page="+id);
 
         cr.get("page/"+id+".html?v="+w.ver,(data)=>{
-            $("#page_contains").html(data);
+            $("#page_contains").html(w.data_template(data));
             w.menu_top();
+            if(act_done==null) w.update_copy();
             if(act_done) act_done();
         });
     }
@@ -79,15 +82,18 @@ class Web{
         });
     }
 
+    data_template(data){
+        var u_name='username';
+        var template = Handlebars.compile(data);
+        if(w.user_login!=null) u_name=w.user_login.username;
+        return template({username:u_name,url:cr.site_url});
+    }
+    
     show_game_tap(id){
         w.tap_game=id;
         w.show_page("home",()=>{
             cr.get("page/"+id+".html?v="+w.ver,(data)=>{
-                var u_name='username';
-                var template = Handlebars.compile(data);
-                if(w.user_login!=null) u_name=w.user_login.username;
-                var html = template({username:u_name});
-                $("#game_dashboar").html(html);
+                $("#game_dashboar").html(w.data_template(data));
                 if(w.user_login==null){
                     w.load_home_box("#game_dashboar_bank","home_box_bank_no_user.html");
                     w.load_home_box("#game_dashboar_history","home_box_history_no_user.html");
@@ -97,6 +103,7 @@ class Web{
                     w.load_home_box("#game_dashboar_history","home_box_history.html");
                 }
                 w.update_menu_game_tap();
+                w.update_copy();
             },()=>{
                 w.show_game_tap(w.tap_game);
             });
@@ -235,6 +242,21 @@ class Web{
         localStorage.removeItem("user");
         w.update_info_user_login();
         w.show_home();
+    }
+
+    update_copy(){
+        var clipboard = new ClipboardJS('.copy-text');
+
+        clipboard.off('success');
+        clipboard.on('success', function(e) {
+            cr.msg("Đã sao chép: "+e.text,"Copied","success");
+            e.clearSelection();
+        });
+
+        clipboard.off('error');
+        clipboard.on('error', function(e) {
+            cr.msg("Sao chép lỗi","Copied","error");
+        });
     }
 }
 
