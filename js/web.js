@@ -1,15 +1,16 @@
 class Web{
 
-    ver="0.3";
+    ver="0.5";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
+    user_login=null;
 
     onLoad(){
         var page=cr.arg("page");
         if(page){
             if(page=="home")
-                w.show_game_tap(w.tap_game);
+                w.show_home();
             else
                 w.show_page(page);
         }else{
@@ -54,10 +55,21 @@ class Web{
         w.show_page("home",()=>{
             cr.get("page/"+id+".html?v="+w.ver,(data)=>{
                 $("#game_dashboar").html(data);
+                if(w.user_login==null)
+                    w.load_home_box("#game_dashboar_bank","home_box_bank_no_user.html");
+                else
+                    w.load_home_box("#game_dashboar_bank","home_box_bank.html");
                 w.update_menu_game_tap();
             },()=>{
                 w.show_game_tap(w.tap_game);
             });
+        });
+    }
+
+    load_home_box(id_emp,url_html_box=null,act_done=null){
+        cr.get("page/"+url_html_box+"?v="+w.ver,(data)=>{
+            $(id_emp).html(data);
+            if(act_done) act_done();
         });
     }
 
@@ -86,11 +98,6 @@ class Web{
             }
             w.box=$(data);
             $("body").append(w.box);
-            $("#preloader").click(()=>{
-                $(w.box).remove();
-                w.box=null;
-                $("#preloader").hide();
-            });
         });
     }
 
@@ -105,12 +112,13 @@ class Web{
             }
             w.box=$(data);
             $("body").append(w.box);
-            $("#preloader").click(()=>{
-                $(w.box).remove();
-                w.box=null;
-                $("#preloader").hide();
-            });
         });
+    }
+
+    box_close(){
+        if(w.box!=null) $(w.box).remove();
+        w.box=null;
+        $("#preloader").hide();
     }
 }
 
