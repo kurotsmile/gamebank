@@ -1,6 +1,6 @@
 class Web{
 
-    ver="0.6";
+    ver="0.12";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -83,11 +83,19 @@ class Web{
         w.tap_game=id;
         w.show_page("home",()=>{
             cr.get("page/"+id+".html?v="+w.ver,(data)=>{
-                $("#game_dashboar").html(data);
-                if(w.user_login==null)
+                var u_name='username';
+                var template = Handlebars.compile(data);
+                if(w.user_login!=null) u_name=w.user_login.username;
+                var html = template({username:u_name});
+                $("#game_dashboar").html(html);
+                if(w.user_login==null){
                     w.load_home_box("#game_dashboar_bank","home_box_bank_no_user.html");
-                else
+                    w.load_home_box("#game_dashboar_history","home_box_history_no_user.html");
+                }
+                else{
                     w.load_home_box("#game_dashboar_bank","home_box_bank.html");
+                    w.load_home_box("#game_dashboar_history","home_box_history.html");
+                }
                 w.update_menu_game_tap();
             },()=>{
                 w.show_game_tap(w.tap_game);
