@@ -44,6 +44,16 @@
             receiving_bank.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
             cms.add(receiving_bank);
 
+            var member=new Post();
+            member.id_collection = "member";
+            member.label = "Thành viên";
+            member.data_form_add.fields.push(cms.field("username", "Tên đăng nhập", "text",'',true));
+            member.data_form_add.fields.push(cms.field("password", "Mật khẩu", "text",'',true));
+            member.data_form_add.fields.push(cms.field("bank_name", "Tên ngân hàng", "text",''));
+            member.data_form_add.fields.push(cms.field("bank_account_number", "Số tài khoản", "text"));
+            member.data_form_add.fields.push(cms.field("bank_account_name", "Tên tài khoản", "text"));
+            cms.add(member);
+
             var p_setting = new Post();
             p_setting.type="setting";
             p_setting.icon='<i class="fas fa-cogs"></i>';

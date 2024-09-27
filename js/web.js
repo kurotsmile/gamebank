@@ -1,6 +1,6 @@
 class Web{
 
-    ver="0.5";
+    ver="0.6";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -10,6 +10,7 @@ class Web{
         cr.get_json("config.json",(config_data)=>{
             cr_firestore.id_project = config_data.id_project;
             cr_firestore.api_key = config_data.api_key;
+            cr_user.id_collection="member";
 
             if(localStorage.getItem("user")!=null) w.user_login=JSON.parse(localStorage.getItem("user"));
             w.update_info_user_login();
@@ -158,6 +159,49 @@ class Web{
                 w.box=null;
             }
             w.box=$(data);
+            $(w.box).find("#cr_btn_register").click(()=>{
+                var cr_reg_username=$(w.box).find("#cr_reg_username").val();
+                var cr_reg_password=$(w.box).find("#cr_reg_password").val();
+                var cr_reg_rpassword=$(w.box).find("#cr_reg_rpassword").val();
+
+                if(cr_reg_username.trim()==""){
+                    cr.msg("Vui lòng nhập tên đăng nhập","Đăng ký","warning");
+                    return false;
+                }
+
+                if(cr_reg_password.trim()==""){
+                    cr.msg("Vui lòng nhập mật khẩu!","Đăng ký","warning");
+                    return false;
+                }
+
+                if(cr_reg_password!=cr_reg_rpassword){
+                    cr.msg("Mật khẩu không trùng khớp!","Đăng ký","warning");
+                    return false;
+                }
+
+                cr.msg_loading();
+                cr_user.check_username(cr_reg_username,(data)=>{
+                    if(data.status=="no_user"){
+                        var data_user={};
+                        data_user["username"]=cr_reg_username;
+                        data_user["password"]=cr_reg_password;
+                        cr_firestore.add(data_user,"member",()=>{
+                            cr.msg("Đăng ký thành công! Bạn có thể đăng nhập vào hệ thống với các thông tin đã đăng ký!","Đăng ký","success");
+                            w.box_close();
+                            return false;
+                        },()=>{
+                            cr.msg("Lỗi hệ thống! xin vui lòng đăng ký lại!","Đăng ký","error");
+                            return false;
+                        });
+                    }else if(data.status=="user_ready"){
+                        cr.msg("Tên đăng nhập đã tồn tại!","Đăng ký","warning");
+                        return false;
+                    }else{
+                        cr.msg("Lỗi hệ thống! xin vui lòng đăng ký lại!","Đăng ký","error");
+                        return false;
+                    }
+                });
+            });
             $("body").append(w.box);
         });
     }
