@@ -1,6 +1,7 @@
 class Web{
 
     ver="0.2";
+    isToggleSidebar=true;
 
     onLoad(){
         var page=cr.arg("page");
@@ -44,6 +45,15 @@ class Web{
                 $("#game_dashboar").html(data);
             });
         });
+    }
+
+    toggle_sidebar(){
+        if (w.isToggleSidebar) {
+            $('.sidebar').css('transform', 'translate3d(0, 0, 0)');
+        } else {
+            $('.sidebar').css('transform', 'translate3d(-280px, 0, 0)');
+        }
+        w.isToggleSidebar = !w.isToggleSidebar;
     }
 }
 
