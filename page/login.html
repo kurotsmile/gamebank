@@ -1,12 +1,12 @@
 <div class="center-box">
-<form class="sign__form form-axios" method="POST" action="#">
+<form class="sign__form form-axios" method="POST" action="#" onclick="return false;">
     <a href="/" class="sign__logo"><img src="images/logo.gif" alt=""></a>
     <div class="sign__group">
         <div id="mess" class="text-center"></div>
     </div>
-    <div class="sign__group"><input type="text" class="sign__input" name="username" placeholder="Tên đăng nhập"></div>
-    <div class="sign__group"><input type="password" class="sign__input" name="password" placeholder="Mật khẩu"></div>
-    <button class="sign__btn" type="submit"><span>ĐĂNG NHẬP</span></button> 
+    <div class="sign__group"><input id="cr_login_username" type="text" class="sign__input" name="username" placeholder="Tên đăng nhập"></div>
+    <div class="sign__group"><input id="cr_login_password" type="password" class="sign__input" name="password" placeholder="Mật khẩu"></div>
+    <button class="sign__btn" id="cr_login_btn" type="submit"><span>ĐĂNG NHẬP</span></button> 
     
     <span class="sign__text">Chưa có tài khoản ? <a href="#" onclick="w.show_register();return false;">Tạo tài khoản</a></span>
 </form>

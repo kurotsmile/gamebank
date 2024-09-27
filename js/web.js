@@ -7,19 +7,43 @@ class Web{
     user_login=null;
 
     onLoad(){
-        var page=cr.arg("page");
-        if(page){
-            if(page=="home")
+        cr.get_json("config.json",(config_data)=>{
+            cr_firestore.id_project = config_data.id_project;
+            cr_firestore.api_key = config_data.api_key;
+
+            if(localStorage.getItem("user")!=null) w.user_login=JSON.parse(localStorage.getItem("user"));
+            w.update_info_user_login();
+
+            var page=cr.arg("page");
+            if(page){
+                if(page=="home")
+                    w.show_home();
+                else
+                    w.show_page(page);
+            }else{
                 w.show_home();
-            else
-                w.show_page(page);
-        }else{
-            w.show_home();
-        }   
+            }
+        });
     }
 
     show_home(){
         w.show_game_tap(w.tap_game);
+    }
+
+    update_info_user_login(){
+        if(w.user_login!=null){
+            $("#sidebar_user_info").show();
+            $("#sidebar_item_logout").show();
+            $("#sidebar_user_info").append(w.sidebar_item_user());
+            $("#sidebar_item_login").hide();
+            $("#sidebar_item_register").hide();
+        }else{
+            $("#sidebar_user_info").empty();
+            $("#sidebar_user_info").hide();
+            $("#sidebar_item_logout").hide();
+            $("#sidebar_item_register").show();
+            $("#sidebar_item_login").show();
+        }
     }
 
     show_page(id,act_done=null){
@@ -89,7 +113,7 @@ class Web{
 
     show_login(){
         cr.msg_loading();
-        cr.get("page/login.html",(data)=>{
+        cr.get("page/login.html?v="+w.ver,(data)=>{
             Swal.close();
             $("#preloader").show();
             if(w.box!=null){
@@ -97,13 +121,32 @@ class Web{
                 w.box=null;
             }
             w.box=$(data);
+            $(w.box).find("#cr_login_btn").click(()=>{
+                var username=$(w.box).find("#cr_login_username").val();
+                var password=$(w.box).find("#cr_login_password").val();
+                cr.msg_loading();
+                cr_user.login(username,password,(data)=>{
+                    if(data.status=="login_success"){
+                        localStorage.setItem("user",JSON.stringify(data.user));
+                        w.user_login=data.user;
+                        Swal.close();
+                        w.box_close();
+                        w.show_home();
+                        w.update_info_user_login();
+                        cr.msg("Đăng nhập thành công!","Đăng nhập","success");
+                    }else{
+                        cr.msg("Vui lòng kiểm tra lại thông tin đăng nhập!","Đăng nhập không thành công!","warning");
+                    }
+                });
+                return false;
+            });
             $("body").append(w.box);
         });
     }
 
     show_register(){
         cr.msg_loading();
-        cr.get("page/register.html",(data)=>{
+        cr.get("page/register.html?v="+w.ver,(data)=>{
             Swal.close();
             $("#preloader").show();
             if(w.box!=null){
@@ -119,6 +162,23 @@ class Web{
         if(w.box!=null) $(w.box).remove();
         w.box=null;
         $("#preloader").hide();
+    }
+
+    sidebar_item_user(){
+        var box_user=$(`
+            <div class="sidebar__user-img"><img src="images/avatar.png" alt="${w.user_login.username}"></div>
+            <div class="sidebar__user-title"><span>Xin chào</span><p>${w.user_login.username}</p></div>
+            <div role="button" onclick="w.logout()" class="sidebar__user-btn" href="#" id="cr_user_logouts"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="log-out" style="fill:none !important; color: #fff" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg></div>
+        `);
+        return box_user;
+    }
+
+    logout(){
+        cr.msg("Đã đăng xuất!","Đăng xuất tài khoản","success");
+        w.user_login=null;
+        localStorage.removeItem("user");
+        w.update_info_user_login();
+        w.show_home();
     }
 }
 
