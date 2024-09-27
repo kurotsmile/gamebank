@@ -3,6 +3,7 @@ class Web{
     ver="0.3";
     isToggleSidebar=true;
     tap_game="home_cltx";
+    box=null;
 
     onLoad(){
         var page=cr.arg("page");
@@ -79,9 +80,37 @@ class Web{
         cr.get("page/login.html",(data)=>{
             Swal.close();
             $("#preloader").show();
-            $("body").append(data);
+            if(w.box!=null){
+                $(w.box).remove();
+                w.box=null;
+            }
+            w.box=$(data);
+            $("body").append(w.box);
+            $("#preloader").click(()=>{
+                $(w.box).remove();
+                w.box=null;
+                $("#preloader").hide();
+            });
         });
-        
+    }
+
+    show_register(){
+        cr.msg_loading();
+        cr.get("page/register.html",(data)=>{
+            Swal.close();
+            $("#preloader").show();
+            if(w.box!=null){
+                $(w.box).remove();
+                w.box=null;
+            }
+            w.box=$(data);
+            $("body").append(w.box);
+            $("#preloader").click(()=>{
+                $(w.box).remove();
+                w.box=null;
+                $("#preloader").hide();
+            });
+        });
     }
 }
 

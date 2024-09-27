@@ -3481,3 +3481,18 @@ button:disabled {
 ::-webkit-scrollbar-thumb:hover {
   background: #ff0000;
 }
+
+.center-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 350px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  z-index: 20000;
+}
