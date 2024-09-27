@@ -61,7 +61,7 @@ class Web{
     }
 
     update_menu_game_tap(){
-        $(".nav-item .games").removeClass("active");
+        $(".games").removeClass("active");
         $("#game_tap_"+w.tap_game).addClass("active");
     }
 
@@ -72,6 +72,16 @@ class Web{
             $('.sidebar').css('transform', 'translate3d(-280px, 0, 0)');
         }
         w.isToggleSidebar = !w.isToggleSidebar;
+    }
+
+    show_login(){
+        cr.msg_loading();
+        cr.get("page/login.html",(data)=>{
+            Swal.close();
+            $("#preloader").show();
+            $("body").append(data);
+        });
+        
     }
 }
 
