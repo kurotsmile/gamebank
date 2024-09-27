@@ -27,34 +27,14 @@
     <script>
         $(document).ready(function () {
 
-            const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-            var p_product = new Post();
-            p_product.id_collection = "style";
-            p_product.label = "Kiểu chữ";
-            p_product.data_form_add.fields.push(cms.field("name", "Tên bộ kiểu chữ", "text",'',true));
-            p_product.data_form_add.fields.push(cms.field("price", "Giá bộ", "text",'',true));
-            p_product.data_form_add.fields.push(cms.field("tip", "Mô tả", "text"));
-            p_product.data_form_add.fields.push(cms.field("star", "Số sao chất lượng sảng phẩn", "list",[{value:"0",label:"0 Đánh giá"},{value:"1",label:"1 sao"},{value:"2",label:"2 sao"},{value:"3",label:"3 sao"},{value:"4",label:"4 sao"},{value:"5",label:"5 sao"}]));
-            p_product.data_form_add.fields.push(cms.field("in_home", "Hiển thị ở trang chủ", "list",[{value:"0",label:"Không hiển thị ở trang chủ"},{value:"1",label:"Hiển thị ở trang chủ"}]));
-            p_product.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
-            $.each(alphabet,function(index,txt){
-                p_product.data_form_add.fields.push(cms.field("txt"+index, txt, "file"));
-            });
-            p_product.list_fields_table=["name","tip"];
-            cms.add(p_product);
+            var daily_missions = new Post();
+            daily_missions.id_collection = "daily_missions";
+            daily_missions.label = "Nhiệm vụ hàng ngày";
+            daily_missions.data_form_add.fields.push(cms.field("milestone", "Mốc chơi", "text",'',true));
+            daily_missions.data_form_add.fields.push(cms.field("reward", "Phần thưởng", "text",'',true));
+            daily_missions.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
+            cms.add(daily_missions);
 
-            var setting_paypal = new Post();
-            setting_paypal.type="setting";
-            setting_paypal.icon='<i class="fab fa-paypal"></i>';
-            setting_paypal.id_collection = "setting_paypal";
-            setting_paypal.label = "Account Paypal";
-            setting_paypal.data_form_add.fields.push(cms.field('type', "Chế độ","select",[{value:"live",label:"Live - Xuất bản"},{value:"sandbox",label:"Sandbox - Thử nghiệm"}]));
-            setting_paypal.data_form_add.fields.push(cms.field('api_paypal', "Api client-id","text"));
-            setting_paypal.data_form_add.fields.push(cms.field('api_paypal_scenrest', "Api Secret","text"));
-            setting_paypal.data_form_add.fields.push(cms.field('api_paypal_sandbox', "Api client-id sandbox","text"));
-            setting_paypal.data_form_add.fields.push(cms.field('api_paypal_scenrest_sandbox', "Api Secret sandbox","text"));
-            cms.add(setting_paypal);
-            
             var p_setting = new Post();
             p_setting.type="setting";
             p_setting.icon='<i class="fas fa-cogs"></i>';
@@ -64,26 +44,6 @@
             p_setting.data_form_add.fields.push(cms.field('title', "Tiêu đề trang web trang chủ"));
             p_setting.data_form_add.fields.push(cms.field('subtitle', "Tiêu đề phụ giới thiệu ngắn về trang web"));
             cms.add(p_setting);
-
-            var setting_contact = new Post();
-            setting_contact.type="setting";
-            setting_contact.icon='<i class="fas fa-wrench"></i>';
-            setting_contact.id_collection = "setting_footer_info";
-            setting_contact.label = "Cài đặt Footer - Info";
-            setting_contact.data_form_add.fields.push(cms.field('footer_company', "Tên công ty"));
-            setting_contact.data_form_add.fields.push(cms.field('footer_company_logo', "Logo công ty (Image)","file"));
-            setting_contact.data_form_add.fields.push(cms.field('footer_company_tip', "Mô tả công ty"));
-            setting_contact.data_form_add.fields.push(cms.field('footer_copyright', "Bản quyền"));
-            cms.add(setting_contact);
-
-            var setting_fb_pixel = new Post();
-            setting_fb_pixel.type="setting";
-            setting_fb_pixel.icon='<i class="fab fa-facebook-square"></i>';
-            setting_fb_pixel.id_collection = "setting_fb_pixel";
-            setting_fb_pixel.label = "Facebook Ads Pixel";
-            setting_fb_pixel.data_form_add.fields.push(cms.field('api_key_page', "Pixel ID For All Page"));
-            setting_fb_pixel.data_form_add.fields.push(cms.field('api_key_register', "Pixel ID For Sign up for promotions","text","",false,'Nhập mã theo dõi hành động quảng cáo cho trang <a href="register.html" target="_blank">Sign up for promotions</a>'));
-            cms.add(setting_fb_pixel);
 
             cr.setColor("#0da4fd");
             cr.onLoad();
