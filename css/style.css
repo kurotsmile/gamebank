@@ -3465,3 +3465,19 @@ button:disabled {
   box-shadow: 0 0 20px 0 rgba(254, 155, 33, 0.5);
   pointer-events: none;
 }
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff55a5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff0000;
+}

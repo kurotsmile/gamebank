@@ -24,6 +24,13 @@ class Web{
 
         cr.get("page/"+id+".html?v="+w.ver,(data)=>{
             $("#page_contains").html(data);
+            w.menu_top();
+        });
+    }
+
+    menu_top(){
+        cr.get("page/menu_top.html?v="+w.ver,(data)=>{
+            $("#profile__tabs").html(data);
         });
     }
 }
