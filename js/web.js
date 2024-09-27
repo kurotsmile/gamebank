@@ -1,14 +1,23 @@
 class Web{
 
-    ver="0.2";
+    ver="0.3";
     isToggleSidebar=true;
+    tap_game="home_cltx";
 
     onLoad(){
         var page=cr.arg("page");
-        if(page)
-            w.show_page(page);
-        else
-            w.show_page("home");
+        if(page){
+            if(page=="home")
+                w.show_game_tap(w.tap_game);
+            else
+                w.show_page(page);
+        }else{
+            w.show_home();
+        }   
+    }
+
+    show_home(){
+        w.show_game_tap(w.tap_game);
     }
 
     show_page(id,act_done=null){
@@ -40,11 +49,20 @@ class Web{
     }
 
     show_game_tap(id){
+        w.tap_game=id;
         w.show_page("home",()=>{
             cr.get("page/"+id+".html?v="+w.ver,(data)=>{
                 $("#game_dashboar").html(data);
+                w.update_menu_game_tap();
+            },()=>{
+                w.show_game_tap(w.tap_game);
             });
         });
+    }
+
+    update_menu_game_tap(){
+        $(".nav-item .games").removeClass("active");
+        $("#game_tap_"+w.tap_game).addClass("active");
     }
 
     toggle_sidebar(){
