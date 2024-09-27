@@ -1,6 +1,6 @@
 class Web{
 
-    ver="0.1";
+    ver="0.2";
 
     onLoad(){
         var page=cr.arg("page");
@@ -10,7 +10,7 @@ class Web{
             w.show_page("home");
     }
 
-    show_page(id){
+    show_page(id,act_done=null){
         cr.top();
         if(id=="home") cr.change_title("Trang chủ","?page="+id);
         if(id=="gifts") cr.change_title("Mã Quà Tặng","?page="+id);
@@ -21,16 +21,28 @@ class Web{
         if(id=="musters") cr.change_title("Điểm Danh","?page="+id);
         if(id=="fans") cr.change_title("Fan Miễn Phí","?page="+id);
         if(id=="referrals") cr.change_title("Giới Thiệu Người Chơi","?page="+id);
+        if(id=="consecutives") cr.change_title("Chuỗi Cược Ngày","?page="+id);
+        if(id=="history") cr.change_title("Lịch Sử Chơi","?page="+id);
+        if(id=="telegram") cr.change_title("Liên Kết Telegram","?page="+id);
 
         cr.get("page/"+id+".html?v="+w.ver,(data)=>{
             $("#page_contains").html(data);
             w.menu_top();
+            if(act_done) act_done();
         });
     }
 
     menu_top(){
         cr.get("page/menu_top.html?v="+w.ver,(data)=>{
             $("#profile__tabs").html(data);
+        });
+    }
+
+    show_game_tap(id){
+        w.show_page("home",()=>{
+            cr.get("page/"+id+".html?v="+w.ver,(data)=>{
+                $("#game_dashboar").html(data);
+            });
         });
     }
 }
