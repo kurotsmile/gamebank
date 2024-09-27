@@ -34,6 +34,8 @@ class Web{
         if(w.user_login!=null){
             $("#sidebar_user_info").show();
             $("#sidebar_item_logout").show();
+            $("#sidebar_item_bank").show();
+            $("#sidebar_item_changepassword").show();
             $("#sidebar_user_info").append(w.sidebar_item_user());
             $("#sidebar_item_login").hide();
             $("#sidebar_item_register").hide();
@@ -41,6 +43,8 @@ class Web{
             $("#sidebar_user_info").empty();
             $("#sidebar_user_info").hide();
             $("#sidebar_item_logout").hide();
+            $("#sidebar_item_bank").hide();
+            $("#sidebar_item_changepassword").hide();
             $("#sidebar_item_register").show();
             $("#sidebar_item_login").show();
         }

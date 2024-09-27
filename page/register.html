@@ -1,13 +1,13 @@
 <div class="center-box">
-    <form class="sign__form form-axios" method="POST" action="#" data-redirect="../auth/login"><a href="/"
+    <form class="sign__form form-axios" method="POST" action="#" data-redirect="register"><a href="/"
             class="sign__logo"><img src="images/logo.gif" alt=""></a>
         <div class="sign__group">
             <div id="mess" class="text-center"></div>
         </div>
-        <div class="sign__group"><input type="text" class="sign__input" name="username" placeholder="Tên đăng nhập"></div>
-        <div class="sign__group"><input type="password" class="sign__input" name="password" placeholder="Mật khẩu"></div>
-        <div class="sign__group"><input type="password" class="sign__input" name="rpassword"
-                placeholder="Nhập lại mật khẩu"></div><button class="sign__btn" type="submit"><span>ĐĂNG KÝ</span></button>
+        <div class="sign__group"><input id="cr_reg_username" type="text" class="sign__input" name="username" placeholder="Tên đăng nhập"></div>
+        <div class="sign__group"><input id="cr_reg_password" type="password" class="sign__input" name="password" placeholder="Mật khẩu"></div>
+        <div class="sign__group"><input id="cr_reg_rpassword" type="password" class="sign__input" name="rpassword" placeholder="Nhập lại mật khẩu"></div>
+        <button class="sign__btn" id="cr_btn_register" type="button"><span>ĐĂNG KÝ</span></button>
         <span class="sign__text">Đã có tài khoản ? <a href="#" onclick="w.show_login();return false;">Đăng nhập</a></span>
     </form>
 </div>
