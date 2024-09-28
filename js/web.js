@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.17";
+    ver="1.18";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -67,58 +67,106 @@ class Web{
         if(id=="consecutives") cr.change_title("Chuỗi Cược Ngày","?page="+id);
         if(id=="history") cr.change_title("Lịch Sử Chơi","?page="+id);
         if(id=="telegram") cr.change_title("Liên Kết Telegram","?page="+id);
+        if(id=="change_password") cr.change_title("Đổi mật khẩu","?page="+id);
 
         cr.get("page/"+id+".html?v="+w.ver,(data)=>{
             $("#page_contains").html(w.data_template(data));
             w.menu_top();
-            w.uopdate_func_page(id);
+            w.update_func_page(id);
             if(act_done==null) w.update_copy();
             if(act_done) act_done();
         });
     }
 
-    uopdate_func_page(id_page){
-        if(id_page=="bank"){
-            var cr_bank_name=$("#cr_bank_name");
-            var cr_bank_account_number=$("#cr_bank_account_number");
-            var cr_bank_account_name=$("#cr_bank_account_name");
+    update_func_page(id_page){
+        if(id_page=="bank") w.func_for_bank();
+        if(id_page=="change_password") w.func_for_change_password();
+    }
 
-            cr_firestore.get("member",w.user_login.id_doc,(data)=>{
-                if(cr.alive(data.bank_name)) cr_bank_name.val(data.bank_name);
-                if(cr.alive(data.bank_account_number)) cr_bank_account_number.val(data.bank_account_number);
-                if(cr.alive(data.bank_account_name)) cr_bank_account_name.val(data.bank_account_name);
+    func_for_bank(){
+        var cr_bank_name=$("#cr_bank_name");
+        var cr_bank_account_number=$("#cr_bank_account_number");
+        var cr_bank_account_name=$("#cr_bank_account_name");
+
+        cr_firestore.get("member",w.user_login.id_doc,(data)=>{
+            if(cr.alive(data.bank_name)) cr_bank_name.val(data.bank_name);
+            if(cr.alive(data.bank_account_number)) cr_bank_account_number.val(data.bank_account_number);
+            if(cr.alive(data.bank_account_name)) cr_bank_account_name.val(data.bank_account_name);
+        });
+
+        $("#btn_update_bank").click(()=>{
+
+            if(cr_bank_name.val().trim()==""){
+                cr.msg("Vui lòng nhập tên ngân hàng!","Cài đặt ngân hàng","warning");
+                return false;
+            }
+
+            if(cr_bank_account_number.val().trim()==""){
+                cr.msg("Vui lòng nhập số tài khoản ngân hàng!","Cài đặt ngân hàng","warning");
+                return false;
+            }
+
+            if(cr_bank_account_name.val().trim()==""){
+                cr.msg("Vui lòng nhập tên tài khoản ngân hàng!","Cài đặt ngân hàng","warning");
+                return false;
+            }
+
+            w.user_login["bank_name"]=cr_bank_name.val();
+            w.user_login["bank_account_number"]=cr_bank_account_number.val();
+            w.user_login["bank_account_name"]=cr_bank_account_name.val();
+
+            cr_firestore.update(w.user_login,"member",w.user_login.id_doc,()=>{
+                cr.msg("Cập nhật thành công!","Cài đặt ngân hàng","success");
+                return false;
+            },()=>{
+                cr.msg("Lỗi cập nhật! vui lòng thử lại sau!","Cài đặt ngân hàng","error");
+                return false;
             });
+        });
+    }
 
-            $("#btn_update_bank").click(()=>{
+    func_for_change_password(){
+        var cr_oldpassword=$("#cr_oldpassword");
+        var cr_password=$("#cr_password");
+        var cr_rpassword=$("#cr_rpassword");
 
-                if(cr_bank_name.val().trim()==""){
-                    cr.msg("Vui lòng nhập tên ngân hàng!","Cài đặt ngân hàng","warning");
-                    return false;
+        $("#btn_update_password").click(()=>{
+            if(cr_oldpassword.val().trim()==""){
+                cr.msg("Vui lòng nhập mật khẩu hiện tại","Đổi mật khẩu","warning");
+                return false;
+            }
+    
+            if(cr_password.val().trim()==""){
+                cr.msg("Vui lòng nhập mật khẩu mới","Đổi mật khẩu","warning");
+                return false;
+            }
+            
+            if(cr_password.val().trim()!=cr_rpassword.val().trim()){
+                cr.msg("Mật khẩu không trùng khớp!","Đổi mật khẩu","warning");
+                return false;
+            }
+
+            if(cr_oldpassword.val().trim()!=w.user_login.password){
+                cr.msg("Mật khẩu hiện tại không đúng!","Đổi mật khẩu","warning");
+                return false;
+            }
+
+            if(cr_password.val().trim()==w.user_login.password){
+                cr.msg("Vui lòng nhập mật khẩu mới khác với mật khẩu hiện tại!","Đổi mật khẩu","warning");
+                return false;
+            }
+
+            cr_user.change_password(w.user_login.id_doc,cr_password.val(),(data)=>{
+                if(data.status=="success"){
+                    cr.msg("Cập nhật mật khẩu thành công!","Đổi mật khẩu","success");
+                }else{
+                    cr.msg("Cập nhật mật khẩu thất bại!","Đổi mật khẩu","success");
                 }
-
-                if(cr_bank_account_number.val().trim()==""){
-                    cr.msg("Vui lòng nhập số tài khoản ngân hàng!","Cài đặt ngân hàng","warning");
-                    return false;
-                }
-
-                if(cr_bank_account_name.val().trim()==""){
-                    cr.msg("Vui lòng nhập tên tài khoản ngân hàng!","Cài đặt ngân hàng","warning");
-                    return false;
-                }
-
-                w.user_login["bank_name"]=cr_bank_name.val();
-                w.user_login["bank_account_number"]=cr_bank_account_number.val();
-                w.user_login["bank_account_name"]=cr_bank_account_name.val();
-
-                cr_firestore.update(w.user_login,"member",w.user_login.id_doc,()=>{
-                    cr.msg("Cập nhật thành công!","Cài đặt ngân hàng","success");
-                    return false;
-                },()=>{
-                    cr.msg("Lỗi cập nhật! vui lòng thử lại sau!","Cài đặt ngân hàng","error");
-                    return false;
-                });
+                return false;
             });
-        }
+            
+            return false;
+        });
     }
 
     menu_top(){
