@@ -20,101 +20,79 @@
                     </svg> CÀI ĐẶT BANK TRẢ THƯỞNG</h3>
             </div>
             <div class="subpage-wrapper">
-                <form class="form-axios" method="post" action="#" style="max-width:400px; margin:0 auto;"
-                    data-redirect="../">
-                    <div id="mess" class="text-center mb-3"></div>
-                    <p><select autocomplete="off" name="bin" class="sign__selectjs" data-id="ss-kmampl31" tabindex="-1"
-                            aria-hidden="true" style="display: none;">
+                <form class="form-axios" method="post" action="#" style="max-width:400px; margin:0 auto;">
+                    <datalist id="banks_vi">
                             <option value="">Chọn ngân hàng nhận tiền</option>
-                            <option value="970415">VIETINBANK - NH TMCP CÔNG THƯƠNG VIỆT NAM</option>
-                            <option value="970436">VIETCOMBANK - NH TMCP NGOẠI THƯƠNG VIỆT NAM</option>
-                            <option value="970418">BIDV - NH TMCP ĐẦU TƯ VÀ PHÁT TRIỂN VIỆT NAM</option>
-                            <option value="970405">AGRIBANK - NH NÔNG NGHIỆP VÀ PHÁT TRIỂN NÔNG THÔN VIỆT NAM</option>
-                            <option value="970448">OCB - NH TMCP PHƯƠNG ĐÔNG</option>
-                            <option value="970422">MBBANK - NH TMCP QUÂN ĐỘI</option>
-                            <option value="970407">TECHCOMBANK - NH TMCP KỸ THƯƠNG VIỆT NAM</option>
-                            <option value="970416" selected="">ACB - NH TMCP Á CHÂU</option>
-                            <option value="970432">VPBANK - NH TMCP VIỆT NAM THỊNH VƯỢNG</option>
-                            <option value="970423">TPBANK - NH TMCP TIÊN PHONG</option>
-                            <option value="970403">SACOMBANK - NH TMCP SÀI GÒN THƯƠNG TÍN</option>
-                            <option value="970437">HDBANK - NH TMCP PHÁT TRIỂN THÀNH PHỐ HỒ CHÍ MINH</option>
-                            <option value="970454">VIETCAPITALBANK - NH TMCP BẢN VIỆT</option>
-                            <option value="970429">SCB - NH TMCP SÀI GÒN</option>
-                            <option value="970441">VIB - NH TMCP QUỐC TẾ VIỆT NAM</option>
-                            <option value="970443">SHB - NH TMCP SÀI GÒN - HÀ NỘI</option>
-                            <option value="970431">EXIMBANK - NH TMCP XUẤT NHẬP KHẨU VIỆT NAM</option>
-                            <option value="970426">MSB - NH TMCP HÀNG HẢI</option>
-                            <option value="546034">CAKE - TMCP VIỆT NAM THỊNH VƯỢNG - NH SỐ CAKE BY VPBANK</option>
-                            <option value="546035">UBANK - TMCP VIỆT NAM THỊNH VƯỢNG - NH SỐ UBANK BY VPBANK</option>
-                            <option value="963388">TIMO - NH SỐ TIMO BY BAN VIET BANK (TIMO BY BAN VIET BANK)</option>
-                            <option value="971005">VIETTELMONEY - TỔNG CÔNG TY DỊCH VỤ SỐ VIETTEL - CHI NHÁNH TẬP ĐOÀN
-                                CÔNG NGHIỆP VIỄN THÔNG QUÂN ĐỘI</option>
-                            <option value="971011">VNPTMONEY - VNPT MONEY</option>
-                            <option value="970400">SAIGONBANK - NH TMCP SÀI GÒN CÔNG THƯƠNG</option>
-                            <option value="970409">BACABANK - NH TMCP BẮC Á</option>
-                            <option value="970412">PVCOMBANK - NH TMCP ĐẠI CHÚNG VIỆT NAM</option>
-                            <option value="970414">OCEANBANK - NH THƯƠNG MẠI TNHH MTV ĐẠI DƯƠNG</option>
-                            <option value="970419">NCB - NH TMCP QUỐC DÂN</option>
-                            <option value="970424">SHINHANBANK - NH TNHH MTV SHINHAN VIỆT NAM</option>
-                            <option value="970425">ABBANK - NH TMCP AN BÌNH</option>
-                            <option value="970427">VIETABANK - NH TMCP VIỆT Á</option>
-                            <option value="970428">NAMABANK - NH TMCP NAM Á</option>
-                            <option value="970430">PGBANK - NH TMCP XĂNG DẦU PETROLIMEX</option>
-                            <option value="970433">VIETBANK - NH TMCP VIỆT NAM THƯƠNG TÍN</option>
-                            <option value="970438">BAOVIETBANK - NH TMCP BẢO VIỆT</option>
-                            <option value="970440">SEABANK - NH TMCP ĐÔNG NAM Á</option>
-                            <option value="970446">COOPBANK - NH HỢP TÁC XÃ VIỆT NAM</option>
-                            <option value="970449">LIENVIETPOSTBANK - NH TMCP BƯU ĐIỆN LIÊN VIỆT</option>
-                            <option value="970452">KIENLONGBANK - NH TMCP KIÊN LONG</option>
-                            <option value="668888">KBANK - NH ĐẠI CHÚNG TNHH KASIKORNBANK</option>
-                            <option value="970458">UNITEDOVERSEAS - NH UNITED OVERSEAS - CHI NHÁNH TP. HỒ CHÍ MINH
-                            </option>
-                            <option value="970410">STANDARDCHARTERED - NH TNHH MTV STANDARD CHARTERED BANK VIỆT NAM
-                            </option>
-                            <option value="970439">PUBLICBANK - NH TNHH MTV PUBLIC VIỆT NAM</option>
-                            <option value="801011">NONGHYUP - NH NONGHYUP - CHI NHÁNH HÀ NỘI</option>
-                            <option value="970434">INDOVINABANK - NH TNHH INDOVINA</option>
-                            <option value="970456">IBKHCM - NH CÔNG NGHIỆP HÀN QUỐC - CHI NHÁNH TP. HỒ CHÍ MINH
-                            </option>
-                            <option value="970455">IBKHN - NH CÔNG NGHIỆP HÀN QUỐC - CHI NHÁNH HÀ NỘI</option>
-                            <option value="970421">VRB - NH LIÊN DOANH VIỆT - NGA</option>
-                            <option value="970457">WOORI - NH TNHH MTV WOORI VIỆT NAM</option>
-                            <option value="970462">KOOKMINHN - NH KOOKMIN - CHI NHÁNH HÀ NỘI</option>
-                            <option value="970463">KOOKMINHCM - NH KOOKMIN - CHI NHÁNH THÀNH PHỐ HỒ CHÍ MINH</option>
-                            <option value="458761">HSBC - NH TNHH MTV HSBC (VIỆT NAM)</option>
-                            <option value="970442">HONGLEONG - NH TNHH MTV HONG LEONG VIỆT NAM</option>
-                            <option value="970408">GPBANK - NH THƯƠNG MẠI TNHH MTV DẦU KHÍ TOÀN CẦU</option>
-                            <option value="970406">DONGABANK - NH TMCP ĐÔNG Á</option>
-                            <option value="796500">DBSBANK - DBS BANK LTD - CHI NHÁNH THÀNH PHỐ HỒ CHÍ MINH</option>
-                            <option value="422589">CIMB - NH TNHH MTV CIMB VIỆT NAM</option>
-                            <option value="970444">CBBANK - NH THƯƠNG MẠI TNHH MTV XÂY DỰNG VIỆT NAM</option>
-                            <option value="533948">CITIBANK - NH CITIBANK, N.A. - CHI NHÁNH HÀ NỘI</option>
-                            <option value="970466">KEBHANAHCM - NH KEB HANA - CHI NHÁNH THÀNH PHỐ HỒ CHÍ MINH</option>
-                            <option value="970467">KEBHANAHN - NH KEB HANA - CHI NHÁNH HÀ NỘI</option>
-                            <option value="977777">MAFC - CÔNG TY TÀI CHÍNH TNHH MTV MIRAE ASSET (VIỆT NAM)</option>
-                            <option value="999888">VBSP - NH CHÍNH SÁCH XÃ HỘI</option>
-                        </select>
-                    <div data-id="ss-kmampl31" id="ss-kmampl31" tabindex="0" class="ss-main sign__selectjs"
-                        role="combobox" aria-haspopup="listbox" aria-controls="ss-kmampl31" aria-expanded="false"
-                        aria-activedescendant="7yqnc0af">
-                        <div class="ss-values">
-                            <div class="ss-single">ACB - NH TMCP Á CHÂU</div>
-                        </div>
-                        <div class="ss-deselect ss-hide"><svg viewBox="0 0 100 100">
-                                <path d="M10,10 L90,90 M10,90 L90,10"></path>
-                            </svg></div><svg class="ss-arrow" viewBox="0 0 100 100">
-                            <path d="M10,30 L50,70 L90,30"></path>
-                        </svg>
-                    </div>
-                    </p>
-                    <p><input autocomplete="off" name="number" class="sign__input" placeholder="Nhập số tài khoản"
-                            type="text" value="4645654765876897690"></p>
-                    <p><input autocomplete="off" name="name" class="sign__input" placeholder="Nhập tên chủ tài khoản"
-                            type="text" value="TRAN THIEN THANH"></p>
-                    <p><button class="sign__btn" type="submit"><span>CẬP NHẬT</span></button></p>
+                            <option value="VIETINBANK">VIETINBANK - NH TMCP CÔNG THƯƠNG VIỆT NAM</option>
+                            <option value="VIETCOMBANK">VIETCOMBANK - NH TMCP NGOẠI THƯƠNG VIỆT NAM</option>
+                            <option value="BIDV">BIDV - NH TMCP ĐẦU TƯ VÀ PHÁT TRIỂN VIỆT NAM</option>
+                            <option value="AGRIBANK">AGRIBANK - NH NÔNG NGHIỆP VÀ PHÁT TRIỂN NÔNG THÔN VIỆT NAM</option>
+                            <option value="OCB">OCB - NH TMCP PHƯƠNG ĐÔNG</option>
+                            <option value="MBBANK">MBBANK - NH TMCP QUÂN ĐỘI</option>
+                            <option value="TECHCOMBANK">TECHCOMBANK - NH TMCP KỸ THƯƠNG VIỆT NAM</option>
+                            <option value="ACB">ACB - NH TMCP Á CHÂU</option>
+                            <option value="VPBANK">VPBANK - NH TMCP VIỆT NAM THỊNH VƯỢNG</option>
+                            <option value="TPBANK">TPBANK - NH TMCP TIÊN PHONG</option>
+                            <option value="SACOMBANK">SACOMBANK - NH TMCP SÀI GÒN THƯƠNG TÍN</option>
+                            <option value="HDBANK">HDBANK - NH TMCP PHÁT TRIỂN THÀNH PHỐ HỒ CHÍ MINH</option>
+                            <option value="VIETCAPITALBANK">VIETCAPITALBANK - NH TMCP BẢN VIỆT</option>
+                            <option value="SCB">SCB - NH TMCP SÀI GÒN</option>
+                            <option value="VIB">VIB - NH TMCP QUỐC TẾ VIỆT NAM</option>
+                            <option value="SHB">SHB - NH TMCP SÀI GÒN - HÀ NỘI</option>
+                            <option value="EXIMBANK">EXIMBANK - NH TMCP XUẤT NHẬP KHẨU VIỆT NAM</option>
+                            <option value="MSB">MSB - NH TMCP HÀNG HẢI</option>
+                            <option value="CAKE">CAKE - TMCP VIỆT NAM THỊNH VƯỢNG - NH SỐ CAKE BY VPBANK</option>
+                            <option value="UBANK">UBANK - TMCP VIỆT NAM THỊNH VƯỢNG - NH SỐ UBANK BY VPBANK</option>
+                            <option value="TIMO">TIMO - NH SỐ TIMO BY BAN VIET BANK (TIMO BY BAN VIET BANK)</option>
+                            <option value="VIETTELMONEY">VIETTELMONEY - TỔNG CÔNG TY DỊCH VỤ SỐ VIETTEL - CHI NHÁNH TẬP ĐOÀN CÔNG NGHIỆP VIỄN THÔNG QUÂN ĐỘI</option>
+                            <option value="VNPTMONEY">VNPTMONEY - VNPT MONEY</option>
+                            <option value="SAIGONBANK">SAIGONBANK - NH TMCP SÀI GÒN CÔNG THƯƠNG</option>
+                            <option value="BACABANK">BACABANK - NH TMCP BẮC Á</option>
+                            <option value="PVCOMBANK">PVCOMBANK - NH TMCP ĐẠI CHÚNG VIỆT NAM</option>
+                            <option value="OCEANBANK">OCEANBANK - NH THƯƠNG MẠI TNHH MTV ĐẠI DƯƠNG</option>
+                            <option value="NCB">NCB - NH TMCP QUỐC DÂN</option>
+                            <option value="SHINHANBANK">SHINHANBANK - NH TNHH MTV SHINHAN VIỆT NAM</option>
+                            <option value="ABBANK">ABBANK - NH TMCP AN BÌNH</option>
+                            <option value="VIETABANK">VIETABANK - NH TMCP VIỆT Á</option>
+                            <option value="NAMABANK">NAMABANK - NH TMCP NAM Á</option>
+                            <option value="PGBANK">PGBANK - NH TMCP XĂNG DẦU PETROLIMEX</option>
+                            <option value="VIETBANK">VIETBANK - NH TMCP VIỆT NAM THƯƠNG TÍN</option>
+                            <option value="BAOVIETBANK">BAOVIETBANK - NH TMCP BẢO VIỆT</option>
+                            <option value="SEABANK">SEABANK - NH TMCP ĐÔNG NAM Á</option>
+                            <option value="COOPBANK">COOPBANK - NH HỢP TÁC XÃ VIỆT NAM</option>
+                            <option value="LIENVIETPOSTBANK">LIENVIETPOSTBANK - NH TMCP BƯU ĐIỆN LIÊN VIỆT</option>
+                            <option value="KIENLONGBANK">KIENLONGBANK - NH TMCP KIÊN LONG</option>
+                            <option value="KBANK">KBANK - NH ĐẠI CHÚNG TNHH KASIKORNBANK</option>
+                            <option value="UNITEDOVERSEAS">UNITEDOVERSEAS - NH UNITED OVERSEAS - CHI NHÁNH TP. HỒ CHÍ MINH</option>
+                            <option value="STANDARDCHARTERED">STANDARDCHARTERED - NH TNHH MTV STANDARD CHARTERED BANK VIỆT NAM</option>
+                            <option value="PUBLICBANK">PUBLICBANK - NH TNHH MTV PUBLIC VIỆT NAM</option>
+                            <option value="NONGHYUP">NONGHYUP - NH NONGHYUP - CHI NHÁNH HÀ NỘI</option>
+                            <option value="INDOVINABANK">INDOVINABANK - NH TNHH INDOVINA</option>
+                            <option value="IBKHCM">IBKHCM - NH CÔNG NGHIỆP HÀN QUỐC - CHI NHÁNH TP. HỒ CHÍ MINH</option>
+                            <option value="IBKHN">IBKHN - NH CÔNG NGHIỆP HÀN QUỐC - CHI NHÁNH HÀ NỘI</option>
+                            <option value="VRB">VRB - NH LIÊN DOANH VIỆT - NGA</option>
+                            <option value="WOORI">WOORI - NH TNHH MTV WOORI VIỆT NAM</option>
+                            <option value="KOOKMINHN">KOOKMINHN - NH KOOKMIN - CHI NHÁNH HÀ NỘI</option>
+                            <option value="KOOKMINHCM">KOOKMINHCM - NH KOOKMIN - CHI NHÁNH THÀNH PHỐ HỒ CHÍ MINH</option>
+                            <option value="HSBC">HSBC - NH TNHH MTV HSBC (VIỆT NAM)</option>
+                            <option value="HONGLEONG">HONGLEONG - NH TNHH MTV HONG LEONG VIỆT NAM</option>
+                            <option value="GPBANK">GPBANK - NH THƯƠNG MẠI TNHH MTV DẦU KHÍ TOÀN CẦU</option>
+                            <option value="DONGABANK">DONGABANK - NH TMCP ĐÔNG Á</option>
+                            <option value="DBSBANK">DBSBANK - DBS BANK LTD - CHI NHÁNH THÀNH PHỐ HỒ CHÍ MINH</option>
+                            <option value="CIMB">CIMB - NH TNHH MTV CIMB VIỆT NAM</option>
+                            <option value="CBBANK">CBBANK - NH THƯƠNG MẠI TNHH MTV XÂY DỰNG VIỆT NAM</option>
+                            <option value="CITIBANK">CITIBANK - NH CITIBANK, N.A. - CHI NHÁNH HÀ NỘI</option>
+                            <option value="KEBHANAHCM">KEBHANAHCM - NH KEB HANA - CHI NHÁNH THÀNH PHỐ HỒ CHÍ MINH</option>
+                            <option value="KEBHANAHN">KEBHANAHN - NH KEB HANA - CHI NHÁNH HÀ NỘI</option>
+                            <option value="MAFC">MAFC - CÔNG TY TÀI CHÍNH TNHH MTV MIRAE ASSET (VIỆT NAM)</option>
+                            <option value="VBSP">VBSP - NH CHÍNH SÁCH XÃ HỘI</option>
+                        </datalist>
+                    <p><input id="cr_bank_name" autocomplete="off" list="banks_vi" name="cr_bank_name" class="sign__input" placeholder="Chọn ngân hàng" type="text" value=""></p>
+                    <p><input id="cr_bank_account_number" autocomplete="off" name="cr_bank_account_number" class="sign__input" placeholder="Nhập số tài khoản" type="number" value=""></p>
+                    <p><input id="cr_bank_account_name" autocomplete="off" name="cr_bank_account_name" class="sign__input" placeholder="Nhập tên chủ tài khoản" type="text" value=""></p>
+                    <p><button class="sign__btn" type="button" id="btn_update_bank"><span>CẬP NHẬT</span></button></p>
                 </form>
-                <p class="text-center mt-4">LƯU Ý: TÀI KHOẢN BANK CỦA BẠN TỰ ĐỘNG Ở CHẾ ĐỘ <span class="code-num">BẢO
-                        VỆ</span> SAU LẦN TRẢ THƯỞNG THÀNH CÔNG ĐẦU TIÊN.</p>
+                <p class="text-center mt-4">LƯU Ý: TÀI KHOẢN BANK CỦA BẠN TỰ ĐỘNG Ở CHẾ ĐỘ <span class="code-num">BẢO VỆ</span> SAU LẦN TRẢ THƯỞNG THÀNH CÔNG ĐẦU TIÊN.</p>
             </div>
         </div>
     </div>

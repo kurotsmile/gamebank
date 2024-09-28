@@ -1,6 +1,6 @@
 class Web{
 
-    ver="0.16";
+    ver="1.17";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -71,9 +71,54 @@ class Web{
         cr.get("page/"+id+".html?v="+w.ver,(data)=>{
             $("#page_contains").html(w.data_template(data));
             w.menu_top();
+            w.uopdate_func_page(id);
             if(act_done==null) w.update_copy();
             if(act_done) act_done();
         });
+    }
+
+    uopdate_func_page(id_page){
+        if(id_page=="bank"){
+            var cr_bank_name=$("#cr_bank_name");
+            var cr_bank_account_number=$("#cr_bank_account_number");
+            var cr_bank_account_name=$("#cr_bank_account_name");
+
+            cr_firestore.get("member",w.user_login.id_doc,(data)=>{
+                if(cr.alive(data.bank_name)) cr_bank_name.val(data.bank_name);
+                if(cr.alive(data.bank_account_number)) cr_bank_account_number.val(data.bank_account_number);
+                if(cr.alive(data.bank_account_name)) cr_bank_account_name.val(data.bank_account_name);
+            });
+
+            $("#btn_update_bank").click(()=>{
+
+                if(cr_bank_name.val().trim()==""){
+                    cr.msg("Vui lòng nhập tên ngân hàng!","Cài đặt ngân hàng","warning");
+                    return false;
+                }
+
+                if(cr_bank_account_number.val().trim()==""){
+                    cr.msg("Vui lòng nhập số tài khoản ngân hàng!","Cài đặt ngân hàng","warning");
+                    return false;
+                }
+
+                if(cr_bank_account_name.val().trim()==""){
+                    cr.msg("Vui lòng nhập tên tài khoản ngân hàng!","Cài đặt ngân hàng","warning");
+                    return false;
+                }
+
+                w.user_login["bank_name"]=cr_bank_name.val();
+                w.user_login["bank_account_number"]=cr_bank_account_number.val();
+                w.user_login["bank_account_name"]=cr_bank_account_name.val();
+
+                cr_firestore.update(w.user_login,"member",w.user_login.id_doc,()=>{
+                    cr.msg("Cập nhật thành công!","Cài đặt ngân hàng","success");
+                    return false;
+                },()=>{
+                    cr.msg("Lỗi cập nhật! vui lòng thử lại sau!","Cài đặt ngân hàng","error");
+                    return false;
+                });
+            });
+        }
     }
 
     menu_top(){
