@@ -47,6 +47,27 @@
             receiving_bank.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
             cms.add(receiving_bank);
 
+
+            var game=new Post();
+            game.id_collection = "game";
+            game.label = "Kết quả các phiên cược";
+            game.icon='<i class="fas fa-dice"></i>';
+            game.data_form_add.fields.push(cms.field("type", "Trò chơi", "select",
+                [{value:"cltx",label:"CLTX"},
+                {value:"cltx2",label:"CLTX2"},
+                {value:"x3",label:"Gấp 3"},
+                {value:"tong3",label:"Tổng 3 số"},
+                {value:"xien",label:"Xiên"},
+                {value:"doanso",label:"Đoán số"}
+            ],true));
+            game.data_form_add.fields.push(cms.field("sel", "Đã chọn", "text",'',true));
+            game.data_form_add.fields.push(cms.field("code_bank", "Mã giao dịch", "text",'',true));
+            game.data_form_add.fields.push(cms.field("username", "Username", "text"));
+            game.data_form_add.fields.push(cms.field("status", "Kết quả", "select",[{value:"0",label:"Thua"},{value:"1",label:"Thắng"}]));
+            game.data_form_add.fields.push(cms.field("date", "Thời gian", "text"));
+            game.data_form_add.fields.push(cms.field("note", "Ghi chú", "text"));
+            cms.add(game);
+
             var member=new Post();
             member.id_collection = "member";
             member.label = "Thành viên";
