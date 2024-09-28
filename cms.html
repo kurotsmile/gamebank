@@ -41,6 +41,9 @@
             receiving_bank.data_form_add.fields.push(cms.field("name", "Tên ngân hàng", "text",'',true));
             receiving_bank.data_form_add.fields.push(cms.field("account_number", "Số tài khoản", "text",'',true));
             receiving_bank.data_form_add.fields.push(cms.field("account_name", "Tên tài khoản", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("min", "Cược Min", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("max", "Cược Max", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("qr_code", "Mã QR", "file"));
             receiving_bank.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
             cms.add(receiving_bank);
 

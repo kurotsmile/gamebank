@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.18";
+    ver="1.19";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -181,6 +181,16 @@ class Web{
         if(w.user_login!=null) u_name=w.user_login.username;
         return template({username:u_name,url:cr.site_url});
     }
+
+    maskString(input) {
+        if (input.length > 3) {
+            let lastThree = input.slice(-3);
+            let masked = '*'.repeat(input.length - 3) + lastThree;
+            return masked;
+        } else {
+            return input;
+        }
+    }
     
     show_game_tap(id){
         w.tap_game=id;
@@ -192,7 +202,36 @@ class Web{
                     w.load_home_box("#game_dashboar_history","home_box_history_no_user.html");
                 }
                 else{
-                    w.load_home_box("#game_dashboar_bank","home_box_bank.html");
+                    w.load_home_box("#game_dashboar_bank","home_box_bank.html",()=>{
+                        function bank_item(data){
+                            var emp_item=$(`
+                                <tr>
+                                    <td><div class="dashbox__table-text">${data.name}</div></td>
+                                    <td><div class="dashbox__table-text"><span>${w.maskString(data.account_number)}&nbsp;<a class="copy-text" data-clipboard-text="${data.account_number}"><i class="fa-regular fa-clipboard fs-10"></i></a></span> </div></td>
+                                    <td><div class="dashbox__table-text">${data.account_name}</div></td>
+                                    <td><div class="dashbox__table-text">${data.min}</div></td>
+                                    <td><div class="dashbox__table-text">${data.max}</div></td>
+                                    <td><button style="background-color:var(--main-color)" class="qrc catalog__btn catalog__btn--banned"><i class="fa-solid fa-qrcode"></i></button></td>
+                                </tr>
+                            `);
+                            
+                            $(emp_item).find(".qrc").click(()=>{
+                                var html='<img style="width:100%" src="'+data.qr_code+'"/>';
+                                cr.msg(html,"Mã QR");
+                                return false;
+                            });
+                            return emp_item;
+                        }
+
+                        $("#bankData").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
+                        cr_firestore.list("receiving_bank",datas=>{
+                            datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
+                            $("#bankData").empty();
+                            $.each(datas,function(index,bank){
+                                $("#bankData").append(bank_item(bank));
+                            });
+                        });
+                    });
                     w.load_home_box("#game_dashboar_history","home_box_history.html");
                 }
                 w.update_menu_game_tap();
