@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.19";
+    ver="1.21";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -81,6 +81,29 @@ class Web{
     update_func_page(id_page){
         if(id_page=="bank") w.func_for_bank();
         if(id_page=="change_password") w.func_for_change_password();
+        if(id_page=="missions") w.func_for_missions();
+    }
+
+    func_for_missions(){
+        function missions_item(data){
+            var emp=$(`
+                <tr>
+                    <td>${data.milestone}</td>
+                    <td>${data.reward}</td>
+                    <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                </tr>
+            `);
+            return emp;
+        }
+
+        $("#data_table_missions").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
+        cr_firestore.list("daily_missions",datas=>{
+            datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
+            $("#data_table_missions").empty();
+            $.each(datas,function(index,missions){
+                $("#data_table_missions").append(missions_item(missions));
+            });
+        });
     }
 
     func_for_bank(){
@@ -158,6 +181,7 @@ class Web{
 
             cr_user.change_password(w.user_login.id_doc,cr_password.val(),(data)=>{
                 if(data.status=="success"){
+                    w.user_login.password=cr_password.val();
                     cr.msg("Cập nhật mật khẩu thành công!","Đổi mật khẩu","success");
                 }else{
                     cr.msg("Cập nhật mật khẩu thất bại!","Đổi mật khẩu","success");

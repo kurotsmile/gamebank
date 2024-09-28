@@ -1,6 +1,6 @@
 {
     "id_project":"gametxck",
     "api_key":"AIzaSyAOAi9uR5xtmBPZ9SDLr2XZO4PU8luqQzI",
-    "cms_mode":"dev",
+    "cms_mode":"pub",
     "site_url":"https://gamebank-ten.vercel.app"
 }
