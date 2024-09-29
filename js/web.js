@@ -12,7 +12,7 @@ class Web{
             cr_firestore.api_key = config_data.api_key;
             cr.site_url=config_data.site_url;
             cr_realtime.config=config_data;
-            cr_realtime.onLoad();
+            cr_realtime.onLoad(config_data);
             cr_user.id_collection="member";
             
             if(localStorage.getItem("user")!=null) w.user_login=JSON.parse(localStorage.getItem("user"));

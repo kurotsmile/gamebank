@@ -20,30 +20,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>'
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.14.0/sweetalert2.min.js"></script>
-  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.22"></script>
-  <script src="Carrot-Framework-Web/cr_realtime.js?v=21"></script>
+  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.23"></script>
+  <script src="Carrot-Framework-Web/cr_realtime.js?v=23"></script>
   <script src="Carrot-Framework-Web/Carrot.js?v=1.18"></script>
-  <script src="Carrot-Framework-Web/cr_user.js?v=1.22"></script>
-  <script src="js/web.js?v=1.26"></script>
+  <script src="Carrot-Framework-Web/cr_user.js?v=1.23"></script>
+  <script src="js/web.js?v=1.23"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-    import { getDatabase, ref, set,onValue} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
-  
-    const firebaseConfig = {
-      apiKey: "AIzaSyAOAi9uR5xtmBPZ9SDLr2XZO4PU8luqQzI",
-      authDomain: "gametxck.firebaseapp.com",
-      databaseURL: "https://gametxck-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "gametxck",
-      storageBucket: "gametxck.appspot.com",
-      messagingSenderId: "926697106190",
-      appId: "1:926697106190:web:2bd5f607d021d92a74855f"
-    };
-  
-    const app = initializeApp(firebaseConfig);
-    cr_realtime.db=getDatabase(app);
-    cr_realtime.ref=ref;
-    cr_realtime.set=set;
-    cr_realtime.onValue=onValue;
+    import { getDatabase, ref, set,onValue,child,get} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
+    window.initializeApp=initializeApp;
+    window.ref=ref;
+    window.set=set;
+    window.get=get;
+    window.getDatabase=getDatabase;
+    window.onValue=onValue;
+    window.child=child;
   </script>
 </head>
 
@@ -239,8 +231,7 @@
           <div class="comments__autor"><img class="comments__avatar" src="images/logo.gif" alt=""> <span
               class="comments__name">GAMEBANK THÔNG BÁO</span></div>
           <p class="comments__text"></p>
-          <div class="modal__btns"><button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal"
-              aria-label="Close"><span>Đóng</span></button></div>
+          <div class="modal__btns"><button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal" aria-label="Close"><span>Đóng</span></button></div>
         </div>
       </div>
     </div>
@@ -248,16 +239,11 @@
   <div id="toast-noti"></div>
   <div class="toast toast-ctv" id="toast-ctv">
     <div class="toast-body text-center">
-      <p class="text-center" style="background-color: #2b2b31; color: #fff; font-size: 14px;"><span><span
-            class="code-num" style="color: #ffea3d;">- GAMEBANK CÓ CTV VÀ NV FAN TẶNG CHO KHÁCH HÀNG KHÔNG CHƠI CŨNG
-            NHẬN THƯỞNG CAO NHẤT THỊ TRƯỜNG</span></span></p><span class="code-num" style="color: #ffea3d;">- HOÀN 50%
-        CƯỢC TỪ 10K-35K</span>
+      <p class="text-center" style="background-color: #2b2b31; color: #fff; font-size: 14px;"><span><span class="code-num" style="color: #ffea3d;">- GAMEBANK CÓ CTV VÀ NV FAN TẶNG CHO KHÁCH HÀNG KHÔNG CHƠI CŨNG NHẬN THƯỞNG CAO NHẤT THỊ TRƯỜNG</span></span></p><span class="code-num" style="color: #ffea3d;">- HOÀN 50%   CƯỢC TỪ 10K-35K</span>
       <p></p><span class="code-num" style="color: #ffea3d;">- SAI NỘI DUNG &amp; SAI HẠN MỨC HOÀN 90% NẾU THẮNG</span>
       <p></p>
-      <p><span class="code-num" style="color: #ffea3d;">- THAM GIA NHÓM GROUP ĐỂ NHẬN GIFTCODE HÀNG NGÀY + MỖI
-          GIỜ</span></p>
-      <p><span class="code-num" style="color: #ffea3d;">- ĐỀ NGHỊ NGƯỜI CHƠI KHÔNG SPAM ĐƠN NẾU PHÁT HIỆN SPAM SẼ KHOÁ
-          TÀI KHOẢN</span></p><span class="code-num" style="color: #ffea3d;">GAMEBANK</span>
+      <p><span class="code-num" style="color: #ffea3d;">- THAM GIA NHÓM GROUP ĐỂ NHẬN GIFTCODE HÀNG NGÀY + MỖI GIỜ</span></p>
+      <p><span class="code-num" style="color: #ffea3d;">- ĐỀ NGHỊ NGƯỜI CHƠI KHÔNG SPAM ĐƠN NẾU PHÁT HIỆN SPAM SẼ KHOÁ TÀI KHOẢN</span></p><span class="code-num" style="color: #ffea3d;">GAMEBANK</span>
       <p></p>AN TOÀN - UY TÍN<p></p>
       <p><span class="code-num" style="color: #ec9009;">CHÚC BẠN MAY MẮN &amp; THẮNG LỚN</span>!</p>
       <div class="mt-3 pt-3 border-top"><button type="button" class="close-tctv">ĐÓNG</button></div>
