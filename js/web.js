@@ -80,11 +80,38 @@ class Web{
     }
 
     update_func_page(id_page){
+        if(id_page=="home") w.func_for_home();
         if(id_page=="bank") w.func_for_bank();
         if(id_page=="change_password") w.func_for_change_password();
         if(id_page=="missions") w.func_for_missions();
     }
 
+    func_for_home(){
+        function history_item(data){
+            var emp=$(`
+                <tr>
+                    <td><div class="dashbox__table-text">${data.username}</div></td>
+                    <td><div class="dashbox__table-text">${data.bet}</div></td>
+                    <td><div class="dashbox__table-text">${data.money_received}</div></td>
+                    <td><div class="dashbox__table-text">${data.type}</div></td>
+                    <td><div class="dashbox__table-text">${data.sel}</div></td>
+                    <td><span class="gstatus not-done">${data.status}</span></td>
+                    <td><div class="dashbox__table-text">${data.date}</td>
+                </tr>
+            `);
+            return emp;
+        }
+
+        $("#historyData").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
+        cr_realtime.list("game",datas=>{
+            datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
+            $("#historyData").empty();
+            $.each(datas,function(index,missions){
+                $("#historyData").append(history_item(missions));
+            });
+        });
+    }
+    
     func_for_missions(){
         function missions_item(data){
             var emp=$(`
