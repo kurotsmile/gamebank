@@ -2,5 +2,12 @@
     "id_project":"gametxck",
     "api_key":"AIzaSyAOAi9uR5xtmBPZ9SDLr2XZO4PU8luqQzI",
     "cms_mode":"pub",
-    "site_url":"https://gamebank-ten.vercel.app"
+    "site_url":"https://gamebank-ten.vercel.app",
+    "apiKey": "AIzaSyAOAi9uR5xtmBPZ9SDLr2XZO4PU8luqQzI",
+    "authDomain": "gametxck.firebaseapp.com",
+    "databaseURL": "https://gametxck-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "gametxck",
+    "storageBucket": "gametxck.appspot.com",
+    "messagingSenderId": "926697106190",
+    "appId": "1:926697106190:web:2bd5f607d021d92a74855f"
 }

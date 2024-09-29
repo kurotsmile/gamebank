@@ -23,6 +23,7 @@
     <script src="Carrot-Framework-Web/cr_icon.js?v=21"></script>
     <script src="Carrot-Framework-Web/cr_firestore.js?v=21"></script>
     <script src="Carrot-Framework-Web/cr_cms.js?v=21"></script>
+    <script src="Carrot-Framework-Web/cr_realtime.js?v=21"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -46,8 +47,7 @@
             receiving_bank.data_form_add.fields.push(cms.field("qr_code", "Mã QR", "file"));
             receiving_bank.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
             cms.add(receiving_bank);
-
-
+            
             var game=new Post();
             game.id_collection = "game";
             game.label = "Kết quả các phiên cược";

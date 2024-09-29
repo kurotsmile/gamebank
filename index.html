@@ -21,9 +21,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.14.0/sweetalert2.min.js"></script>
   <script src="Carrot-Framework-Web/cr_firestore.js?v=1.22"></script>
+  <script src="Carrot-Framework-Web/cr_realtime.js?v=21"></script>
   <script src="Carrot-Framework-Web/Carrot.js?v=1.18"></script>
   <script src="Carrot-Framework-Web/cr_user.js?v=1.22"></script>
   <script src="js/web.js?v=1.26"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+    import { getDatabase, ref, set,onValue} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOAi9uR5xtmBPZ9SDLr2XZO4PU8luqQzI",
+      authDomain: "gametxck.firebaseapp.com",
+      databaseURL: "https://gametxck-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "gametxck",
+      storageBucket: "gametxck.appspot.com",
+      messagingSenderId: "926697106190",
+      appId: "1:926697106190:web:2bd5f607d021d92a74855f"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    cr_realtime.db=getDatabase(app);
+    cr_realtime.ref=ref;
+    cr_realtime.set=set;
+    cr_realtime.onValue=onValue;
+  </script>
 </head>
 
 <body data-id="8fe63e1d457b165974d9a06dc3540452">
