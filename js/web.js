@@ -87,6 +87,32 @@ class Web{
     }
 
     func_for_home(){
+
+
+        function history_item_ketqua(data){
+            if(data=="1")
+                return '<span class="gstatus not-done bg-success">Thắng</span>';
+            else
+                return '<span class="gstatus not-done bg-warning">Thua</span>';
+        }
+
+        function historyBet(data){
+            var emp=$(`
+                <tr>
+                    <td><div class="dashbox__table-text">${data.username}</div></td>
+                    <td><div class="dashbox__table-text">${data.sel}</div></td>
+                    <td><div class="dashbox__table-text">${data.code_bank}</div></td>
+                    <td><div class="dashbox__table-text">${data.bet}</div></td>
+                    <td>${history_item_ketqua(data.status)}</td>
+                    <td><div class="dashbox__table-text">${data.money_received}</div></td>
+                    <td><div class="dashbox__table-text">${data.date}</td>
+                    <td><div class="dashbox__table-text">${data.note}</td>
+                    <td><div class="dashbox__table-text">${data.note}</td>
+                </tr>
+            `);
+            return emp;
+        }
+
         function history_item(data){
             var emp=$(`
                 <tr>
@@ -95,7 +121,7 @@ class Web{
                     <td><div class="dashbox__table-text">${data.money_received}</div></td>
                     <td><div class="dashbox__table-text">${data.type}</div></td>
                     <td><div class="dashbox__table-text">${data.sel}</div></td>
-                    <td><span class="gstatus not-done">${data.status}</span></td>
+                    <td>${history_item_ketqua(data.status)}</td>
                     <td><div class="dashbox__table-text">${data.date}</td>
                 </tr>
             `);
@@ -106,8 +132,13 @@ class Web{
         cr_realtime.list("game",datas=>{
             datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
             $("#historyData").empty();
-            $.each(datas,function(index,missions){
-                $("#historyData").append(history_item(missions));
+            $.each(datas,function(index,history){
+                if(w.user_login!=null){
+                    if(history.username==w.user_login.username){
+                        $("#historyBet").append(historyBet(history));
+                    }
+                }
+                $("#historyData").append(history_item(history));
             });
         });
     }
