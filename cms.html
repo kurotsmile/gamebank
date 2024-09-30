@@ -19,7 +19,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
     <script src="Carrot-Framework-Web/Carrot.js?v=24"></script>
-    <script src="Carrot-Framework-Web/cr_post.js?v=22"></script>
+    <script src="Carrot-Framework-Web/cr_post.js?v=25"></script>
     <script src="Carrot-Framework-Web/cr_icon.js?v=21"></script>
     <script src="Carrot-Framework-Web/cr_firestore.js?v=24"></script>
     <script src="Carrot-Framework-Web/cr_cms.js?v=24"></script>
@@ -92,13 +92,13 @@
                     {value:"LX",label:"LX - Xiên"},
                 ],true));
             game.data_form_add.fields.push(cms.field("code_bank", "Mã giao dịch", "text",'',true));
-            game.data_form_add.fields.push(cms.field("username", "Username", "text"));
-            game.data_form_add.fields.push(cms.field("bet", "Tiền cược", "text"));
-            game.data_form_add.fields.push(cms.field("money_received", "Tiền nhận", "text"));
+            game.data_form_add.fields.push(cms.field("username", "Username", "text",'',true));
+            game.data_form_add.fields.push(cms.field("bet", "Tiền cược", "text",'',true));
+            game.data_form_add.fields.push(cms.field("money_received", "Tiền nhận", "text",'',true));
             game.data_form_add.fields.push(cms.field("status", "Kết quả", "select",[{value:"0",label:"Thua"},{value:"1",label:"Thắng"}]));
             game.data_form_add.fields.push(cms.field("statement", "Sao kê", "text"));
-            game.data_form_add.fields.push(cms.field("date", "Thời gian", "text"));
-            game.data_form_add.fields.push(cms.field("note", "Ghi chú", "text"));
+            game.data_form_add.fields.push(cms.field("date", "Thời gian", "datetime-local"));
+            game.data_form_add.fields.push(cms.field("note", "Ghi chú", "text",'',true));
             game.type_db="realtime";
             cms.add(game);
 
