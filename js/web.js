@@ -129,7 +129,7 @@ class Web{
 
         $("#historyData").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
         cr_realtime.list("game",datas=>{
-            datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
+            w.sortArrayByDate(datas,'date')
             $("#historyData").empty();
             $("#historyBet").empty();
             $.each(datas,function(index,history){
@@ -471,6 +471,12 @@ class Web{
         clipboard.off('error');
         clipboard.on('error', function(e) {
             cr.msg("Sao chép lỗi","Copied","error");
+        });
+    }
+
+    sortArrayByDate(arr, key) {
+        return arr.sort(function(a, b) {
+            return new Date(b[key]) - new Date(a[key]);
         });
     }
 }

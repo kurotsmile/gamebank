@@ -20,14 +20,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>'
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.14.0/sweetalert2.min.js"></script>
-  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.27"></script>
-  <script src="Carrot-Framework-Web/cr_realtime.js?v=27"></script>
+  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.30"></script>
+  <script src="Carrot-Framework-Web/cr_realtime.js?v=1.30"></script>
   <script src="Carrot-Framework-Web/Carrot.js?v=1.18"></script>
-  <script src="Carrot-Framework-Web/cr_user.js?v=1.23"></script>
+  <script src="Carrot-Framework-Web/cr_user.js?v=1.30"></script>
   <script src="js/web.js?v=1.28"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-    import { getDatabase, ref, set,onValue,child,get} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+    import { getDatabase, ref, set,onValue,child,get,remove} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
     window.initializeApp=initializeApp;
     window.ref=ref;
@@ -36,6 +36,7 @@
     window.getDatabase=getDatabase;
     window.onValue=onValue;
     window.child=child;
+    window.removedb=remove;
   </script>
 </head>
 
