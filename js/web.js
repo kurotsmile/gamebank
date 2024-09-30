@@ -7,7 +7,7 @@ class Web{
     user_login=null;
 
     onLoad(){
-        cr.get_json("config.json",(config_data)=>{
+        cr.get_json("config.json?v="+w.ver,(config_data)=>{
             cr_firestore.id_project = config_data.id_project;
             cr_firestore.api_key = config_data.api_key;
             cr.site_url=config_data.site_url;
