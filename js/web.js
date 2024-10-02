@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.21";
+    ver="1.23";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -19,17 +19,18 @@ class Web{
             
             cr.show_menu_list("#menu_main","menu",()=>{
                 w.update_info_user_login();
-            });
-            
-            var page=cr.arg("page");
-            if(page){
-                if(page=="home")
+
+                var page=cr.arg("page");
+                if(page){
+                    if(page=="home")
+                        w.show_home();
+                    else
+                        w.show_page(page);
+                }else{
                     w.show_home();
-                else
-                    w.show_page(page);
-            }else{
-                w.show_home();
-            }
+                }
+
+            });
         });
     }
 
@@ -72,6 +73,7 @@ class Web{
         if(id=="history") cr.change_title("Lịch Sử Chơi","?page="+id);
         if(id=="telegram") cr.change_title("Liên Kết Telegram","?page="+id);
         if(id=="change_password") cr.change_title("Đổi mật khẩu","?page="+id);
+        if(id=="xsmb") cr.change_title("XSMB Lô Đề 6H30","?page="+id);
 
         cr.get("page/"+id+".html?v="+w.ver,(data)=>{
             $("#page_contains").html(w.data_template(data));
@@ -87,6 +89,12 @@ class Web{
         if(id_page=="bank") w.func_for_bank();
         if(id_page=="change_password") w.func_for_change_password();
         if(id_page=="missions") w.func_for_missions();
+        w.update_menu_main(id_page);
+    }
+
+    update_menu_main(id_page){
+        $(".cr_menu_item").removeClass("nav-link--active");
+        if($("#sidebar_item_"+id_page).length>0) $("#sidebar_item_"+id_page).addClass("nav-link--active");
     }
 
     func_for_home(){
@@ -281,6 +289,7 @@ class Web{
     show_game_tap(id){
         w.tap_game=id;
         w.show_page("home",()=>{
+            w.update_menu_main("home");
             cr.get("page/"+id+".html?v="+w.ver,(data)=>{
                 $("#game_dashboar").html(w.data_template(data));
                 if(w.user_login==null){
