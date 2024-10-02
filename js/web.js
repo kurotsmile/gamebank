@@ -16,8 +16,11 @@ class Web{
             cr_user.id_collection="member";
             
             if(localStorage.getItem("user")!=null) w.user_login=JSON.parse(localStorage.getItem("user"));
-            w.update_info_user_login();
-
+            
+            cr.show_menu_list("#menu_main","menu",()=>{
+                w.update_info_user_login();
+            });
+            
             var page=cr.arg("page");
             if(page){
                 if(page=="home")
@@ -27,8 +30,6 @@ class Web{
             }else{
                 w.show_home();
             }
-            
-            cr.show_menu_list("#menu_main","menu");
         });
     }
 
