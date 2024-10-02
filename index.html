@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="images/logo.gif">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/slimselect.css">
-  <link rel="stylesheet" href="css/style.css?v=1.22">
+  <link rel="stylesheet" href="css/style.css?v=1.23">
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
@@ -21,11 +21,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>'
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.14.0/sweetalert2.min.js"></script>
-  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.30"></script>
-  <script src="Carrot-Framework-Web/cr_realtime.js?v=1.30"></script>
-  <script src="Carrot-Framework-Web/Carrot.js?v=1.18"></script>
-  <script src="Carrot-Framework-Web/cr_user.js?v=1.30"></script>
-  <script src="js/web.js?v=1.28"></script>
+  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.31"></script>
+  <script src="Carrot-Framework-Web/cr_realtime.js?v=1.31"></script>
+  <script src="Carrot-Framework-Web/Carrot.js?v=1.31"></script>
+  <script src="Carrot-Framework-Web/cr_user.js?v=1.31"></script>
+  <script src="js/web.js?v=1.31"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
     import { getDatabase, ref, set,onValue,child,get,remove} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
@@ -52,220 +52,7 @@
   <div class="sidebar"><a href="" class="sidebar__logo"><img src="images/logo.gif" alt=""></a>
     <div class="sidebar__user" id="sidebar_user_info"></div>
     <ul class="sidebar__nav" data-scrollbar="true" tabindex="-1" style="overflow-y: scroll;overflow-x: hidden;">
-      <div class="scroll-content">
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="w.show_home();return false;" class="sidebar__nav-link sidebar__nav-link--active">
-            <span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                data-lucide="layout-grid" class="lucide lucide-layout-grid">
-                <rect width="7" height="7" x="3" y="3" rx="1"></rect>
-                <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-                <rect width="7" height="7" x="14" y="14" rx="1"></rect>
-                <rect width="7" height="7" x="3" y="14" rx="1"></rect>
-              </svg>
-              Trang Chủ
-            </span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item" id="sidebar_item_login">
-          <a href="#" onclick="w.show_login();return false;" class="sidebar__nav-link">
-            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="log-in" class="lucide lucide-log-in">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                <polyline points="10 17 15 12 10 7"></polyline>
-                <line x1="15" x2="3" y1="12" y2="12"></line>
-              </svg>Đăng Nhập</span>
-            </a>
-        </li>
-        <li class="sidebar__nav-item" id="sidebar_item_register">
-          <a href="#" onclick="w.show_register();return false;" class="sidebar__nav-link">
-            <span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                data-lucide="plus-circle" class="lucide lucide-plus-circle">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M8 12h8"></path>
-                <path d="M12 8v8"></path>
-              </svg>
-              Đăng Ký
-            </span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="w.show_page('missions');return false;" class="sidebar__nav-link"><span><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                data-lucide="book-minus" class="lucide lucide-book-minus">
-                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
-                <path d="M9 10h6"></path>
-              </svg>Nhiệm Vụ Ngày</span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('referrals');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="users" class="lucide lucide-users">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>Trở Thành CTV</span></a></li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('consecutives');return false;"
-            class="sidebar__nav-link">
-            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                data-lucide="rows-3" class="lucide lucide-rows-3">
-                <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-                <path d="M21 9H3"></path>
-                <path d="M21 15H3"></path>
-              </svg>Chuỗi Cược Ngày</span></a>
-        </li>
-        <li class="sidebar__nav-item" id="sidebar_item_bank"><a href="#" onclick="w.show_page('bank');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="landmark" class="lucide lucide-landmark">
-                <line x1="3" x2="21" y1="22" y2="22"></line>
-                <line x1="6" x2="6" y1="18" y2="11"></line>
-                <line x1="10" x2="10" y1="18" y2="11"></line>
-                <line x1="14" x2="14" y1="18" y2="11"></line>
-                <line x1="18" x2="18" y1="18" y2="11"></line>
-                <polygon points="12 2 20 7 4 7"></polygon>
-              </svg>Cài Đặt Bank</span></a>
-        </li>
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="return false;" class="sidebar__nav-link">
-            <span><i class="far fa-futbol lucide lucide-gift"></i>  &nbsp;&nbsp;&nbsp;Cá cược bóng đá</span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="return false;" class="sidebar__nav-link">
-            <span><i class="fas fa-cookie-bite lucide lucide-gift"></i> &nbsp;&nbsp;&nbsp;Thức ăn cho chim</span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="return false;" class="sidebar__nav-link">
-            <span><i class="fab fa-facebook-square lucide lucide-gift"></i> &nbsp;&nbsp;&nbsp;CSKH FACEBOOK</span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="return false;" class="sidebar__nav-link">
-            <span><i class="fab fa-telegram-plane lucide lucide-gift"></i> &nbsp;&nbsp;&nbsp;CSKH TELEGRAM</span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="return false;" class="sidebar__nav-link">
-            <span><i class="fab fa-telegram lucide lucide-gift"></i> &nbsp;&nbsp;&nbsp;BOX CHAT Telegram</span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item">
-          <a href="#" onclick="return false;" class="sidebar__nav-link">
-            <span><i class="fab fa-facebook lucide lucide-gift"></i> &nbsp;&nbsp;&nbsp;Box chat Facebook</span>
-          </a>
-        </li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('gifts');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="gift" class="lucide lucide-gift">
-                <rect x="3" y="8" width="18" height="4" rx="1"></rect>
-                <path d="M12 8v13"></path>
-                <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
-                <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
-              </svg>Giftcode</span></a>
-        </li>
-<!--
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('jackpots');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="trophy" class="lucide lucide-trophy">
-                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                <path d="M4 22h16"></path>
-                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-              </svg>Nổ Hũ</span></a></li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('refunds');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="gift" class="lucide lucide-gift">
-                <rect x="3" y="8" width="18" height="4" rx="1"></rect>
-                <path d="M12 8v13"></path>
-                <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
-                <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
-              </svg>Hoàn Cược Lỗi</span></a></li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('musters');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="calendar-check" class="lucide lucide-calendar-check">
-                <path d="M8 2v4"></path>
-                <path d="M16 2v4"></path>
-                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                <path d="M3 10h18"></path>
-                <path d="m9 16 2 2 4-4"></path>
-              </svg>Điểm Danh</span></a></li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('fans');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                fill="currentColor" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566ZM9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z">
-                </path>
-              </svg>Fan Miễn Phí</span></a></li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('history');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="clock" class="lucide lucide-clock">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>Lịch Sử Chơi</span></a></li>
-        <li class="sidebar__nav-item"><a href="#" onclick="w.show_page('telegram');return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="send" class="lucide lucide-send">
-                <path d="m22 2-7 20-4-9-9-4Z"></path>
-                <path d="M22 2 11 13"></path>
-              </svg>Liên Kết Telegram</span></a></li>
-        <li class="sidebar__nav-item" id="sidebar_item_changepassword"><a href="#"
-            onclick="w.show_page('change_password');return false;" class="sidebar__nav-link"><span><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="lock"
-                class="lucide lucide-lock">
-                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>Đổi Mật Khẩu</span></a></li>
-        <li class="sidebar__nav-item" id="sidebar_item_logout"><a href="#" onclick="w.logout();return false;"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="log-out" class="lucide lucide-log-out">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" x2="9" y1="12" y2="12"></line>
-              </svg>Đăng Xuất</span></a></li>
-        <li class="sidebar__nav-item"><a href="https://t.me/GAMEBANKMEUYTIN" class="sidebar__nav-link"><span><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                data-lucide="message-circle" class="lucide lucide-message-circle">
-                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-              </svg> CSKH 24/24</span></a></li>
-        <li class="sidebar__nav-item"><a href="https://t.me/thongbaochanlebankjp" class="sidebar__nav-link"><span><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                data-lucide="message-circle" class="lucide lucide-message-circle">
-                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-              </svg> Box Thông báo(BẮTBUỘCVÀO)</span></a></li>
-        <li class="sidebar__nav-item"><a href="https://t.me/gamebankmeboxchatt" class="sidebar__nav-link"><span><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                data-lucide="message-circle" class="lucide lucide-message-circle">
-                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-              </svg> Box Chat</span></a></li>
--->
-        <li class="sidebar__nav-item"><a href="https://www.facebook.com/abcxyzhahahihi/"
-            class="sidebar__nav-link"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" data-lucide="message-circle" class="lucide lucide-message-circle">
-                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
-              </svg> Thành Liên hệ qua ADMIN</span></a></li>
-      </div>
+      <div class="scroll-content" id="menu_main"></div>
       <div class="scrollbar-track scrollbar-track-x show" style="display: none;">
         <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 280px; transform: translate3d(0px, 0px, 0px);">
         </div>

@@ -27,6 +27,8 @@ class Web{
             }else{
                 w.show_home();
             }
+            
+            cr.show_menu_list("#menu_main","menu");
         });
     }
 
