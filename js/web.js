@@ -331,7 +331,7 @@ class Web{
                         }
 
                         $("#bankData").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
-                        cr_firestore.list("receiving_bank",datas=>{
+                        cr_realtime.list("receiving_bank",datas=>{
                             datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
                             $("#bankData").empty();
                             $.each(datas,function(index,bank){

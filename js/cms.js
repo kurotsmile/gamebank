@@ -12,8 +12,6 @@ cms.view_history_play_user=()=>{
             return new Date(b['date']) - new Date(a['date']);
         });
         p.label="Lịch sử chơi của ("+user.username+")";
-        cms.msg_collection_data(p,["username","game","money"],list_member,()=>{
-
-        });
+        cms.msg_collection_data(p,["username","game","money"],list_member);
     });
 };
