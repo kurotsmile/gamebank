@@ -459,7 +459,7 @@ class Web{
 
     sidebar_item_user(){
         var box_user=$(`
-            <div class="sidebar__user-img"><img src="images/avatar.png" alt="${w.user_login.username}"></div>
+            <div class="sidebar__user-img"><img src="images/avatar_user.png?=${w.ver}" alt="${w.user_login.username}"></div>
             <div class="sidebar__user-title"><span>Xin chào</span><p>${w.user_login.username}</p></div>
             <div role="button" onclick="w.logout()" class="sidebar__user-btn" href="#" id="cr_user_logouts"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="log-out" style="fill:none !important; color: #fff" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg></div>
         `);
@@ -500,7 +500,7 @@ class Web{
         html+='<div class="toast toast-ctv" id="toast-ctv" style="display: block;">';
             html+='<div class="toast-body text-center">';
                 html+='<div class="w-100">';
-                    html+='<img class="w-100" src="images/logo.gif" alt=""> <span class="comments__name">BANKCL THÔNG BÁO</span>';
+                    html+='<img class="w-100" src="images/logo_cl.png" alt=""> <span class="comments__name">BANKCL THÔNG BÁO</span>';
                 html+='</div>';
 
                 html+='<div class="w-100" id="w_msg_body"></div>';
