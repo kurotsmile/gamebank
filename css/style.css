@@ -3424,7 +3424,9 @@ button:disabled {
   top: 10px;
   background: #2b2b31;
   color: #fff;
-  border-color: rgb(61, 44, 57);
+  border-color: var(--main-color);
+  border-width: 3px;
+  box-shadow: 0px 0px 20px 7px #db000091;
   left: 50%;
   top: 50%;
   z-index: 9999;
