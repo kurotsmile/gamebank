@@ -62,44 +62,21 @@
           style="height: 210.005px; transform: translate3d(0px, 0px, 0px);"></div>
       </div>
     </ul>
-    <div class="sidebar__copyright"><b>GAMEBANK</b>&nbsp;©&nbsp;2024&nbsp;-&nbsp;2026</div>
+    <div class="sidebar__copyright"><b>BANKCL</b>&nbsp;©&nbsp;2024&nbsp;-&nbsp;2026</div>
   </div>
   <main class="main">
     <div class="container-fluid" id="page_contains"></div>
   </main>
-  <div class="modal fade" id="modal-qr" tabindex="-1" aria-labelledby="modal-view" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal__content modal__content--view">
-          <div class="comments__autor"><img class="comments__avatar" src="images/logo.gif" alt=""> <span class="comments__name">GAMEBANK QR</span></div>
-          <div class="text-center" id="canvasQr"><canvas width="200" height="200"></canvas></div>
-          <div class="text-center mt-3">
-            <p class="text-center mt-2 mb-1"><button id="qr-download" class="lnk__btn">Tải ảnh QR về máy</button></p>
-          </div>
-          <div class="modal__btns"><button class="modal__btn modal__btn--dismiss btn-close-qr"
-              data-bs-dismiss="modal"><span>Đóng</span></button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="modal-notes" tabindex="-1" aria-labelledby="modal-view" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal__content modal__content--view">
-          <div class="comments__autor"><img class="comments__avatar" src="images/logo.gif" alt=""> <span
-              class="comments__name">GAMEBANK THÔNG BÁO</span></div>
-          <p class="comments__text"></p>
-          <div class="modal__btns"><button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal"  aria-label="Close"><span>Đóng</span></button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="toast-noti"></div>
-  <div class="toast toast-ctv" id="toast-ctv">
+
+  <div class="toast toast-ctv" id="toast-ctv" style="display: block;">
     <div class="toast-body text-center">
+      <div class="w-100">
+        <img class="w-100" src="images/logo.gif" alt=""> <span class="comments__name">BANKCL THÔNG BÁO</span>
+      </div>
+
       <p class="text-center" style="background-color: #2b2b31; color: #fff; font-size: 14px;">
         <span>
-          <span class="code-num" style="color: #ffea3d;">- GAMEBANK CÓ CTV VÀ NV FAN TẶNG CHO KHÁCH HÀNG KHÔNG CHƠI CŨNG NHẬN THƯỞNG CAO NHẤT THỊ TRƯỜNG</span>
+          <span class="code-num" style="color: #ffea3d;">- BANKCL CÓ CTV VÀ NV FAN TẶNG CHO KHÁCH HÀNG KHÔNG CHƠI CŨNG NHẬN THƯỞNG CAO NHẤT THỊ TRƯỜNG</span>
         </span>
       </p>
         <span class="code-num" style="color: #ffea3d;">- HOÀN 50% CƯỢC TỪ 10K-35K</span>
@@ -107,10 +84,10 @@
       <span class="code-num" style="color: #ffea3d;">- SAI NỘI DUNG &amp; SAI HẠN MỨC HOÀN 90% NẾU THẮNG</span><p></p><p><span class="code-num" style="color: #ffea3d;">- THAM GIA NHÓM GROUP ĐỂ NHẬN GIFTCODE HÀNG NGÀY + MỖI GIỜ</span>
       </p>
       <p><span class="code-num" style="color: #ffea3d;">- ĐỀ NGHỊ NGƯỜI CHƠI KHÔNG SPAM ĐƠN NẾU PHÁT HIỆN SPAM SẼ KHOÁ
-          TÀI KHOẢN</span></p><span class="code-num" style="color: #ffea3d;">GAMEBANK</span>
+          TÀI KHOẢN</span></p><span class="code-num" style="color: #ffea3d;">BANKCL</span>
       <p></p>AN TOÀN - UY TÍN<p></p>
       <p><span class="code-num" style="color: #ec9009;">CHÚC BẠN MAY MẮN &amp; THẮNG LỚN</span>!</p>
-      <div class="mt-3 pt-3 border-top"><button type="button" class="close-tctv">ĐÓNG</button></div>
+      <div class="mt-3 pt-3 border-top"><button onclick="$('#toast-ctv').hide();return false;" type="button" class="close-tctv">ĐÓNG</button></div>
     </div>
   </div>
 </body>
