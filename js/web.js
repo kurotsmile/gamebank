@@ -62,7 +62,7 @@ class Web{
 
     show_page(id,act_done=null){
         cr.top();
-        //if(id=="home") cr.change_title("Trang chủ","?page="+id);
+        if(id=="home") cr.change_title("Trang chủ","");
         if(id=="gifts") cr.change_title("Mã Quà Tặng","?page="+id);
         if(id=="bank") cr.change_title("Cài Đặt Bank","?page="+id);
         if(id=="missions") cr.change_title("Nhiệm Vụ Ngày","?page="+id);
@@ -76,6 +76,8 @@ class Web{
         if(id=="telegram") cr.change_title("Liên Kết Telegram","?page="+id);
         if(id=="change_password") cr.change_title("Đổi mật khẩu","?page="+id);
         if(id=="xsmb") cr.change_title("XSMB Lô Đề 6H30","?page="+id);
+        if(id=="chim") cr.change_title("Thức ăn cho chim","?page="+id);
+        if(id=="bongda") cr.change_title("Cá cược bóng đá","?page="+id);
 
         cr.get("page/"+id+".html?v="+w.ver,(data)=>{
             $("#page_contains").html(w.data_template(data));
