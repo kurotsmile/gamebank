@@ -14,7 +14,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.0/css/all.min.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 
-    
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -23,12 +22,12 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
-    <script src="Carrot-Framework-Web/Carrot.js?v=31"></script>
-    <script src="Carrot-Framework-Web/cr_post.js?v=32"></script>
-    <script src="Carrot-Framework-Web/cr_icon.js?v=32"></script>
+    <script src="Carrot-Framework-Web/Carrot.js?v=35"></script>
+    <script src="Carrot-Framework-Web/cr_post.js?v=35"></script>
+    <script src="Carrot-Framework-Web/cr_icon.js?v=34"></script>
     <script src="Carrot-Framework-Web/cr_firestore.js?v=32"></script>
-    <script id="cr_cms" src="Carrot-Framework-Web/cr_cms.js?v=33"></script>
-    <script src="Carrot-Framework-Web/cr_realtime.js?v=31"></script>
+    <script id="cr_cms" src="Carrot-Framework-Web/cr_cms.js?v=35"></script>
+    <script src="Carrot-Framework-Web/cr_realtime.js?v=35"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
@@ -104,10 +103,20 @@
             lich_su_danh_kh.id_collection = "lich_su_danh_kh";
             lich_su_danh_kh.icon='<i class="fas fa-hourglass-half"></i>';
             lich_su_danh_kh.label = "Lịch sử đánh của khách hàng";
-            lich_su_danh_kh.data_form_add.fields.push(cms.field("username", "Nhập username - khách hàng", "collection",'member',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("username", "Nhập username - khách hàng", "collection",
+                {
+                    "id_collection":"member",
+                    "field_view":["username","bank_account_name"],
+                    "field_select":["username"]
+                },true));
             lich_su_danh_kh.data_form_add.fields.push(cms.field("game", "Chọn loại trò chơi", "select",games,true));
             lich_su_danh_kh.data_form_add.fields.push(cms.field("user", "Nhân viên nhập xử lý", "user",'',true));
-            lich_su_danh_kh.data_form_add.fields.push(cms.field("receiving_bank", "Ngân hàng ATM thanh toán - Ngân hàng nhận", "collection",'receiving_bank',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("receiving_bank", "Ngân hàng ATM thanh toán - Ngân hàng nhận", "collection",
+                {
+                    "id_collection":"receiving_bank",
+                    "field_view":["name","account_name","account_number"],
+                    "field_select":["name"]
+                },true));
             lich_su_danh_kh.data_form_add.fields.push(cms.field("date", "Thời gian", "datetime-local"));
             lich_su_danh_kh.type_db="realtime";
             cms.add(lich_su_danh_kh);
@@ -116,10 +125,20 @@
             lich_su_chuyen_kh.id_collection = "lich_su_chuyen_kh";
             lich_su_chuyen_kh.icon='<i class="fas fa-hand-holding-usd"></i>';
             lich_su_chuyen_kh.label = "Lịch sử chuyển cho khách hàng";
-            lich_su_chuyen_kh.data_form_add.fields.push(cms.field("username", "Nhập username - khách hàng", "collection",'member',true));
+            lich_su_chuyen_kh.data_form_add.fields.push(cms.field("username", "Nhập username - khách hàng", "collection",
+                {
+                    "id_collection":"member",
+                    "field_view":["username","bank_account_name"],
+                    "field_select":["username"]
+                },true));
             lich_su_chuyen_kh.data_form_add.fields.push(cms.field("game", "Chọn loại trò chơi", "select",games,true));
             lich_su_chuyen_kh.data_form_add.fields.push(cms.field("user", "Nhân viên nhập xử lý", "user",'',true));
-            lich_su_chuyen_kh.data_form_add.fields.push(cms.field("receiving_bank", "Ngân hàng ATM thanh toán - Ngân hàng chuyển", "collection",'receiving_bank',true));
+            lich_su_chuyen_kh.data_form_add.fields.push(cms.field("receiving_bank", "Ngân hàng ATM thanh toán - Ngân hàng chuyển", "collection",
+                {
+                    "id_collection":"receiving_bank",
+                    "field_view":["name","account_name","account_number"],
+                    "field_select":["name"]
+                },true));
             lich_su_chuyen_kh.data_form_add.fields.push(cms.field("date", "Thời gian", "datetime-local"));
             lich_su_chuyen_kh.type_db="realtime";
             cms.add(lich_su_chuyen_kh);
