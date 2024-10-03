@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.24";
+    ver="1.26";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -8,6 +8,7 @@ class Web{
 
     onLoad(){
         cr.get_json("config.json?v="+w.ver,(config_data)=>{
+            cr.ver=w.ver;
             cr_firestore.id_project = config_data.id_project;
             cr_firestore.api_key = config_data.api_key;
             cr.site_url=config_data.site_url;
@@ -30,6 +31,7 @@ class Web{
                     w.show_home();
                 }
 
+                w.show_msg_welcome();
             });
         });
     }
@@ -60,7 +62,7 @@ class Web{
 
     show_page(id,act_done=null){
         cr.top();
-        if(id=="home") cr.change_title("Trang chủ","?page="+id);
+        //if(id=="home") cr.change_title("Trang chủ","?page="+id);
         if(id=="gifts") cr.change_title("Mã Quà Tặng","?page="+id);
         if(id=="bank") cr.change_title("Cài Đặt Bank","?page="+id);
         if(id=="missions") cr.change_title("Nhiệm Vụ Ngày","?page="+id);
@@ -381,6 +383,7 @@ class Web{
                         w.show_home();
                         w.update_info_user_login();
                         cr.msg("Đăng nhập thành công!","Đăng nhập","success");
+                        w.show_msg_welcome();
                     }else{
                         cr.msg("Vui lòng kiểm tra lại thông tin đăng nhập!","Đăng nhập không thành công!","warning");
                     }
@@ -490,6 +493,41 @@ class Web{
         return arr.sort(function(a, b) {
             return new Date(b[key]) - new Date(a[key]);
         });
+    }
+
+    show_msg(t_body=""){
+        var html='';
+        html+='<div class="toast toast-ctv" id="toast-ctv" style="display: block;">';
+            html+='<div class="toast-body text-center">';
+                html+='<div class="w-100">';
+                    html+='<img class="w-100" src="images/logo.gif" alt=""> <span class="comments__name">BANKCL THÔNG BÁO</span>';
+                html+='</div>';
+
+                html+='<div class="w-100" id="w_msg_body"></div>';
+                html+='<div class="mt-3 pt-3 border-top"><button onclick=";return false;" type="button" class="close-tctv">ĐÓNG</button></div>';
+            html+='</div>';
+        html+='</div>';
+
+        var emp_box=$(html);
+        $(emp_box).find("#w_msg_body").html(t_body);
+
+        $(emp_box).find(".close-tctv").click(()=>{
+            $('#toast-ctv').hide();
+        });
+
+        if($("#toast-ctv").length>0) $("#toast-ctv").remove();
+        $("body").append(emp_box);
+    }
+
+    show_msg_welcome(){
+        var html_msg='';
+        html_msg+='<p class="text-center" style="background-color: #2b2b31; color: #fff; font-size: 14px;"><span><span class="code-num" style="color: #ffea3d;">- BANKCL CÓ CTV VÀ NV FAN TẶNG CHO KHÁCH HÀNG KHÔNG CHƠI CŨNG NHẬN THƯỞNG CAO NHẤT THỊ TRƯỜNG</span></span></p>';
+        html_msg+='<span class="code-num" style="color: #ffea3d;">- HOÀN 50% CƯỢC TỪ 10K-35K</span><p></p>';
+        html_msg+='<span class="code-num" style="color: #ffea3d;">- SAI NỘI DUNG &amp; SAI HẠN MỨC HOÀN 90% NẾU THẮNG</span><p></p><p><span class="code-num" style="color: #ffea3d;">- THAM GIA NHÓM GROUP ĐỂ NHẬN GIFTCODE HÀNG NGÀY + MỖI GIỜ</span>'
+        html_msg+='</p>';
+        html_msg+='<p><span class="code-num" style="color: #ffea3d;">- ĐỀ NGHỊ NGƯỜI CHƠI KHÔNG SPAM ĐƠN NẾU PHÁT HIỆN SPAM SẼ KHOÁ TÀI KHOẢN</span></p><span class="code-num" style="color: #ffea3d;">BANKCL</span>';
+        html_msg+='<p></p>AN TOÀN - UY TÍN<p></p>';
+        w.show_msg(html_msg);
     }
 }
 
