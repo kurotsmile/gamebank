@@ -24,7 +24,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
     <script src="Carrot-Framework-Web/Carrot.js?v=31"></script>
-    <script src="Carrot-Framework-Web/cr_post.js?v=31"></script>
+    <script src="Carrot-Framework-Web/cr_post.js?v=32"></script>
     <script src="Carrot-Framework-Web/cr_icon.js?v=32"></script>
     <script src="Carrot-Framework-Web/cr_firestore.js?v=31"></script>
     <script id="cr_cms" src="Carrot-Framework-Web/cr_cms.js?v=33"></script>
@@ -76,7 +76,7 @@
             member.data_form_add.fields.push(cms.field("bank_name", "Tên ngân hàng", "text",''));
             member.data_form_add.fields.push(cms.field("bank_account_number", "Số tài khoản", "text"));
             member.data_form_add.fields.push(cms.field("bank_account_name", "Tên tài khoản", "text"));
-            member.list_btn_table.push({"label":'<i class="fas fa-history"></i> Lịch sử chơi'});
+            member.list_btn_table.push({"label":'<i class="fas fa-history"></i> Lịch sử chơi',"class":"btn-warning","onclick":"view_history_play_user"});
             cms.add(member);
 
             var daily_missions = new Post();
@@ -115,9 +115,9 @@
             var lich_su_danh_kh=new Post();
             lich_su_danh_kh.id_collection = "lich_su_danh_kh";
             lich_su_danh_kh.label = "Lịch sử đánh của khách hàng";
-            lich_su_danh_kh.data_form_add.fields.push(cms.field("username", "Nhập username - khách hàng", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("username", "Nhập username - khách hàng", "collection",'member',true));
             lich_su_danh_kh.data_form_add.fields.push(cms.field("game", "Chọn loại trò chơi", "select",games,true));
-            lich_su_danh_kh.data_form_add.fields.push(cms.field("user", "Nhân viên nhập xử lý", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("user", "Nhân viên nhập xử lý", "collection",'user',true));
             lich_su_danh_kh.data_form_add.fields.push(cms.field("receiving_bank", "Ngân hàng ATM thanh toán - Ngân hàng nhận", "collection",'receiving_bank',true));
             lich_su_danh_kh.data_form_add.fields.push(cms.field("date", "Thời gian", "datetime-local"));
             cms.add(lich_su_danh_kh);
@@ -208,6 +208,12 @@
                 cms.onLoad();
             });
         });
+
+
+        cms.view_history_play_user=()=>{
+            var user=cms.data_select;
+            cr.msg("Danh sách người chơi đây nì!","Lịch sử chơi của ("+user.username+")");
+        };
     </script>
 </head>
 
