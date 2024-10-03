@@ -14,6 +14,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.0/css/all.min.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     
@@ -22,7 +27,7 @@
     <script src="Carrot-Framework-Web/cr_post.js?v=31"></script>
     <script src="Carrot-Framework-Web/cr_icon.js?v=32"></script>
     <script src="Carrot-Framework-Web/cr_firestore.js?v=31"></script>
-    <script src="Carrot-Framework-Web/cr_cms.js?v=31"></script>
+    <script id="cr_cms" src="Carrot-Framework-Web/cr_cms.js?v=33"></script>
     <script src="Carrot-Framework-Web/cr_realtime.js?v=31"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
@@ -41,40 +46,7 @@
     <script>
         $(document).ready(function () {
 
-            var daily_missions = new Post();
-            daily_missions.id_collection = "daily_missions";
-            daily_missions.label = "Nhiệm vụ hàng ngày";
-            daily_missions.data_form_add.fields.push(cms.field("milestone", "Mốc chơi", "text",'',true));
-            daily_missions.data_form_add.fields.push(cms.field("reward", "Phần thưởng", "text",'',true));
-            daily_missions.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
-            cms.add(daily_missions);
-
-            var receiving_bank=new Post();
-            receiving_bank.id_collection = "receiving_bank";
-            receiving_bank.label = "Ngân hàng nhận tiền";
-            receiving_bank.data_form_add.fields.push(cms.field("name", "Tên ngân hàng", "text",'',true));
-            receiving_bank.data_form_add.fields.push(cms.field("account_number", "Số tài khoản", "text",'',true));
-            receiving_bank.data_form_add.fields.push(cms.field("account_name", "Tên tài khoản", "text",'',true));
-            receiving_bank.data_form_add.fields.push(cms.field("min", "Cược Min", "text",'',true));
-            receiving_bank.data_form_add.fields.push(cms.field("max", "Cược Max", "text",'',true));
-            receiving_bank.data_form_add.fields.push(cms.field("qr_code", "Mã QR", "file"));
-            receiving_bank.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
-            cms.add(receiving_bank);
-            
-            var game=new Post();
-            game.id_collection = "game";
-            game.label = "Kết quả các phiên cược";
-            game.icon='<i class="fas fa-dice"></i>';
-            game.data_form_add.fields.push(cms.field("type", "Trò chơi", "select",
-                [{value:"cltx",label:"CLTX"},
-                {value:"cltx2",label:"CLTX2"},
-                {value:"x3",label:"Gấp 3"},
-                {value:"tong3",label:"Tổng 3 số"},
-                {value:"xien",label:"Xiên"},
-                {value:"doanso",label:"Đoán số"}
-            ],true));
-            game.data_form_add.fields.push(cms.field("sel", "Đã chọn", "select",
-                [
+            var games=[
                     {value:"L",label:"L - CLTX"},
                     {value:"C",label:"C - CLTX"},
                     {value:"X",label:"X - CLTX"},
@@ -91,7 +63,91 @@
                     {value:"LT",label:"LT - Xiên"},
                     {value:"CT",label:"CT - Xiên"},
                     {value:"LX",label:"LX - Xiên"},
-                ],true));
+                ];
+
+            cms.label_user_collection="Nhân viên";
+
+            var member=new Post();
+            member.id_collection = "member";
+            member.icon='<i class="fas fa-user-astronaut"></i>';
+            member.label = "Thành viên - Khách hàng";
+            member.data_form_add.fields.push(cms.field("username", "Tên đăng nhập", "text",'',true));
+            member.data_form_add.fields.push(cms.field("password", "Mật khẩu", "text",'',true));
+            member.data_form_add.fields.push(cms.field("bank_name", "Tên ngân hàng", "text",''));
+            member.data_form_add.fields.push(cms.field("bank_account_number", "Số tài khoản", "text"));
+            member.data_form_add.fields.push(cms.field("bank_account_name", "Tên tài khoản", "text"));
+            member.list_btn_table.push({"label":'<i class="fas fa-history"></i> Lịch sử chơi'});
+            cms.add(member);
+
+            var daily_missions = new Post();
+            daily_missions.id_collection = "daily_missions";
+            daily_missions.label = "Nhiệm vụ hàng ngày";
+            daily_missions.data_form_add.fields.push(cms.field("milestone", "Mốc chơi", "text",'',true));
+            daily_missions.data_form_add.fields.push(cms.field("reward", "Phần thưởng", "text",'',true));
+            daily_missions.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
+            cms.add(daily_missions);
+
+            var receiving_bank=new Post();
+            receiving_bank.id_collection = "receiving_bank";
+            receiving_bank.label = "Ngân hàng ATM thanh toán";
+            receiving_bank.data_form_add.fields.push(cms.field("name", "Tên ngân hàng", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("account_number", "Số tài khoản", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("account_name", "Tên tài khoản", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("min", "Cược Min", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("max", "Cược Max", "text",'',true));
+            receiving_bank.data_form_add.fields.push(cms.field("qr_code", "Mã QR", "file"));
+            receiving_bank.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
+            cms.add(receiving_bank);
+
+            var revenue_and_profit=new Post();
+            revenue_and_profit.id_collection = "doanh_thu_loi";
+            revenue_and_profit.icon='<i class="fas fa-coins"></i>';
+            revenue_and_profit.label = "Doanh Thu lời";
+            revenue_and_profit.data_form_add.fields.push(cms.field("name", "Tên nhân viên", "text",'',true));
+            revenue_and_profit.data_form_add.fields.push(cms.field("account_number", "Số tài khoản", "text",'',true));
+            revenue_and_profit.data_form_add.fields.push(cms.field("account_name", "Tên tài khoản", "text",'',true));
+            revenue_and_profit.data_form_add.fields.push(cms.field("min", "Cược Min", "text",'',true));
+            revenue_and_profit.data_form_add.fields.push(cms.field("max", "Cược Max", "text",'',true));
+            revenue_and_profit.data_form_add.fields.push(cms.field("qr_code", "Mã QR", "file"));
+            revenue_and_profit.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
+            cms.add(revenue_and_profit);
+            
+            var lich_su_danh_kh=new Post();
+            lich_su_danh_kh.id_collection = "lich_su_danh_kh";
+            lich_su_danh_kh.label = "Lịch sử đánh của khách hàng";
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("username", "Nhập username - khách hàng", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("game", "Chọn loại trò chơi", "select",games,true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("user", "Nhân viên nhập xử lý", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("receiving_bank", "Ngân hàng ATM thanh toán - Ngân hàng nhận", "collection",'receiving_bank',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("date", "Thời gian", "datetime-local"));
+            cms.add(lich_su_danh_kh);
+
+            var lich_su_danh_kh=new Post();
+            lich_su_danh_kh.id_collection = "lich_su_chuyen_kh";
+            lich_su_danh_kh.icon='<i class="fas fa-hand-holding-usd"></i>';
+            lich_su_danh_kh.label = "Lịch sử chuyển cho khách hàng";
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("name", "Tên nhân viên", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("account_number", "Số tài khoản", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("account_name", "Tên tài khoản", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("min", "Cược Min", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("max", "Cược Max", "text",'',true));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("qr_code", "Mã QR", "file"));
+            lich_su_danh_kh.data_form_add.fields.push(cms.field("order", "Thứ tự hiển thị", "number"));
+            cms.add(lich_su_danh_kh);
+            
+            var game=new Post();
+            game.id_collection = "game";
+            game.label = "Lịch sử thắng thua";
+            game.icon='<i class="fas fa-dice"></i>';
+            game.data_form_add.fields.push(cms.field("type", "Trò chơi", "select",
+                [{value:"cltx",label:"CLTX"},
+                {value:"cltx2",label:"CLTX2"},
+                {value:"x3",label:"Gấp 3"},
+                {value:"tong3",label:"Tổng 3 số"},
+                {value:"xien",label:"Xiên"},
+                {value:"doanso",label:"Đoán số"}
+            ],true));
+            game.data_form_add.fields.push(cms.field("sel", "Đã chọn", "select",games,true));
             game.data_form_add.fields.push(cms.field("code_bank", "Mã giao dịch", "text",'',true));
             game.data_form_add.fields.push(cms.field("username", "Username", "text",'',true));
             game.data_form_add.fields.push(cms.field("bet", "Tiền cược", "text",'',true));
@@ -103,16 +159,6 @@
             game.type_db="realtime";
             cms.add(game);
 
-            var member=new Post();
-            member.id_collection = "member";
-            member.label = "Thành viên";
-            member.data_form_add.fields.push(cms.field("username", "Tên đăng nhập", "text",'',true));
-            member.data_form_add.fields.push(cms.field("password", "Mật khẩu", "text",'',true));
-            member.data_form_add.fields.push(cms.field("bank_name", "Tên ngân hàng", "text",''));
-            member.data_form_add.fields.push(cms.field("bank_account_number", "Số tài khoản", "text"));
-            member.data_form_add.fields.push(cms.field("bank_account_name", "Tên tài khoản", "text"));
-            cms.add(member);
-
             var p_setting = new Post();
             p_setting.type="setting";
             p_setting.icon='<i class="fas fa-cogs"></i>';
@@ -122,6 +168,34 @@
             p_setting.data_form_add.fields.push(cms.field('title', "Tiêu đề trang web trang chủ"));
             p_setting.data_form_add.fields.push(cms.field('subtitle', "Tiêu đề phụ giới thiệu ngắn về trang web"));
             cms.add(p_setting);
+
+            var p_setting = new Post();
+            p_setting.type="setting";
+            p_setting.icon='<i class="fas fa-cogs"></i>';
+            p_setting.id_collection = "setting_chim";
+            p_setting.label = "Cài đặt - Thức ăn cho chim";
+            p_setting.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
+            p_setting.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
+            cms.add(p_setting);
+
+            var p_setting = new Post();
+            p_setting.type="setting";
+            p_setting.icon='<i class="fas fa-cogs"></i>';
+            p_setting.id_collection = "setting_bongda";
+            p_setting.label = "Cài đặt - Cá cược bóng đá";
+            p_setting.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
+            p_setting.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
+            cms.add(p_setting);
+
+            var p_setting_gifts = new Post();
+            p_setting_gifts.type="setting";
+            p_setting_gifts.icon='<i class="fas fa-cogs"></i>';
+            p_setting_gifts.id_collection = "setting_gifts";
+            p_setting_gifts.label = "Cài đặt - Gift Code (Mã thưởng)";
+            p_setting_gifts.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
+            p_setting_gifts.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
+            p_setting_gifts.data_form_add.fields.push(cms.field('msg', "Thông báo khi vào trang gift - Nhận Code mã thưởng","textarea"));
+            cms.add(p_setting_gifts);
 
             cr.setColor("#0da4fd");
             cr.onLoad();
@@ -138,4 +212,11 @@
 </head>
 
 <body></body>
+
+<script>
+    $(document).ready(function() {
+        var timestamp = new Date().getTime();
+        $('script[id="cr_cms"]').attr('src', 'cr_cms.js?v=' + timestamp);
+    });
+</script>
 </html>

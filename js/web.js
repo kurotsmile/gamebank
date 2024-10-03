@@ -93,6 +93,14 @@ class Web{
         if(id_page=="bank") w.func_for_bank();
         if(id_page=="change_password") w.func_for_change_password();
         if(id_page=="missions") w.func_for_missions();
+        if(id_page=="gifts"){
+            var html='';
+            html='<b>GIFTCODE</b> dành cho người mới tham gia bạn vui lòng vào nhóm.<br/>Nhóm sẽ cập nhật code hàng ngày trên nhóm bạn vui lòng chú ý trên nhóm!';
+            setTimeout(()=>{
+                w.show_msg(html);
+            },1000);
+            
+        }
         w.update_menu_main(id_page);
     }
 
