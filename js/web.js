@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.23";
+    ver="1.24";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
