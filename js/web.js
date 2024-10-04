@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.27";
+    ver="1.30";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -95,13 +95,22 @@ class Web{
         if(id_page=="missions") w.func_for_missions();
         if(id_page=="gifts"){
             cr_firestore.get("setting","setting_gifts",data=>{
-                var html='';
-                html='<b>GIFTCODE</b> dành cho người mới tham gia bạn vui lòng vào nhóm.<br/>Nhóm sẽ cập nhật code hàng ngày trên nhóm bạn vui lòng chú ý trên nhóm!';
                 $("#gifts_link_fb").attr("href",data.link_fb);
                 $("#gifts_link_telegram").attr("href",data.link_telegram);
                 setTimeout(()=>{
                     w.show_msg(data.msg);
                 },1000);
+            });
+        }
+        if(id_page=="chim"||id_page=="bongda"||id_page=="xsmb"){
+            var id_collection='';
+            if(id_page=="xsmb") id_collection="bongda";
+            else id_collection=id_page;
+            cr_firestore.get("setting","setting_"+id_collection,datas=>{
+                $("#link_page_fb").attr("href",datas.link_fb);
+                $("#link_page_fb").html(datas.link_fb);
+                $("#link_page_telegram").attr("href",datas.link_telegram);
+                $("#link_page_telegram").html(datas.link_telegram);
             });
         }
         w.update_menu_main(id_page);
