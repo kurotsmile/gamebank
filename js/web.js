@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.31";
+    ver="1.37";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -93,24 +93,24 @@ class Web{
         if(id_page=="bank") w.func_for_bank();
         if(id_page=="change_password") w.func_for_change_password();
         if(id_page=="missions") w.func_for_missions();
-        if(id_page=="gifts"){
-            cr_firestore.get("setting","setting_gifts",data=>{
-                $("#gifts_link_fb").attr("href",data.link_fb);
-                $("#gifts_link_telegram").attr("href",data.link_telegram);
-                setTimeout(()=>{
-                    w.show_msg(data.msg);
-                },1000);
-            });
-        }
+        if(id_page=="consecutives") w.func_for_consecutives();
         if(id_page=="chim"||id_page=="bongda"||id_page=="xsmb"){
             var id_collection='';
             if(id_page=="xsmb") id_collection="bongda";
             else id_collection=id_page;
             cr_firestore.get("setting","setting_"+id_collection,datas=>{
-                $("#link_page_fb").attr("href",datas.link_fb);
-                $("#link_page_fb").html(datas.link_fb);
-                $("#link_page_telegram").attr("href",datas.link_telegram);
-                $("#link_page_telegram").html(datas.link_telegram);
+                if(id_page=="gifts"){
+                    $("#gifts_link_fb").attr("href",datas.link_fb);
+                    $("#gifts_link_telegram").attr("href",datas.link_telegram);
+                }else{
+                    $("#link_page_fb").attr("href",datas.link_fb);
+                    $("#link_page_fb").html(datas.link_fb);
+                    $("#link_page_telegram").attr("href",datas.link_telegram);
+                    $("#link_page_telegram").html(datas.link_telegram);
+                }
+                setTimeout(()=>{
+                    w.show_msg(datas.msg);
+                },1000);
             });
         }
         w.update_menu_main(id_page);
@@ -185,25 +185,100 @@ class Web{
     }
     
     func_for_missions(){
-        function missions_item(data){
+        function missions_item(data,status_bet=0){
+            function s_bet(status){
+                if(status==0) 
+                    return '<span class="gstatus not-done">CHƯA ĐẠT</span>';
+                else 
+                    return '<span class="gstatus not-done bg-success">ĐẠT</span>';
+            }
             var emp=$(`
                 <tr>
                     <td>${data.milestone}</td>
                     <td>${data.reward}</td>
-                    <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                    <td>${s_bet(status_bet)}</td>
                 </tr>
             `);
             return emp;
         }
 
-        $("#data_table_missions").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
-        cr_firestore.list("daily_missions",datas=>{
-            datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
-            $("#data_table_missions").empty();
-            $.each(datas,function(index,missions){
-                $("#data_table_missions").append(missions_item(missions));
+        function list_mission(cur_money=0){
+            $("#data_table_missions").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
+            cr_firestore.list("daily_missions",datas=>{
+                datas.sort(function(a, b) { return parseInt(a.order) - parseInt(b.order);});
+                $("#data_table_missions").empty();
+                $.each(datas,function(index,missions){
+                    var status=0;
+                    var cur_bet=parseInt(missions.milestone.replace(/,/g, ""));
+                    if(cur_bet<=cur_money)
+                        status=1;
+                    else
+                        status=0;
+                    $("#data_table_missions").append(missions_item(missions,status));
+                });
             });
-        });
+        }
+
+        if(w.user_login!=null){
+            var cont_best=0;
+            var money_best=0;
+            cr_realtime.list_one("lich_su_danh_kh",datas=>{
+                $.each(datas,function(index,b){
+                    if(b.username==w.user_login.username){
+                        cont_best++;
+                        money_best+=parseInt(b.money);
+                    }
+                });
+                $("#m_count_bet").html(cont_best);
+                list_mission(money_best);
+            });
+        }else{
+            list_mission();
+        }
+    }
+
+    func_for_consecutives(){
+
+        let longestWinStreak = 0;
+        let longestLoseStreak = 0;
+        let currentWinStreak = 0;
+        let currentLoseStreak = 0;
+
+        if(w.user_login!=null){
+            cr_realtime.list_one("lich_su_danh_kh",datas=>{
+                $.each(datas,function(index,b){
+                    if(b.status=="2"){
+                        currentLoseStreak++;
+                        currentWinStreak = 0;
+                    }else{
+                        currentWinStreak++;
+                        currentLoseStreak = 0; 
+                    }
+                });
+
+                if (currentWinStreak > longestWinStreak)longestWinStreak = currentWinStreak;
+                if (currentLoseStreak > longestLoseStreak) longestLoseStreak = currentLoseStreak;
+
+                $("#longestWinStreak").html(longestWinStreak);
+                $("#longestLoseStreak").html(longestLoseStreak);
+
+                $(".ss_thang").each(function(index,t){
+                    var count=parseInt($(t).data("count"));
+                    if(count<=longestWinStreak)
+                        $(t).html("ĐẠT").addClass("bg-success");
+                    else
+                        $(t).html("CHƯA ĐẠT");
+                });
+
+                $(".ss_thua").each(function(index,t){
+                    var count=parseInt($(t).data("count"));
+                    if(count<=longestLoseStreak)
+                        $(t).html("ĐẠT").addClass("bg-success");
+                    else
+                        $(t).html("CHƯA ĐẠT");
+                });
+            });
+        }
     }
 
     func_for_bank(){
@@ -548,14 +623,11 @@ class Web{
     }
 
     show_msg_welcome(){
-        var html_msg='';
-        html_msg+='<p class="text-center" style="background-color: #2b2b31; color: #fff; font-size: 14px;"><span><span class="code-num" style="color: #ffea3d;">- BANKCL CÓ CTV VÀ NV FAN TẶNG CHO KHÁCH HÀNG KHÔNG CHƠI CŨNG NHẬN THƯỞNG CAO NHẤT THỊ TRƯỜNG</span></span></p>';
-        html_msg+='<span class="code-num" style="color: #ffea3d;">- HOÀN 50% CƯỢC TỪ 10K-35K</span><p></p>';
-        html_msg+='<span class="code-num" style="color: #ffea3d;">- SAI NỘI DUNG &amp; SAI HẠN MỨC HOÀN 90% NẾU THẮNG</span><p></p><p><span class="code-num" style="color: #ffea3d;">- THAM GIA NHÓM GROUP ĐỂ NHẬN GIFTCODE HÀNG NGÀY + MỖI GIỜ</span>'
-        html_msg+='</p>';
-        html_msg+='<p><span class="code-num" style="color: #ffea3d;">- ĐỀ NGHỊ NGƯỜI CHƠI KHÔNG SPAM ĐƠN NẾU PHÁT HIỆN SPAM SẼ KHOÁ TÀI KHOẢN</span></p><span class="code-num" style="color: #ffea3d;">BANKCL</span>';
-        html_msg+='<p></p>AN TOÀN - UY TÍN<p></p>';
-        w.show_msg(html_msg);
+        cr_firestore.get("setting","setting_site",datas=>{
+            w.show_msg(datas.msg);
+        },()=>{
+            w.show_msg_welcome();
+        });
     }
 }
 

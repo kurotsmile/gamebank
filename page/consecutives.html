@@ -16,8 +16,14 @@
             <div class="subpage-wrapper">
                 <p>Mô tả chuỗi cược ngày...</p>
                 <div class="text-center mb-3">
-                    <p><span>CHUỖI THUA: </span><span class="code-num"><b>0</b></span><br><span>CHUỖI THẮNG:
-                        </span><span class="code-num"><b>0</b></span><br><i class="small-notes">(lưu ý: hệ thông cập
+                    <p>
+                        <span>CHUỖI THUA: </span>
+                        <span class="code-num"><b id="longestWinStreak">0</b></span>
+                        <br>
+                        <span>CHUỖI THẮNG: </span>
+                        <span class="code-num"><b id="longestLoseStreak">0</b></span>
+                        <br>
+                        <i class="small-notes">(lưu ý: hệ thông cập
                             nhật chuỗi mỗi 5p)</i></p>
                 </div>
                 <div id="mess" class="text-center text--uppercase"></div>
@@ -49,27 +55,27 @@
                                         <tr>
                                             <td>x5</td>
                                             <td>10%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thua" data-count="5">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x10</td>
                                             <td>20%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thua" data-count="10">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x20</td>
                                             <td>45%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thua" data-count="20">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x30</td>
                                             <td>90%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thua" data-count="30">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x50</td>
                                             <td>250%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thua" data-count="50">CHƯA ĐẠT</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -111,27 +117,27 @@
                                         <tr>
                                             <td>x5</td>
                                             <td>10%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thang" data-count="5">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x10</td>
                                             <td>20%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thang" data-count="10">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x20</td>
                                             <td>35%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thang" data-count="20">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x30</td>
                                             <td>85%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done ss_thang" data-count="30">CHƯA ĐẠT</span></td>
                                         </tr>
                                         <tr>
                                             <td>x50</td>
                                             <td>150%</td>
-                                            <td><span class="gstatus not-done">CHƯA ĐẠT</span></td>
+                                            <td><span class="gstatus not-done  ss_thang" data-count="50">CHƯA ĐẠT</span></td>
                                         </tr>
                                     </tbody>
                                 </table>

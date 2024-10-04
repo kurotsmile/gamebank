@@ -22,13 +22,13 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
-    <script src="Carrot-Framework-Web/Carrot.js?v=1.53"></script>
-    <script src="Carrot-Framework-Web/cr_post.js?v=1.53"></script>
-    <script src="Carrot-Framework-Web/cr_icon.js?v=1.53"></script>
-    <script src="Carrot-Framework-Web/cr_firestore.js?v=1.53"></script>
-    <script id="cr_cms" src="Carrot-Framework-Web/cr_cms.js?v=1.53"></script>
-    <script src="Carrot-Framework-Web/cr_realtime.js?v=1.53"></script>
-    <script src="js/cms.js?v=1.53"></script>
+    <script src="Carrot-Framework-Web/Carrot.js?v=1.55"></script>
+    <script src="Carrot-Framework-Web/cr_post.js?v=1.55"></script>
+    <script src="Carrot-Framework-Web/cr_icon.js?v=1.55"></script>
+    <script src="Carrot-Framework-Web/cr_firestore.js?v=1.55"></script>
+    <script id="cr_cms" src="Carrot-Framework-Web/cr_cms.js?v=1.55"></script>
+    <script src="Carrot-Framework-Web/cr_realtime.js?v=1.55"></script>
+    <script src="js/cms.js?v=1.55"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
@@ -185,34 +185,44 @@
             p_setting.icon='<i class="fas fa-cogs"></i>';
             p_setting.id_collection = "setting_site";
             p_setting.label = "Cài đặt Site";
-            p_setting.data_form_add.fields.push(cms.field('logo_txt', "Logo Text (Logo bằng chữ ở đầu menu)"));
-            p_setting.data_form_add.fields.push(cms.field('title', "Tiêu đề trang web trang chủ"));
-            p_setting.data_form_add.fields.push(cms.field('subtitle', "Tiêu đề phụ giới thiệu ngắn về trang web"));
+            p_setting.data_form_add.fields.push(cms.field('msg', "Thông báo khi đăng nhập","textarea"));
             cms.add(p_setting);
 
-            var p_setting = new Post();
-            p_setting.type="setting";
-            p_setting.icon='<i class="fas fa-cogs"></i>';
-            p_setting.id_collection = "setting_chim";
-            p_setting.label = "Cài đặt - Thức ăn cho chim";
-            p_setting.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
-            p_setting.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
-            cms.add(p_setting);
+            var setting_chim = new Post();
+            setting_chim.type="setting";
+            setting_chim.icon='<i class="fas fa-cogs"></i>';
+            setting_chim.id_collection = "setting_chim";
+            setting_chim.label = "Cài đặt - Thức ăn cho chim";
+            setting_chim.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
+            setting_chim.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
+            setting_chim.data_form_add.fields.push(cms.field('msg', "Thông báo khi vào trang thức ăn cho chim","textarea"));
+            cms.add(setting_chim);
 
-            var p_setting = new Post();
-            p_setting.type="setting";
-            p_setting.icon='<i class="fas fa-cogs"></i>';
-            p_setting.id_collection = "setting_bongda";
-            p_setting.label = "Cài đặt - Cá cược bóng đá";
-            p_setting.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
-            p_setting.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
-            cms.add(p_setting);
+            var setting_bongda = new Post();
+            setting_bongda.type="setting";
+            setting_bongda.icon='<i class="fas fa-cogs"></i>';
+            setting_bongda.id_collection = "setting_bongda";
+            setting_bongda.label = "Cài đặt - Cá cược bóng đá";
+            setting_bongda.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
+            setting_bongda.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
+            setting_bongda.data_form_add.fields.push(cms.field('msg', "Thông báo khi vào trang bóng đá","textarea"));
+            cms.add(setting_bongda);
+
+            var setting_xsmb = new Post();
+            setting_xsmb.type="setting";
+            setting_xsmb.icon='<i class="fas fa-cogs"></i>';
+            setting_xsmb.id_collection = "setting_xsmb";
+            setting_xsmb.label = "Cài đặt - XSMB";
+            setting_xsmb.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
+            setting_xsmb.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
+            setting_xsmb.data_form_add.fields.push(cms.field('msg', "Thông báo khi vào xổ số - lô đề","textarea"));
+            cms.add(setting_xsmb);
 
             var p_setting_gifts = new Post();
             p_setting_gifts.type="setting";
             p_setting_gifts.icon='<i class="fas fa-cogs"></i>';
             p_setting_gifts.id_collection = "setting_gifts";
-            p_setting_gifts.label = "Cài đặt - Gift Code (Mã thưởng)";
+            p_setting_gifts.label = "Cài đặt - Gift Code";
             p_setting_gifts.data_form_add.fields.push(cms.field('link_fb', "Liên kết Facebook"));
             p_setting_gifts.data_form_add.fields.push(cms.field('link_telegram', "Liên kết telegram"));
             p_setting_gifts.data_form_add.fields.push(cms.field('msg', "Thông báo khi vào trang gift - Nhận Code mã thưởng","textarea"));
