@@ -211,8 +211,10 @@ cms.chuyentien=(id_data_danh_kh)=>{
     });
 }
 
-cms.update_for_data_kh=()=>{
+cms.update_for_data_kh=(data)=>{
+    alert(JSON.stringify(data));
     cms.data_kh_temp["status"]="1";
+    cms.data_kh_temp["reward"]=data["money"];
     var id_doc=cms.data_kh_temp["id_doc"];
     cr_realtime.add('lich_su_danh_kh',id_doc,cms.data_kh_temp,()=>{
         cms.p_temp.js_act_done_frm=null;

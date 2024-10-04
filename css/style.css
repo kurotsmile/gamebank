@@ -355,9 +355,10 @@ code {
   height: 85px;
   min-height: 85px;
   padding: 0 30px;
-  background-color: #28282d;
+  /*background-color: #28282d;*/
   width: 100%;
   position: relative;
+  background-color: #000;
 }
 
 .sidebar__logo:before {

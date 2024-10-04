@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.38";
+    ver="1.45";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -142,12 +142,14 @@ class Web{
         }
 
         function historyBet(data){
+            if(!cr.alive(data.reward)) data.reward="0";
             var emp=$(`
                 <tr>
                     <td><div class="dashbox__table-text">${data.username}</div></td>
                     <td><div class="dashbox__table-text">${data.game}</div></td>
                     <td><div class="dashbox__table-text">${data.receiving_bank}</div></td>
                     <td><div class="dashbox__table-text">${formatVND(data.money)}</div></td>
+                    <td><div class="dashbox__table-text">${formatVND(data.reward)}</div></td>
                     <td>${history_item_ketqua(data.status)}</td>
                     <td><div class="dashbox__table-text">${data.date}</td>
                 </tr>
@@ -156,10 +158,12 @@ class Web{
         }
 
         function history_item(data){
+            if(!cr.alive(data.reward)) data.reward="0";
             var emp=$(`
                 <tr>
                     <td><div class="dashbox__table-text">${data.username}</div></td>
                     <td><div class="dashbox__table-text">${formatVND(data.money)}</div></td>
+                    <td><div class="dashbox__table-text">${formatVND(data.reward)}</div></td>
                     <td><div class="dashbox__table-text">${data.game}</div></td>
                     <td>${history_item_ketqua(data.status)}</td>
                     <td><div class="dashbox__table-text">${data.date}</td>
@@ -610,7 +614,7 @@ class Web{
         html+='<div class="toast toast-ctv" id="toast-ctv" style="display: block;">';
             html+='<div class="toast-body text-center">';
                 html+='<div class="w-100">';
-                    html+='<img class="w-100" src="images/logo_cl.png" alt=""> <span class="comments__name">BANKCL THÔNG BÁO</span>';
+                    html+='<img class="w-100" src="images/logo_m2.gif" alt=""> <span class="comments__name">BANKCL THÔNG BÁO</span>';
                 html+='</div>';
 
                 html+='<div class="w-100" id="w_msg_body"></div>';
