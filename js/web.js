@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.37";
+    ver="1.38";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -173,13 +173,20 @@ class Web{
             w.sortArrayByDate(datas,'date')
             $("#historyData").empty();
             $("#historyBet").empty();
+            var list_history_by_user=[];
             $.each(datas,function(index,history){
+                if(index>=200) return false;
                 if(w.user_login!=null){
                     if(history.username==w.user_login.username){
-                        $("#historyBet").append(historyBet(history));
+                        list_history_by_user.push(history);
                     }
                 }
                 $("#historyData").append(history_item(history));
+            });
+
+            $.each(list_history_by_user,function(index,history){
+                if(index>=200) return false;
+                $("#historyBet").append(historyBet(history));
             });
         });
     }
