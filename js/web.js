@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.30";
+    ver="1.31";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -123,9 +123,20 @@ class Web{
 
     func_for_home(){
 
+        function formatVND(number) {
+            if (typeof number !== 'number') {
+                number = parseFloat(number);
+                if (isNaN(number)) return '0 đ';
+            }
+            
+            return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace("₫", "đ");
+        }
+        
         function history_item_ketqua(data){
-            if(data=="1")
-                return '<span class="gstatus not-done bg-success">Thắng</span>';
+            if(data=="0")
+                return '<span class="gstatus not-done bg-success">Thắng - Chờ trả thưởng</span>';
+            else if(data=="1")
+                return '<span class="gstatus not-done bg-success">Thắng - Đã trả thưởng</span>';
             else
                 return '<span class="gstatus not-done bg-warning">Thua</span>';
         }
@@ -134,14 +145,11 @@ class Web{
             var emp=$(`
                 <tr>
                     <td><div class="dashbox__table-text">${data.username}</div></td>
-                    <td><div class="dashbox__table-text">${data.sel}</div></td>
-                    <td><div class="dashbox__table-text">${data.code_bank}</div></td>
-                    <td><div class="dashbox__table-text">${data.bet}</div></td>
+                    <td><div class="dashbox__table-text">${data.game}</div></td>
+                    <td><div class="dashbox__table-text">${data.receiving_bank}</div></td>
+                    <td><div class="dashbox__table-text">${formatVND(data.money)}</div></td>
                     <td>${history_item_ketqua(data.status)}</td>
-                    <td><div class="dashbox__table-text">${data.money_received}</div></td>
                     <td><div class="dashbox__table-text">${data.date}</td>
-                    <td><div class="dashbox__table-text">${data.statement}</td>
-                    <td><div class="dashbox__table-text">${data.note}</td>
                 </tr>
             `);
             return emp;
@@ -151,10 +159,8 @@ class Web{
             var emp=$(`
                 <tr>
                     <td><div class="dashbox__table-text">${data.username}</div></td>
-                    <td><div class="dashbox__table-text">${data.bet}</div></td>
-                    <td><div class="dashbox__table-text">${data.money_received}</div></td>
-                    <td><div class="dashbox__table-text">${data.type}</div></td>
-                    <td><div class="dashbox__table-text">${data.sel}</div></td>
+                    <td><div class="dashbox__table-text">${formatVND(data.money)}</div></td>
+                    <td><div class="dashbox__table-text">${data.game}</div></td>
                     <td>${history_item_ketqua(data.status)}</td>
                     <td><div class="dashbox__table-text">${data.date}</td>
                 </tr>
@@ -163,7 +169,7 @@ class Web{
         }
 
         $("#historyData").html('<tr><td class="text-white"><i class="fa-solid fa-spinner fa-spin"></i> Loading..<td></tr>');
-        cr_realtime.list("game",datas=>{
+        cr_realtime.list("lich_su_danh_kh",datas=>{
             w.sortArrayByDate(datas,'date')
             $("#historyData").empty();
             $("#historyBet").empty();
