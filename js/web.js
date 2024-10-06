@@ -1,6 +1,6 @@
 class Web{
 
-    ver="1.52";
+    ver="1.54";
     isToggleSidebar=true;
     tap_game="home_cltx";
     box=null;
@@ -123,15 +123,6 @@ class Web{
 
     func_for_home(){
 
-        function formatVND(number) {
-            if (typeof number !== 'number') {
-                number = parseFloat(number);
-                if (isNaN(number)) return '0 đ';
-            }
-            
-            return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace("₫", "đ");
-        }
-        
         function history_item_ketqua(data){
             if(data=="0")
                 return '<span class="gstatus not-done bg-success">Thắng - Chờ trả thưởng</span>';
@@ -148,8 +139,8 @@ class Web{
                     <td><div class="dashbox__table-text">${data.username}</div></td>
                     <td><div class="dashbox__table-text">${data.game}</div></td>
                     <td><div class="dashbox__table-text">${data.receiving_bank}</div></td>
-                    <td><div class="dashbox__table-text">${formatVND(data.money)}</div></td>
-                    <td><div class="dashbox__table-text">${formatVND(data.reward)}</div></td>
+                    <td><div class="dashbox__table-text">${w.formatVND(data.money)}</div></td>
+                    <td><div class="dashbox__table-text">${w.formatVND(data.reward)}</div></td>
                     <td>${history_item_ketqua(data.status)}</td>
                     <td><div class="dashbox__table-text">${data.date}</td>
                 </tr>
@@ -162,8 +153,8 @@ class Web{
             var emp=$(`
                 <tr>
                     <td><div class="dashbox__table-text">${data.username}</div></td>
-                    <td><div class="dashbox__table-text">${formatVND(data.money)}</div></td>
-                    <td><div class="dashbox__table-text">${formatVND(data.reward)}</div></td>
+                    <td><div class="dashbox__table-text">${w.formatVND(data.money)}</div></td>
+                    <td><div class="dashbox__table-text">${w.formatVND(data.reward)}</div></td>
                     <td><div class="dashbox__table-text">${data.game}</div></td>
                     <td>${history_item_ketqua(data.status)}</td>
                     <td><div class="dashbox__table-text">${data.date}</td>
@@ -420,8 +411,8 @@ class Web{
                                     <td><div class="dashbox__table-text">${data.name}</div></td>
                                     <td><div class="dashbox__table-text"><span>${w.maskString(data.account_number)}&nbsp;<a class="copy-text" data-clipboard-text="${data.account_number}"><i class="fa-regular fa-clipboard fs-10"></i></a></span> </div></td>
                                     <td><div class="dashbox__table-text">${data.account_name}</div></td>
-                                    <td><div class="dashbox__table-text">${data.min}</div></td>
-                                    <td><div class="dashbox__table-text">${data.max}</div></td>
+                                    <td><div class="dashbox__table-text">${w.formatVND(data.min)}</div></td>
+                                    <td><div class="dashbox__table-text">${w.formatVND(data.max)}</div></td>
                                     <td><button style="background-color:var(--main-color)" class="qrc catalog__btn catalog__btn--banned"><i class="fa-solid fa-qrcode"></i></button></td>
                                 </tr>
                             `);
@@ -639,6 +630,31 @@ class Web{
         },()=>{
             w.show_msg_welcome();
         });
+    }
+
+    formatVND(number) {
+        if (typeof number !== 'number') {
+            number = parseFloat(number);
+            if (isNaN(number)) return '0 đ';
+        }
+        
+        return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace("₫", "đ");
+    }
+
+    show_game_tai_xiu_md5(){
+        cr.msg_loading();
+        
+        if (typeof taixiu === 'undefined') {
+            var script = document.createElement('script');
+            script.src = "js/taixiumd5.js";
+            script.onload = function() {
+                taixiu.show();
+            };
+            document.head.appendChild(script);
+            
+        } else {
+            taixiu.show();
+        }
     }
 }
 
