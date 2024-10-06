@@ -646,7 +646,8 @@ class Web{
         
         if (typeof taixiu === 'undefined') {
             var script = document.createElement('script');
-            script.src = "js/taixiumd5.js";
+            var timestamp = new Date().getTime();
+            script.src = "js/taixiumd5.js?v="+timestamp;
             script.onload = function() {
                 taixiu.show();
             };

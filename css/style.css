@@ -3511,6 +3511,136 @@ button:disabled {
   z-index: 1000;
 }
 
-#tx{
-  
+#tx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 1200;
+  height: 100%;
+}
+
+#tx #game_tx{
+  background-image: url('../images/tx_bk.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 794px;
+  height: 459px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game_tx #dia{
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+}
+
+#game_tx #dia #dice{
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  position: absolute;
+  color: white;
+  align-items: center;
+  height: 300px;
+}
+
+#game_tx #dia #dice img{
+  width: 73%;
+  margin-top: 46px;
+}
+
+#game_tx #dia #effect_c{
+  background-image: url(../images/effect_c.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 248px;
+  width: 248px;
+  margin-top: 50px;
+  animation: spin 2s linear infinite; 
+}
+
+#game_tx .info{
+  width: 200px;
+  text-align: center;
+}
+
+#game_tx .btn{
+  width: 200px;
+  text-align: center;
+}
+
+#game_tx .btn .close{
+  position: relative;
+  top: -105px;
+  left: -46px;
+}
+
+#game_tx .btn .close:hover {
+  content: url('../images/btn_close_hover.png');
+}
+
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+/* Extra small devices (phones, 0px and up) */
+@media (max-width: 575.98px) {
+  #tx {
+    transform: scale(65%, 65%);
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  #tx {
+    transform: scale(65%, 65%);
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* CSS for devices between 768px and 991px (tablets) */
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  /* CSS for devices between 992px and 1199px (desktops) */
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  /* CSS for devices between 1200px and 1399px (large desktops) */
+}
+
+/* Extra Extra large devices (very large desktops, 1400px and up) */
+@media (min-width: 1400px) {
+  /* CSS for devices larger than 1400px (extra large desktops) */
+}
+
+/* Landscape orientation */
+@media (orientation: landscape) {
+  /* CSS for devices in landscape mode */
+}
+
+/* Portrait orientation */
+@media (orientation: portrait) {
+  /* CSS for devices in portrait mode */
 }
