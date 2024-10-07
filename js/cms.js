@@ -221,3 +221,83 @@ cms.update_for_data_kh=(data)=>{
         return false;
     });
 }
+
+cms.taixiu=()=>{
+    var currentTime = new Date();
+    var html_page='<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom mt-5">';
+    html_page+='<h1 class="h2">Các phiên cược Tài Xỉu MD5</h1>';
+        html_page+='<div class="btn-toolbar mb-2 mb-md-0">';
+        html_page+='<div class="btn-group mr-2">';
+            html_page+='<button onclick="return false;" class="btn btn-sm btn-outline-secondary"><i class="fas fa-dice-d6"></i> Tạo mới (nếu bản trống)</button>';
+            //html_page+='<button onclick="cms.lichsuthangthua(\'2\');return false;" class="btn '+(status_view=="2"? "active":"")+' btn-sm btn-outline-secondary"><i class="fas fa-skull"></i> Lịch sử thua</button>';
+        html_page+='</div>';
+    html_page+='</div>';
+    html_page+='</div>';
+
+    html_page+='<div class="table-responsive">';
+    html_page+='<table class="table table-linght table-sm table-striped table-hover">';
+
+    html_page+='<thead>';
+    html_page+='<tr>';
+        html_page+='<th scope="col">Mã phiên</th>';
+        html_page+='<th scope="col">Số người chơi</th>'
+        html_page+='<th scope="col">Số người cược tài</th>';
+        html_page+='<th scope="col">Số người cược Xỉu</th>';
+        html_page+='<th scope="col">Trạng thái</th>';
+        html_page+='<th scope="col">Thời gian bắt đầu</th>';
+        html_page+='<th scope="col">Thời gian kết thúc</th>';
+    html_page+='</tr>';
+    html_page+='</thead>';
+
+    html_page+='<tbody id="all_item_taixiu"></tbody>';
+    html_page+='</table>';
+    html_page+='</div>';
+    $("main").html(html_page);
+
+    function item_taixiu(data){
+        var html='';
+        html+='<tr>';
+        html+='<td>'+data.id+'</td>';
+        html+='<td>'+data.count_user+'</td>';
+        html+='<td>'+data.count_tai+'</td>';
+        html+='<td>'+data.count_xiu+'</td>';
+
+
+              var date1 = new Date(currentTime);
+              var date2 = new Date(data.time_start);
+  
+              // Chuyển đổi sang giờ Việt Nam (UTC+7)
+              var vietnamOffset = 7 * 60; // UTC+7 bằng 7 giờ x 60 phút
+              var vietnamDate1 = new Date(date1.getTime() + vietnamOffset * 60 * 1000);
+              var vietnamDate2 = new Date(date2.getTime() + vietnamOffset * 60 * 1000);
+
+        if (vietnamDate1 > vietnamDate2) {
+            html+='<td>Hoàn tất</td>';
+        } else if (vietnamDate1 < vietnamDate2) {
+            html+='<td>Xắp diễn ra</td>';
+        }else{
+            html+='<td>Đang diễn ra</td>';
+        }
+        html+='<td>'+data.time_start+'</td>';
+        html+='<td>'+data.time_end+'</td>';
+        html+='</tr>';
+        return $(html);
+    }
+
+    function createBettingSessions() {
+        var startDate = new Date();
+        var sessionDuration = 3 * 60 * 1000;
+        var numSessions = 480;
+
+        for (var i = 0; i < numSessions; i++) {
+            var startTime = new Date(startDate.getTime() + i * sessionDuration);
+            var endTime = new Date(startTime.getTime() + sessionDuration);
+            var sessionId = 'session' + (i + 1);
+
+            var tx={id:sessionId,count_user:0,count_tai:0,count_xiu:0,status:"waiting",time_start:startTime.toISOString(),time_end:endTime.toISOString()};
+            $("#all_item_taixiu").append(item_taixiu(tx));
+        }
+    }
+
+    createBettingSessions();
+}

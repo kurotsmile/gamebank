@@ -3522,10 +3522,11 @@ button:disabled {
   width: 100%;
   z-index: 1200;
   height: 100%;
+  flex-wrap: wrap;
 }
 
 #tx #game_tx{
-  background-image: url('../images/tx_bk.png');
+  background-image: url('../images/tx_bk.png?v=12');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 794px;
@@ -3539,12 +3540,14 @@ button:disabled {
   width: 300px;
   text-align: center;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-content: center;
   justify-content: center;
+  cursor: pointer;
+  align-items: center;
 }
 
-#game_tx #dia #dice{
+#game_tx #dia #dice,#game_tx #dia #dice_return{
   width: 300px;
   text-align: center;
   display: flex;
@@ -3560,21 +3563,30 @@ button:disabled {
 #game_tx #dia #dice img{
   width: 73%;
   margin-top: 46px;
+  position: absolute;
 }
 
 #game_tx #dia #effect_c{
-  background-image: url(../images/effect_c.png);
+  background-image: url('../images/effect_c.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 248px;
   width: 248px;
   margin-top: 50px;
   animation: spin 2s linear infinite; 
+  position: absolute;
+  z-index: 0;
 }
 
 #game_tx .info{
   width: 200px;
   text-align: center;
+}
+
+#game_tx .info .txt{
+  width: 89px;
+  position: relative;
+  top: 20px;
 }
 
 #game_tx .btn{
@@ -3585,20 +3597,238 @@ button:disabled {
 #game_tx .btn .close{
   position: relative;
   top: -105px;
-  left: -46px;
+  left: -58px;
 }
 
 #game_tx .btn .close:hover {
   content: url('../images/btn_close_hover.png');
 }
 
+.sprite_dice{
+  width: 51px;
+  height: 51px;
+  background-image: url(../images/dice.png);
+  background-position: 0px 0px;
+  background-size: 301px 51px;
+  display: none;
+}
+
+.sprite_dice.p1{
+  top: 38px;
+  position: relative;
+  left: 20px;
+}
+
+.sprite_dice.p2{
+  top: -2px;
+  position: relative;
+  left: -3px;
+}
+
+.sprite_dice.p3{
+  top: 34px;
+  position: relative;
+  left: -27px;
+}
+
+.sprite_dice.d1{
+  background-position: 0px 0px;
+}
+
+.sprite_dice.d6{
+  background-position: 51px 0px;
+}
+
+.sprite_dice.d5{
+  background-position: 101px 0px;
+}
+
+.sprite_dice.d4{
+  background-position: 151px 0px;
+}
+
+.sprite_dice.d3{
+  background-position: 201px 0px;
+}
+
+.sprite_dice.d2{
+  background-position: 251px 0px;
+}
+
+.zoom { animation: zoomEffect 2s infinite;}
+
 @keyframes spin {
   from {
-      transform: rotate(0deg);
-  }
-  to {
       transform: rotate(360deg);
   }
+  to {
+      transform: rotate(0deg);
+  }
+}
+
+@keyframes zoomEffect {
+  0% {transform: scale(1);}
+  30% { transform: scale(1.3);}
+  50% { transform: scale(0.8);}
+  70% { transform: scale(1.4);}
+  100% {transform: scale(1);}
+}
+
+
+
+.btn-bet{
+  background-image: url('../images/btn_bet_0.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 130px;
+  height: 49px;
+  position: relative;
+  top: 55px;
+}
+
+.btn-bet:hover{
+  background-image: url('../images/btn_bet_1.png');
+}
+
+.btn-bet.block{
+  background-image: url('../images/btn_bet_2.png');
+}
+
+
+#dia #dice_history{
+  width: 520px;
+  position: relative;
+  height: 22px;
+  bottom: -158px;
+  z-index: 60000;
+  display: flex;
+}
+
+#dia #dice_history .item{
+  width: 20px;
+  height: 20px;
+}
+
+#dia #dice_history .item.tai{
+  background-image: url('../images/r_tai.png');
+}
+
+#dia #dice_history .item.xiu{
+  background-image: url('../images/r_xiu.png');
+}
+
+#dia #dice_md5{
+  position: relative;
+  color: #e3db76;
+  bottom: -176px;
+  font-size: 14px;
+  text-shadow: 2px 2px 0px #992604;;
+}
+
+#dice_panel_bet{
+    color: white;
+    background-color: #00000042;
+    width: 500px;
+    position: absolute;
+    top: 626px;
+    display: none;
+}
+
+#dice_panel_bet .btn-bet {
+	box-shadow:inset 0px 1px 0px 0px #fce2c1;
+	background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
+	background-color:#ffc477;
+	border-radius:6px;
+	border:1px solid #eeb44f;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #cc9f52;
+  width: auto !important;
+  margin: 2px;
+  padding: 5px !important;
+  top: 0px;
+  height: auto;
+}
+#dice_panel_bet .btn-bet:hover {
+	background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
+	background-color:#fb9e25;
+}
+
+#dice_panel_bet .btn-bet:active {
+	position:relative;
+	top:1px;
+}
+
+.btn-bet-done{
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+	background-color:#f24537;
+	border-radius:6px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+}
+.btn-bet-done:hover {
+	background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+	background-color:#c62d1f;
+}
+.btn-bet-done:active {
+	position:relative;
+	top:1px;
+}
+
+.btnx2 {
+  width: auto;
+	box-shadow:inset 0px 1px 0px 0px #a4e271;
+	background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+	background-color:#89c403;
+	border-radius:6px;
+	border:1px solid #74b807;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528009;
+  margin: 2px;
+}
+.btnx2:hover {
+	background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+	background-color:#77a809;
+}
+.btnx2:active {
+	position:relative;
+	top:1px;
+}
+
+.txt_money_bet{
+  position: relative;
+  top: 55px;
+  color: #f9ff00;
+  text-shadow: 3px 3px 3px black;
+}
+
+.txt_money_bet_total{
+  position: relative;
+  top: 42px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 /* Extra small devices (phones, 0px and up) */
@@ -3617,7 +3847,9 @@ button:disabled {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
-  /* CSS for devices between 768px and 991px (tablets) */
+  #tx {
+    transform: scale(65%, 65%);
+  }
 }
 
 /* Large devices (desktops, 992px and up) */

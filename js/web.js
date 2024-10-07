@@ -645,13 +645,13 @@ class Web{
         cr.msg_loading();
         
         if (typeof taixiu === 'undefined') {
-            var script = document.createElement('script');
+            var script_tx = document.createElement('script');
             var timestamp = new Date().getTime();
-            script.src = "js/taixiumd5.js?v="+timestamp;
-            script.onload = function() {
+            script_tx.src = "js/taixiumd5.js?v="+timestamp;
+            script_tx.onload = function() {
                 taixiu.show();
             };
-            document.head.appendChild(script);
+            document.head.appendChild(script_tx);
             
         } else {
             taixiu.show();
