@@ -488,7 +488,11 @@ class Web{
                         w.show_home();
                         w.update_info_user_login();
                         cr.msg("Đăng nhập thành công!","Đăng nhập","success");
-                        w.show_msg_welcome();
+                        setTimeout(() => {
+                            Swal.close();
+                            w.show_msg_welcome();
+                        }, 2000);
+                        
                     }else{
                         cr.msg("Vui lòng kiểm tra lại thông tin đăng nhập!","Đăng nhập không thành công!","warning");
                     }
