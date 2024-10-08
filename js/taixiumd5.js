@@ -463,37 +463,62 @@ class TaiXiu_MD5{
     }
 
     show_chat(){
-
-        function item_chat(username,msg){
-            var html='<div class="chat_item"><b class="username">'+username+':</b> <div class="text-white msg">'+msg+'</div></div>';
-            return html;
-        }
-
+        
         if(taixiu.box_chat!=null) $(taixiu.box_chat).remove();
         var box_chat='';
         box_chat+='<div id="tx_chat">';
         box_chat+='<div onclick="taixiu.close_chat()" class="btn_close"></div>';
         box_chat+='<div id="tx_chat_all_item"></div>';
         box_chat+='<input type="text" value="" placeholder="Nhập nội dung trò chuyện vào đây..." id="tx_inp_chat"/>';
+        box_chat+='<img id="btn_send" onclick="taixiu.send_chat()" src="images/btn_send.png">';
         box_chat+='</div>';
         taixiu.box_chat=$(box_chat);
 
         $(taixiu.box_chat).find('#tx_inp_chat').on('keypress', function(e) {
             if (e.which === 13) {
                 e.preventDefault();
-                var message = $(this).val();
-                if (message.trim() !== "") {
-                    if(w.user_login!=null){
-                        $("#tx_chat_all_item").append(item_chat(w.user_login.username,message));
-                    }else{
-                        $("#tx_chat_all_item").append(item_chat("Ẩn danh",message));
-                    }
-                    $(this).val('');
-                }
+                taixiu.send_chat();
             }
         });
         $("body").append(taixiu.box_chat);
-        setTimeout(()=>{$("#tx_chat").draggable(); },300)
+        $("#tx_chat_all_item").html('<div class="w-100 text-white text-center"><i class="fas fa-spinner"></i> Loading...</div>');
+        setTimeout(()=>{
+            $("#tx_chat").draggable();
+            cr_realtime.list("chat",chats=>{
+                $("#tx_chat_all_item").html("");
+                $.each(chats,function(index,c){
+                    $("#tx_chat_all_item").append(taixiu.item_chat(c.username,c.msg));
+                });
+            });
+        },300);
+    }
+
+    item_chat(username,msg){
+        var html='<div class="chat_item"><b class="username">'+username+':</b> <div class="text-white msg">'+msg+'</div></div>';
+        return html;
+    }
+
+    send_chat(){
+        var u_username='';
+        var tx_inp_chat=$("#tx_inp_chat");
+        var message = $(tx_inp_chat).val();
+        if (message.trim() !== "") {
+            if(w.user_login!=null)
+                u_username=w.user_login.username;
+            else
+                u_username='Ẩn danh';
+
+            $(tx_inp_chat).val('');
+            
+            var obj_chat={};
+            obj_chat["username"]=u_username;
+            obj_chat["date"]=cr.getDateCur();
+            obj_chat["msg"]=message;
+            obj_chat["id"]="c"+cr.create_id(10);
+            cr_realtime.add("chat",obj_chat.id,obj_chat,()=>{
+                $('#tx_chat_all_item').scrollTop($('#tx_chat_all_item')[0].scrollHeight);
+            });
+        }
     }
 
     close_chat(){

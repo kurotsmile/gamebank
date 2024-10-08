@@ -1,7 +1,7 @@
 
 :root {
   --main-color: #ff55a5;
-  --main-loading: url('../images/loading.png');
+  --main-loading: url('../images/loading.png?v=1');
 }
 
 
@@ -3896,7 +3896,7 @@ button:disabled {
 }
 
 #tx_chat{
-  position: absolute;
+  position: fixed;
   bottom: 10px;
   right: 10px;
   width: 380px;
@@ -3956,6 +3956,19 @@ button:disabled {
   color: white;
   margin-left: 27px;
   background-color: transparent;
+}
+
+#tx_chat #btn_send{
+  position: relative;
+  bottom: 38px;
+  left: 296px;
+  width: 65px;
+  height: 33px;
+  cursor: pointer;
+}
+
+#tx_chat #btn_send:hover{
+  content: url('../images/btn_send_hover.png');
 }
 
 /* Extra small devices (phones, 0px and up) */
