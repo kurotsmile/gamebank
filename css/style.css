@@ -1,7 +1,6 @@
 
 :root {
   --main-color: #ff55a5;
-  --main-loading: url("css/loading.svg")
 }
 
 
@@ -3920,6 +3919,42 @@ button:disabled {
 
 #tx_chat .btn_close:hover{
   background-image: url(../images/chat_btn_close.png);
+}
+
+#tx_chat #tx_chat_all_item{
+  width: 348px;
+  height: 335px;
+  background-color: #8b592759;
+  margin-left: 15px;
+  margin-top: 69px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+#tx_chat_all_item .chat_item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+#tx_chat_all_item .chat_item .username{
+  color: yellow;
+}
+
+#tx_chat #tx_inp_chat{
+  width: 335px;
+  height: 45px;
+  margin-top: 14px;
+  border: none;
+  color: white;
+  margin-left: 27px;
+  background-color: transparent;
 }
 
 /* Extra small devices (phones, 0px and up) */
