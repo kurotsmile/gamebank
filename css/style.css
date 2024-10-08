@@ -1,6 +1,7 @@
 
 :root {
   --main-color: #ff55a5;
+  --main-loading: url('../images/loading.png');
 }
 
 
@@ -3922,10 +3923,10 @@ button:disabled {
 }
 
 #tx_chat #tx_chat_all_item{
-  width: 348px;
-  height: 335px;
+  width: 346px;
+  height: 332px;
   background-color: #8b592759;
-  margin-left: 15px;
+  margin-left: 20px;
   margin-top: 69px;
   display: flex;
   flex-direction: column;
@@ -3950,7 +3951,7 @@ button:disabled {
 #tx_chat #tx_inp_chat{
   width: 335px;
   height: 45px;
-  margin-top: 14px;
+  margin-top: 17px;
   border: none;
   color: white;
   margin-left: 27px;
