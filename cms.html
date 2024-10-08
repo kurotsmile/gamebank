@@ -182,6 +182,22 @@
             revenue_and_profit.js="doangthu";
             cms.add(revenue_and_profit);
 
+            var chat_game=new Post();
+            chat_game.id_collection = "chat";
+            chat_game.icon='<i class="fas fa-comments"></i>';
+            chat_game.label = "Chat Game";
+            chat_game.data_form_add.fields.push(cms.field("id", "ID định danh"));
+            chat_game.data_form_add.fields.push(cms.field("username", "khách hàng", "collection",
+                {
+                    "id_collection":"member",
+                    "field_view":["username","bank_account_name"],
+                    "field_select":["username"]
+                },true,'Nhập hoặc chọn danh sách <b>username</b> của khách hàng ở nút <b>select</b>'));
+            chat_game.data_form_add.fields.push(cms.field("msg", "Nội dung"));
+            chat_game.data_form_add.fields.push(cms.field("date", "Thời gian", "datetime-local"));
+            chat_game.type_db="realtime";
+            cms.add(chat_game);
+
             var daily_missions = new Post();
             daily_missions.id_collection = "daily_missions";
             daily_missions.label = "Nhiệm vụ hàng ngày";

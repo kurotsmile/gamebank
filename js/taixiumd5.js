@@ -515,6 +515,7 @@ class TaiXiu_MD5{
             obj_chat["date"]=cr.getDateCur();
             obj_chat["msg"]=message;
             obj_chat["id"]="c"+cr.create_id(10);
+            obj_chat["id_doc"]=obj_chat.id;
             cr_realtime.add("chat",obj_chat.id,obj_chat,()=>{
                 $('#tx_chat_all_item').scrollTop($('#tx_chat_all_item')[0].scrollHeight);
             });
