@@ -3526,7 +3526,7 @@ button:disabled {
 }
 
 #tx #game_tx{
-  background-image: url('../images/tx_bk.png?v=12');
+  background-image: url('../images/tx_bk.png?v=13');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 794px;
@@ -3630,6 +3630,27 @@ button:disabled {
 
 #game_tx .btn .chat:hover{
   content: url('../images/btn_chat_hover.png');
+}
+
+#game_tx .btn .info{
+  width: 66px;
+  position: relative;
+  top: -59px;
+  left: 59px;
+}
+
+#game_tx .btn .info:hover{
+  content: url('../images/btn_info_hover.png');
+}
+
+#game_tx .btn .chart{
+  position: relative;
+  top: -52px;
+  left: -14px;
+}
+
+#game_tx .btn .chart:hover{
+  content: url('../images/btn_chart_hover.png');
 }
 
 .sprite_dice{

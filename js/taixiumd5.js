@@ -21,7 +21,7 @@ class TaiXiu_MD5{
 
     money_pending_bet=0;
     money_bet=0;
-    length_history_bet=16;
+    length_history_bet=17;
 
     timeLeft_length=10;
     timeLeft =0;
@@ -80,7 +80,10 @@ class TaiXiu_MD5{
     laodAllEmp(){
         var html_game='<div id="tx">';
         html_game+='<div id="game_tx">';
-            html_game+='<div class="btn"></div>';
+            html_game+='<div class="btn">';
+                html_game+='<img onclick="taixiu.info();" class="info" src="images/btn_info.png"/>';
+                html_game+='<img onclick="taixiu.chart();" class="chart" src="images/btn_chart.png"/>';
+            html_game+='</div>';
             html_game+='<div class="info">';
                 html_game+='<div id="total_user_tai" class="txt_user tai">0</div>';
                 html_game+='<img id="txt_tai" class="txt tai" src="images/txt_tai.png"/>';
@@ -524,6 +527,10 @@ class TaiXiu_MD5{
 
     close_chat(){
         if(taixiu.box_chat!=null) $(taixiu.box_chat).remove();
+    }
+
+    info(){
+        alert("Infor");
     }
 }
 
