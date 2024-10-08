@@ -222,28 +222,61 @@ cms.update_for_data_kh=(data)=>{
     });
 }
 
-cms.taixiu=()=>{
-    var currentTime = new Date();
+cms.compareWithCurrentTime=(dateString)=>{
+    var date = new Date(dateString);
+
+    var hoursFromString = date.getHours();
+    var minutesFromString = date.getMinutes();
+
+    var currentDate = new Date();
+    var currentHours = currentDate.getHours();
+    var currentMinutes = currentDate.getMinutes();
+
+    if (hoursFromString > currentHours || (hoursFromString === currentHours && minutesFromString > currentMinutes)) {
+       return '<i class="fas fa-hourglass-start"></i> <small class="bg-warning p-1 rounded">Xắp diễn ra</small>';
+    } else if (hoursFromString < currentHours || (hoursFromString === currentHours && minutesFromString < currentMinutes)) {
+       return '<i class="fas fa-check-circle"></i> <small class="bg-success text-white p-1 rounded">Đã diễn ra</small>';
+    } else {
+       return '<i class="fas fa-running live"></i> <small class="bg-info p-1 rounded">Đang diễn ra</small>';
+    }
+}
+
+cms.taixiu=(h=null)=>{
+    var hours=null;
+    if(h==null) 
+        hours=new Date().getHours().toString();
+    else
+        hours=h.toString();
     var html_page='<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom mt-5">';
     html_page+='<h1 class="h2">Các phiên cược Tài Xỉu MD5</h1>';
         html_page+='<div class="btn-toolbar mb-2 mb-md-0">';
         html_page+='<div class="btn-group mr-2">';
-            html_page+='<button onclick="return false;" class="btn btn-sm btn-outline-secondary"><i class="fas fa-dice-d6"></i> Tạo mới (nếu bản trống)</button>';
-            //html_page+='<button onclick="cms.lichsuthangthua(\'2\');return false;" class="btn '+(status_view=="2"? "active":"")+' btn-sm btn-outline-secondary"><i class="fas fa-skull"></i> Lịch sử thua</button>';
+            html_page+='<button id="btn_createBettingSessions" onclick="cms.createBettingSessions('+h+');" class="btn btn-sm btn-outline-secondary"><i class="fas fa-dice-d6"></i> Tạo mới các phiên</button>';
         html_page+='</div>';
+    html_page+='</div>';
+    html_page+='</div>';
+
+    html_page+='<div class="row">';
+    html_page+='<div class="col-12">';
+    for(var i=0;i<24;i++){
+        if(i.toString()==hours){
+            html_page+='<button onclick="cms.taixiu('+i+')" class="btn btn-sm btn-dark m-1">Hours '+i+'</button>';
+        }
+        else{
+            html_page+='<button onclick="cms.taixiu('+i+')" class="btn btn-sm btn-light m-1">Hours '+i+'</button>';
+        }
+            
+    }
     html_page+='</div>';
     html_page+='</div>';
 
     html_page+='<div class="table-responsive">';
     html_page+='<table class="table table-linght table-sm table-striped table-hover">';
-
     html_page+='<thead>';
     html_page+='<tr>';
-        html_page+='<th scope="col">Mã phiên</th>';
-        html_page+='<th scope="col">Số người chơi</th>'
-        html_page+='<th scope="col">Số người cược tài</th>';
-        html_page+='<th scope="col">Số người cược Xỉu</th>';
+        html_page+='<th scope="col">ID phiên</th>';
         html_page+='<th scope="col">Trạng thái</th>';
+        html_page+='<th scope="col">Kết quả</th>';
         html_page+='<th scope="col">Thời gian bắt đầu</th>';
         html_page+='<th scope="col">Thời gian kết thúc</th>';
     html_page+='</tr>';
@@ -254,50 +287,97 @@ cms.taixiu=()=>{
     html_page+='</div>';
     $("main").html(html_page);
 
-    function item_taixiu(data){
-        var html='';
-        html+='<tr>';
-        html+='<td>'+data.id+'</td>';
-        html+='<td>'+data.count_user+'</td>';
-        html+='<td>'+data.count_tai+'</td>';
-        html+='<td>'+data.count_xiu+'</td>';
+    function load_list_by_hour(h){
+        $("#all_item_taixiu").empty();
 
-
-              var date1 = new Date(currentTime);
-              var date2 = new Date(data.time_start);
-  
-              // Chuyển đổi sang giờ Việt Nam (UTC+7)
-              var vietnamOffset = 7 * 60; // UTC+7 bằng 7 giờ x 60 phút
-              var vietnamDate1 = new Date(date1.getTime() + vietnamOffset * 60 * 1000);
-              var vietnamDate2 = new Date(date2.getTime() + vietnamOffset * 60 * 1000);
-
-        if (vietnamDate1 > vietnamDate2) {
-            html+='<td>Hoàn tất</td>';
-        } else if (vietnamDate1 < vietnamDate2) {
-            html+='<td>Xắp diễn ra</td>';
-        }else{
-            html+='<td>Đang diễn ra</td>';
-        }
-        html+='<td>'+data.time_start+'</td>';
-        html+='<td>'+data.time_end+'</td>';
-        html+='</tr>';
-        return $(html);
+        var q=new Firestore_Query("tx");
+        q.add_where("hour",h);
+        q.set_limit(100);
+        q.get_data(datas=>{
+            if(datas.length>0)
+                $("#btn_createBettingSessions").hide();
+            else
+                $("#btn_createBettingSessions").show();
+            datas.sort((a, b) => new Date(a.time_start) - new Date(b.time_start));
+            $.each(datas,function(index,t){
+                $("#all_item_taixiu").append(cms.item_taixiu(t));
+            });
+    
+            cms.thread_check_timer=setInterval(()=>{
+                if($("#all_item_taixiu").length==0) clearInterval(cms.thread_check_timer);
+                $("#all_item_taixiu tr").each(function(index,emp){
+                    var timer_start=$(emp).data("timer-start");
+                    $(emp).find(".col-status").html(cms.compareWithCurrentTime(timer_start));
+                });
+            },9000);
+        });
     }
 
-    function createBettingSessions() {
-        var startDate = new Date();
-        var sessionDuration = 3 * 60 * 1000;
-        var numSessions = 480;
+   load_list_by_hour(hours);
+    //createBettingSessions(1);
+}
 
-        for (var i = 0; i < numSessions; i++) {
-            var startTime = new Date(startDate.getTime() + i * sessionDuration);
-            var endTime = new Date(startTime.getTime() + sessionDuration);
-            var sessionId = 'session' + (i + 1);
+cms.item_taixiu=(data)=>{
+    var dice_font=['',
+        '<i class="fas fa-dice-one"></i>',
+        '<i class="fas fa-dice-two"></i>',
+        '<i class="fas fa-dice-three"></i>',
+        '<i class="fas fa-dice-four"></i>',
+        '<i class="fas fa-dice-five"></i>',
+        '<i class="fas fa-dice-six"></i>'
+    ];
 
-            var tx={id:sessionId,count_user:0,count_tai:0,count_xiu:0,status:"waiting",time_start:startTime.toISOString(),time_end:endTime.toISOString()};
-            $("#all_item_taixiu").append(item_taixiu(tx));
-        }
+    function getTimeFromDate(dateString) {
+        var date = new Date(dateString);
+        var hours = date.getHours().toString().padStart(2, '0');
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+        return hours + ":" + minutes;
     }
+    var s_return=dice_font[parseInt(data.a)]+' '+dice_font[parseInt(data.b)]+' '+dice_font[parseInt(data.c)];
+    var total_dice=parseInt(data.a)+parseInt(data.b)+parseInt(data.c);
+    if(total_dice<=10){
+        s_return+=" - <b>Xỉu</b>";
+    }else{
+        s_return+=" - <b>Tài</b>";
+    }
+    
+    var html='';
+    html+='<tr data-timer-start="'+data.time_start+'">';
+    html+='<td>'+data.id+'</td>';
+    html+='<td class="col-status">'+cms.compareWithCurrentTime(data.time_start)+'</td>';
+    html+='<td>'+s_return+'</td>';
+    html+='<td>'+getTimeFromDate(data.time_start)+'</td>';
+    html+='<td>'+getTimeFromDate(data.time_end)+'</td>';
+    html+='</tr>';
+    return $(html);
+}
 
-    createBettingSessions();
+cms.createBettingSessions=(hours,min=1)=>{
+    var startDate = new Date();
+    startDate.setHours(hours, 0, 0, 0);
+    var sessionDuration = min * 60 * 1000; 
+    var numSessions = 60;
+
+    for (var i = 0; i < numSessions; i++) {
+        var startTime = new Date(startDate.getTime() + i * sessionDuration);
+        var endTime = new Date(startTime.getTime() + sessionDuration);
+        var sessionId = 'session' + cr.create_id(10); 
+
+        var randomNumber_a = Math.floor(Math.random() * 6) + 1;
+        var randomNumber_b = Math.floor(Math.random() * 6) + 1;
+        var randomNumber_c = Math.floor(Math.random() * 6) + 1;
+
+        var tx = {
+            id: sessionId,
+            a: randomNumber_a,
+            b: randomNumber_b,
+            c: randomNumber_c,
+            time_start: startTime.toString(),
+            time_end: endTime.toString(),
+            hour: hours.toString()
+        };
+
+        $("#all_item_taixiu").append(cms.item_taixiu(tx));
+        cr_firestore.set(tx, "tx", tx.id); 
+    }
 }

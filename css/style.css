@@ -3560,12 +3560,6 @@ button:disabled {
   height: 300px;
 }
 
-#game_tx #dia #dice img{
-  width: 73%;
-  margin-top: 46px;
-  position: absolute;
-}
-
 #game_tx #dia #effect_c{
   background-image: url('../images/effect_c.png');
   background-repeat: no-repeat;
@@ -3586,7 +3580,31 @@ button:disabled {
 #game_tx .info .txt{
   width: 89px;
   position: relative;
-  top: 20px;
+  top: 10px;
+}
+
+#game_tx .info .txt.tai{
+  right:25px;
+}
+
+#game_tx .info .txt.xiu{
+  left: 25px;
+}
+
+#game_tx .info .txt_user{
+  color: white;
+  position: relative;
+  font-size: 12px;
+}
+
+#game_tx .info .txt_user.tai{
+  top: 23px;
+  right: -61px;
+}
+
+#game_tx .info .txt_user.xiu{
+  left: -59px;
+  top: 23px;
 }
 
 #game_tx .btn{
@@ -3594,14 +3612,24 @@ button:disabled {
   text-align: center;
 }
 
-#game_tx .btn .close{
+#game_tx .btn .close {
   position: relative;
-  top: -105px;
-  left: -58px;
+  top: -71px;
+  left: -41px;
 }
 
 #game_tx .btn .close:hover {
   content: url('../images/btn_close_hover.png');
+}
+
+#game_tx .btn .chat{
+  position: relative;
+  top: 60px;
+  right: -31px;
+}
+
+#game_tx .btn .chat:hover{
+  content: url('../images/btn_chat_hover.png');
 }
 
 .sprite_dice{
@@ -3610,23 +3638,22 @@ button:disabled {
   background-image: url(../images/dice.png);
   background-position: 0px 0px;
   background-size: 301px 51px;
-  display: none;
 }
 
 .sprite_dice.p1{
-  top: 38px;
+  top: 96px;
   position: relative;
-  left: 20px;
+  left: 31px;
 }
 
 .sprite_dice.p2{
   top: -2px;
   position: relative;
-  left: -3px;
+  left: -1px;
 }
 
 .sprite_dice.p3{
-  top: 34px;
+  top: 0px;
   position: relative;
   left: -27px;
 }
@@ -3683,7 +3710,7 @@ button:disabled {
   width: 130px;
   height: 49px;
   position: relative;
-  top: 55px;
+  top: 48px;
 }
 
 .btn-bet:hover{
@@ -3694,14 +3721,19 @@ button:disabled {
   background-image: url('../images/btn_bet_2.png');
 }
 
+.btn-bet.tai{
+  right: 16px;
+}
+
+.btn-bet.xiu{
+  left: 36px;
+}
 
 #dia #dice_history{
-  width: 520px;
-  position: relative;
   height: 22px;
-  bottom: -158px;
   z-index: 60000;
   display: flex;
+  position: absolute;
 }
 
 #dia #dice_history .item{
@@ -3718,22 +3750,45 @@ button:disabled {
 }
 
 #dia #dice_md5{
-  position: relative;
+  position: absolute;
   color: #e3db76;
-  bottom: -176px;
+  top: 637px;
   font-size: 14px;
-  text-shadow: 2px 2px 0px #992604;;
+  text-shadow: 2px 2px 0px #992604;
+}
+
+#dice #guess{
+  background-image: url(../images/dia.png);
+  width: 210px;
+  height: 210px;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 70px;
+  z-index: 200000;
 }
 
 #dice_panel_bet{
-    color: white;
-    background-color: #00000042;
-    width: 500px;
-    position: absolute;
-    top: 626px;
-    display: none;
+  color: white;
+  background-color: #00000042;
+  width: 547px;
+  position: absolute;
+  top: 548px;
+  display: none;
+  z-index: 500;
 }
 
+#dia #countdown{
+  font-size: 45px;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 63px;
+  z-index: 500;
+}
 #dice_panel_bet .btn-bet {
 	box-shadow:inset 0px 1px 0px 0px #fce2c1;
 	background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
@@ -3754,6 +3809,7 @@ button:disabled {
   top: 0px;
   height: auto;
 }
+
 #dice_panel_bet .btn-bet:hover {
 	background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
 	background-color:#fb9e25;
@@ -3818,17 +3874,52 @@ button:disabled {
 
 .txt_money_bet{
   position: relative;
-  top: 55px;
+  top: 48px;
   color: #f9ff00;
   text-shadow: 3px 3px 3px black;
 }
 
 .txt_money_bet_total{
   position: relative;
-  top: 42px;
+  top: 34px;
   color: white;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 17px;
+}
+
+.txt_money_bet_total.tai{
+  right: 16px;
+}
+
+.txt_money_bet_total.xiu{
+  left: 28px;
+}
+
+#tx_chat{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 380px;
+  height: 480px;
+  z-index: 2000;
+  background-image: url('../images/chat.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+#tx_chat .btn_close{
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 80px;
+  height: 51px;
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  cursor: pointer;
+}
+
+#tx_chat .btn_close:hover{
+  background-image: url(../images/chat_btn_close.png);
 }
 
 /* Extra small devices (phones, 0px and up) */
