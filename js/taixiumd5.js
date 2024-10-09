@@ -31,6 +31,7 @@ class TaiXiu_MD5{
     data_session_cur=null;
 
     box_chat=null;
+    box_msg=null;
 
     show(){
         var d_cur=new Date();
@@ -530,7 +531,36 @@ class TaiXiu_MD5{
     }
 
     info(){
-        alert("Infor");
+        this.msg("Tài xỉu md5","Thông tin");
+    }
+
+    msg(msg="",title="info"){
+        if(taixiu.box_msg!=null) $(taixiu.box_msg).remove();
+        var html='';
+        html+='<div id="tx_msg">';
+            html+='<div class="btn_close"></div>';
+            html+='<div class="title">'+title+'</div>';
+            html+='<div class="msg_body">';
+                html+='<div class="txt">'+msg+'</div>';
+            html+='</div>';
+        html+='</div>';
+        taixiu.box_msg=$(html);
+        $(taixiu.box_msg).find(".btn_close").click(()=>{
+            taixiu.close_msg();
+        });
+        $("body").append(taixiu.box_msg);
+
+        setTimeout(()=>{
+            $("#tx_msg").draggable();
+        },300);
+    }
+
+    close_msg(){
+        if(taixiu.box_msg!=null) $(taixiu.box_msg).remove();
+    }
+
+    chart(){
+        this.msg("Tài xỉu md5","Biểu đồ");
     }
 }
 
