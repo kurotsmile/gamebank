@@ -3,6 +3,7 @@ class TaiXiu_MD5{
     is_play=false;
     is_tai_bet=false;
     is_test_bet=true;
+    is_hand=true;
 
     thread_game_play=null;
     thread_game_countdown=null;
@@ -144,7 +145,7 @@ class TaiXiu_MD5{
                 html_game+='<img onclick="taixiu.close();" class="close" src="images/btn_close.png"/>';
                 html_game+='<img onclick="taixiu.rank();" class="rank" src="images/btn_rank.png"/>';
                 html_game+='<img onclick="taixiu.show_chat();" class="chat" src="images/btn_chat.png"/>';
-                html_game+='<img onclick="taixiu.show_chat();" class="hand" src="images/btn_hand_used.png"/>';
+                html_game+='<img id="btn_dice_hand" onclick="taixiu.hand();" class="hand" src="images/btn_hand_used.png"/>';
             html_game+='</div>';
         html_game+='</div>';
         html_game+='</div>';
@@ -594,7 +595,50 @@ class TaiXiu_MD5{
     }
 
     chart(){
-        this.msg("","Biểu đồ");
+        var html_c='';
+        html_c+='<canvas id="myChart" style="width:100%;height:250px"></canvas>';
+        this.msg(html_c,"Biểu đồ");
+        var ctx = $("#myChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'Sample Data',
+                    data: [65, 59, 80, 81, 56],
+                    borderColor: 'yellow',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    pointBackgroundColor: ['white', 'white', 'black', 'white', 'black'],
+                    pointBorderColor: ['yellow', 'yellow', 'yellow', 'yellow', 'yellow'],
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'yellow',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {color: '#FFFFFF'},
+                        ticks: {color: '#FFFFFF'}
+                    },
+                    x:{
+                        grid: {color: '#FFFFFF'},
+                        ticks: {color: '#FFFFFF'}
+                    }
+                }
+            }
+        });
     }
 
     question(){
@@ -644,12 +688,27 @@ class TaiXiu_MD5{
                var speed = 1500 + Math.random() * 1500;
                $goldenDot.animate({
                    top: startY - 300 + Math.random() * 100 + 'px', 
-                   left: startX + Math.random() * 500 - 250 + 'px', 
+                   left: startX + Math.random() * 100 - 10 + 'px', 
                    opacity: 0  // Mờ dần
                }, speed, function() {
                    $(this).remove(); 
                });
            }
+    }
+
+    hand(){
+        if(this.is_hand)
+            this.is_hand=false;
+        else
+            this.is_hand=true;
+        this.check_hand();
+    }
+
+    check_hand(){
+        if(this.is_hand)
+            $("#btn_dice_hand").attr("src","images/btn_hand_used.png");
+        else
+            $("#btn_dice_hand").attr("src","images/btn_hand.png");
     }
 }
 
