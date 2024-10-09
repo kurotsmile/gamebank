@@ -27,7 +27,6 @@ class TaiXiu_MD5{
 
     timeLeft_length=10;
     timeLeft =0;
-    dice_total=0;
 
     id_session=null;
     data_session_cur=null;
@@ -35,13 +34,24 @@ class TaiXiu_MD5{
     box_chat=null;
     box_msg=null;
 
+    obj_h_temp=null;
+
     show(){
         var d_cur=new Date();
         this.id_session="tx"+d_cur.getDay()+""+d_cur.getMonth()+d_cur.getFullYear();
         taixiu.array_history=[];
         for(var i=0;i<taixiu.length_history_bet;i++){
-            var randomValue = Math.floor(Math.random() * 2);
-            taixiu.array_history.push(randomValue);
+            var dice_random=taixiu.randomDice();
+            var obj_h={};
+            obj_h["a"]=dice_random.a;
+            obj_h["b"]=dice_random.b;
+            obj_h["c"]=dice_random.c;
+            obj_h["total"]=dice_random.a+dice_random.b+dice_random.c;
+            if(obj_h.total>=10)
+                obj_h["ketqua"]=0;
+            else
+                obj_h["ketqua"]=1;
+            taixiu.array_history.push(obj_h);
         }
 
         taixiu.clear_thread();
@@ -244,28 +254,27 @@ class TaiXiu_MD5{
         taixiu.money_bet=0;
         $("#roll_dice").remove();
         
-        var dice_a=0;
-        var dice_b=0;
-        var dice_c=0;
+        taixiu.obj_h_temp={};
 
         if(data==null){
-            dice_a= Math.floor(Math.random() * 6) + 1;
-            dice_b= Math.floor(Math.random() * 6) + 1;
-            dice_c= Math.floor(Math.random() * 6) + 1;
+            var dice_random=taixiu.randomDice();
+            taixiu.obj_h_temp["a"]=dice_random.a;
+            taixiu.obj_h_temp["b"]=dice_random.b;
+            taixiu.obj_h_temp["c"]=dice_random.c;
         }else{
-            dice_a=parseInt(data.a);
-            dice_b=parseInt(data.b);
-            dice_c=parseInt(data.c);
+            taixiu.obj_h_temp["a"]=parseInt(data.a);
+            taixiu.obj_h_temp["b"]=parseInt(data.b);
+            taixiu.obj_h_temp["c"]=parseInt(data.c);
         }
 
-        taixiu.dice_total=dice_a+dice_b+dice_c;
+        taixiu.obj_h_temp["total"]=taixiu.obj_h_temp["a"]+taixiu.obj_h_temp["b"]+taixiu.obj_h_temp["c"];
         $("#dice_a").attr("class","sprite_dice p1");
         $("#dice_b").attr("class","sprite_dice p2");
         $("#dice_c").attr("class","sprite_dice p3");
 
-        $("#dice_a").addClass("d"+dice_a);
-        $("#dice_b").addClass("d"+dice_b);
-        $("#dice_c").addClass("d"+dice_c);
+        $("#dice_a").addClass("d"+taixiu.obj_h_temp["a"]);
+        $("#dice_b").addClass("d"+taixiu.obj_h_temp["b"]);
+        $("#dice_c").addClass("d"+taixiu.obj_h_temp["c"]);
 
         $("#dice_md5").html(CryptoJS.MD5(cr.create_id()).toString());
 
@@ -280,15 +289,16 @@ class TaiXiu_MD5{
     }
 
     mo_dia_xong(){
-        if(taixiu.dice_total<=10){
+        if(taixiu.obj_h_temp["total"]<=10){
             $("#txt_xiu").addClass("zoom");
             $("#txt_tai").removeClass("zoom");
-            taixiu.add_dice_history(0);
+            taixiu.obj_h_temp["ketqua"]=0;
         }else{
             $("#txt_tai").addClass("zoom");
             $("#txt_xiu").removeClass("zoom");
-            taixiu.add_dice_history(1);
+            taixiu.obj_h_temp["ketqua"]=1;
         }
+        taixiu.add_dice_history(taixiu.obj_h_temp);
         taixiu.is_play=false;
     }
 
@@ -309,8 +319,8 @@ class TaiXiu_MD5{
         if(taixiu.thread_game_return!=null) clearTimeout(taixiu.thread_game_return);
     }
 
-    add_dice_history(newValue) {
-        taixiu.array_history.push(newValue);
+    add_dice_history(obj_h) {
+        taixiu.array_history.push(obj_h);
         if (taixiu.array_history.length > taixiu.length_history_bet) taixiu.array_history.shift();
         taixiu.update_dice_history();
     }
@@ -318,7 +328,7 @@ class TaiXiu_MD5{
     update_dice_history(){
         $("#dice_history").empty();
         $.each(taixiu.array_history,function(index,d){
-            if(d==0)
+            if(d.ketqua==0)
                 $("#dice_history").append('<div class="item xiu"></div>');
             else
                 $("#dice_history").append('<div class="item tai"></div>');
@@ -599,42 +609,45 @@ class TaiXiu_MD5{
         html_c+='<canvas id="myChart" style="width:100%;height:250px"></canvas>';
         this.msg(html_c,"Biểu đồ");
         var ctx = $("#myChart");
-        var myLineChart = new Chart(ctx, {
+        var obj_soicau={
+            label: 'Soi cầu',
+            data: [],
+            borderColor: 'yellow',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            pointBackgroundColor: [],
+            pointBorderColor: [],
+            pointRadius: 10,
+            pointHoverRadius: 7
+        };
+        var labels_all_item=[];
+
+        $.each(this.array_history,function(index,h){
+            obj_soicau.data.push(h.total);
+            if(h.ketqua==0)
+                obj_soicau.pointBackgroundColor.push("white");
+            else
+                obj_soicau.pointBackgroundColor.push("black");
+            obj_soicau.pointBorderColor.push("yellow");
+            labels_all_item.push("#Phiên "+index);
+        });
+        new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May'],
-                datasets: [{
-                    label: 'Sample Data',
-                    data: [65, 59, 80, 81, 56],
-                    borderColor: 'yellow',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    pointBackgroundColor: ['white', 'white', 'black', 'white', 'black'],
-                    pointBorderColor: ['yellow', 'yellow', 'yellow', 'yellow', 'yellow'],
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                }]
+                labels: labels_all_item,
+                datasets: [obj_soicau]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'yellow',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    }
-                },
+                plugins: {legend: {display: false}},
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: {color: '#FFFFFF'},
-                        ticks: {color: '#FFFFFF'}
+                        grid: {color: 'goldenrod'},
+                        ticks: {color: 'goldenrod'}
                     },
                     x:{
-                        grid: {color: '#FFFFFF'},
-                        ticks: {color: '#FFFFFF'}
+                        grid: {color: 'goldenrod'},
+                        ticks: {color: 'goldenrod'}
                     }
                 }
             }
@@ -709,6 +722,14 @@ class TaiXiu_MD5{
             $("#btn_dice_hand").attr("src","images/btn_hand_used.png");
         else
             $("#btn_dice_hand").attr("src","images/btn_hand.png");
+    }
+
+    randomDice(){
+        var obj_dice={};
+        obj_dice["a"]= Math.floor(Math.random() * 6) + 1;
+        obj_dice["b"]= Math.floor(Math.random() * 6) + 1;
+        obj_dice["c"]= Math.floor(Math.random() * 6) + 1;
+        return obj_dice;
     }
 }
 

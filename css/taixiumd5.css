@@ -124,6 +124,11 @@
     width: 200px;
     text-align: center;
   }
+
+  #game_tx .btn img{
+    width: 68px;
+    height: 68px;
+  }
   
   #game_tx .btn .close {
     position: relative;
@@ -137,7 +142,7 @@
 
   #game_tx .btn .rank {
     position: relative;
-    top: 9px;
+    top: 6px;
     left: 26px;
   }
   
@@ -147,7 +152,7 @@
   
   #game_tx .btn .chat{
     position: relative;
-    top: 60px;
+    top: 57px;
     right: -31px;
   }
   
@@ -188,7 +193,7 @@
 
   #game_tx .btn .history{
     position: relative;
-    top: 65px;
+    top: 59px;
     left: 16px;
   }
 
@@ -199,7 +204,7 @@
   #game_tx .btn .hand{
     width: 66px;
     position: relative;
-    top: 72px;
+    top: 67px;
     left: -29px;
   }
   
