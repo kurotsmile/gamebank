@@ -222,9 +222,26 @@ cms.update_for_data_kh=(data)=>{
     });
 }
 
+cms.getStatusCurrentTime=(dateString)=>{
+    var date = new Date(dateString);
+    var hoursFromString = date.getHours();
+    var minutesFromString = date.getMinutes();
+
+    var currentDate = new Date();
+    var currentHours = currentDate.getHours();
+    var currentMinutes = currentDate.getMinutes();
+
+    if (hoursFromString > currentHours || (hoursFromString === currentHours && minutesFromString > currentMinutes)) {
+       return 0;
+    } else if (hoursFromString < currentHours || (hoursFromString === currentHours && minutesFromString < currentMinutes)) {
+       return 2;
+    } else {
+       return 1;
+    }
+}
+
 cms.compareWithCurrentTime=(dateString)=>{
     var date = new Date(dateString);
-
     var hoursFromString = date.getHours();
     var minutesFromString = date.getMinutes();
 
@@ -274,6 +291,7 @@ cms.taixiu=(h=null)=>{
     html_page+='<table class="table table-linght table-sm table-striped table-hover">';
     html_page+='<thead>';
     html_page+='<tr>';
+        html_page+='<th scope="col">Thao tác</th>';
         html_page+='<th scope="col">ID phiên</th>';
         html_page+='<th scope="col">Trạng thái</th>';
         html_page+='<th scope="col">Kết quả</th>';
@@ -303,18 +321,30 @@ cms.taixiu=(h=null)=>{
                 $("#all_item_taixiu").append(cms.item_taixiu(t));
             });
     
+            cms.check_list_attr_item_tx();
             cms.thread_check_timer=setInterval(()=>{
                 if($("#all_item_taixiu").length==0) clearInterval(cms.thread_check_timer);
-                $("#all_item_taixiu tr").each(function(index,emp){
-                    var timer_start=$(emp).data("timer-start");
-                    $(emp).find(".col-status").html(cms.compareWithCurrentTime(timer_start));
-                });
+                cms.check_list_attr_item_tx();
             },9000);
         });
     }
 
    load_list_by_hour(hours);
     //createBettingSessions(1);
+}
+
+cms.check_list_attr_item_tx=()=>{
+    $("#all_item_taixiu tr").each(function(index,emp){
+        var timer_start=$(emp).data("timer-start");
+        $(emp).find(".col-btn").empty();
+        var btn_edit=$('<button class="btn btn-sm btn-light"><i class="fas fa-edit"></i> Chỉnh sửa kết quả</button>');
+        $(btn_edit).click(()=>{
+            alert(timer_start);
+        });
+        $(emp).find(".col-btn").append(btn_edit);
+
+        $(emp).find(".col-status").html(cms.compareWithCurrentTime(timer_start));
+    });
 }
 
 cms.item_taixiu=(data)=>{
@@ -343,6 +373,7 @@ cms.item_taixiu=(data)=>{
     
     var html='';
     html+='<tr data-timer-start="'+data.time_start+'">';
+    html+='<td class="col-btn"></td>';
     html+='<td>'+data.id+'</td>';
     html+='<td class="col-status">'+cms.compareWithCurrentTime(data.time_start)+'</td>';
     html+='<td>'+s_return+'</td>';

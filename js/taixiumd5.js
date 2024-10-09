@@ -71,6 +71,7 @@ class TaiXiu_MD5{
         taixiu.getSession(data=>{
             if(data!=null){
                 taixiu.data_session_cur=data;
+                $("#name_session").html("#"+taixiu.data_session_cur.id.replace('session',''));
                 taixiu.play(taixiu.timeDifferenceInSeconds(data.time_end));
             }else{
                 taixiu.play();    
@@ -164,6 +165,7 @@ class TaiXiu_MD5{
         taixiu.emp_game=$(html_game);
         $("body").append(taixiu.emp_game);
         $("#dice_md5").html(CryptoJS.MD5(cr.create_id()).toString());
+        $("#name_session").html("#"+cr.create_id(10));
         taixiu.update_dice_history();
 
         $('img').on('dragstart', function(e) {
@@ -176,10 +178,10 @@ class TaiXiu_MD5{
 
         $("#effect_c").show();
         $("#countdown").show();
+        $("#countdown").html('<i class="fas fa-spinner fa-spin"></i>');
         $("#guess").hide();
         $(".btn-bet").animate({ opacity: 1 }, 1000);
-        $("#name_session").html("#"+cr.create_id(10));
-   
+  
         if(timer_length==null)
             this.timeLeft=this.timeLeft_length;
         else
@@ -315,6 +317,7 @@ class TaiXiu_MD5{
         $(taixiu.emp_game).remove();
         taixiu.clear_thread();
         if(taixiu.box_chat) $(taixiu.box_chat).remove();
+        if(taixiu.box_msg) $(taixiu.box_msg).remove();
     }
 
     clear_thread(){
@@ -738,6 +741,7 @@ class TaiXiu_MD5{
     }
 
     copy_md5(){
+        cr.copy("#dice_md5",false);
         cr.msg("Đã copy mã MD5 của phiên cược!","Copy","success");
     }
 }
