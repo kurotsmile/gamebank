@@ -8,6 +8,7 @@ class TaiXiu_MD5{
     thread_game_countdown=null;
     thread_game_pending_return=null;
     thread_game_return=null;
+    thread_effect=null;
 
     array_history=[];
 
@@ -51,6 +52,7 @@ class TaiXiu_MD5{
         $("#preloader").show();
         taixiu.laodAllEmp();
         taixiu.load_session();
+        this.thread_effect=setInterval(taixiu.createGoldenDot, 2000);
     }
 
     load_session(){
@@ -290,6 +292,7 @@ class TaiXiu_MD5{
     }
 
     close(){
+        if(this.thread_effect!=null) clearInterval(this.thread_effect);
         taixiu.is_play=false;
         $("#preloader").hide();
         $("#dice_history").html("");
@@ -621,6 +624,32 @@ class TaiXiu_MD5{
 
     rank(){
         this.msg("","Bảng xếp hạng");
+    }
+
+    createGoldenDot(){
+        var l=Math.floor(Math.random() * 10) + 3;
+       
+           for (var i = 0; i < l; i++) {
+               var $goldenDot = $('<div class="golden-dot"></div>');
+               var w=Math.floor(Math.random() * 12) + 3;
+               $('body').append($goldenDot);
+               var startX = $('#dia').offset().left + 110;
+               var startY = $('#dia').offset().top-140;
+               $goldenDot.css({
+                   left: startX + 'px',
+                   top: startY + 'px',
+                   width:w+'px',
+                   height:w+'px'
+               });
+               var speed = 1500 + Math.random() * 1500;
+               $goldenDot.animate({
+                   top: startY - 300 + Math.random() * 100 + 'px', 
+                   left: startX + Math.random() * 500 - 250 + 'px', 
+                   opacity: 0  // Mờ dần
+               }, speed, function() {
+                   $(this).remove(); 
+               });
+           }
     }
 }
 

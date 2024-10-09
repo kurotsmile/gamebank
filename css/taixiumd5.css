@@ -600,6 +600,16 @@
     content: url('../images/btn_send_hover.png');
   }
   
+  .golden-dot {
+    width: 10px;
+    height: 10px;
+    background-color: yellow;
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 5px rgba(255, 223, 0, 0.8);
+    z-index: 1300;
+}
+
   /* Extra small devices (phones, 0px and up) */
   @media (max-width: 575.98px) {
     #tx{transform: scale(65%, 65%);}
