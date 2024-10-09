@@ -64,10 +64,36 @@
     text-align: center;
   }
   
+  #game_tx .info .txt_session{
+    color: black;
+    position: relative;
+    font-size: 11px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    top: -16px;
+    left: -14px;
+    text-shadow: 1px 1px 1px #ebb052;
+    font-weight: bold;
+  }
+
+#game_tx .info .timer_session {
+    position: relative;
+    top: -14px;
+    background-color: black;
+    width: 49px;
+    border-radius: 13px;
+    height: 21px;
+    color: yellow;
+    font-size: 11px;
+    padding-top: 3px;
+    left: 59px;
+    box-shadow: inset 0px 3px 2px darkgoldenrod;
+}
+
   #game_tx .info .txt{
     width: 89px;
     position: relative;
-    top: 10px;
+    top: -5px;
   }
   
   #game_tx .info .txt.tai{
@@ -85,13 +111,13 @@
   }
   
   #game_tx .info .txt_user.tai{
-    top: 23px;
+    top: 12px;
     right: -61px;
   }
   
   #game_tx .info .txt_user.xiu{
     left: -59px;
-    top: 23px;
+    top: 10px;
   }
   
   #game_tx .btn{
@@ -101,12 +127,22 @@
   
   #game_tx .btn .close {
     position: relative;
-    top: -71px;
-    left: -41px;
+    top: 2px;
+    left: -50px;
   }
   
   #game_tx .btn .close:hover {
     content: url('../images/btn_close_hover.png');
+  }
+
+  #game_tx .btn .rank {
+    position: relative;
+    top: 9px;
+    left: 26px;
+  }
+  
+  #game_tx .btn .rank:hover {
+    content: url('../images/btn_rank_hover.png');
   }
   
   #game_tx .btn .chat{
@@ -122,7 +158,7 @@
   #game_tx .btn .info{
     width: 66px;
     position: relative;
-    top: -59px;
+    top: 3px;
     left: 59px;
   }
   
@@ -132,12 +168,39 @@
   
   #game_tx .btn .chart{
     position: relative;
-    top: -52px;
+    top: 14px;
     left: -14px;
   }
-  
+
   #game_tx .btn .chart:hover{
     content: url('../images/btn_chart_hover.png');
+  }
+
+  #game_tx .btn .question{
+    position: relative;
+    top: 54px;
+    left: -37px;
+  }
+
+  #game_tx .btn .question:hover{
+    content: url('../images/btn_question_hover.png');
+  }
+
+  #game_tx .btn .history{
+    position: relative;
+    top: 65px;
+    left: 16px;
+  }
+
+  #game_tx .btn .history:hover{
+    content: url('../images/btn_history_hover.png');
+  }
+
+  #game_tx .btn .hand{
+    width: 66px;
+    position: relative;
+    top: 72px;
+    left: -29px;
   }
   
   .sprite_dice{
@@ -236,6 +299,9 @@
   
   #tx_msg .msg_body{
     color: white;
+    overflow-y: auto;
+    width: 571px;
+    height: 300px;
   }
 
   #tx_msg .msg_body .txt{
@@ -268,7 +334,7 @@
     width: 130px;
     height: 49px;
     position: relative;
-    top: 48px;
+    top: 41px;
   }
   
   .btn-bet:hover{
@@ -333,6 +399,11 @@
     top: 548px;
     display: none;
     z-index: 500;
+  }
+
+  #dia #dice_roll{
+    position: relative;
+    top: 21px;
   }
   
   #dia #countdown{
@@ -432,14 +503,14 @@
   
   .txt_money_bet{
     position: relative;
-    top: 48px;
+    top: 35px;
     color: #f9ff00;
     text-shadow: 3px 3px 3px black;
   }
   
   .txt_money_bet_total{
     position: relative;
-    top: 34px;
+    top: 22px;
     color: white;
     font-weight: bold;
     font-size: 17px;

@@ -18,8 +18,8 @@
   <link rel="apple-touch-icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/slimselect.css">
-  <link rel="stylesheet" href="css/style.css?v=1.87">
-  <link rel="stylesheet" href="css/taixiumd5.css?v=1.87">
+  <link rel="stylesheet" href="css/style.css?v=1.86">
+  <link rel="stylesheet" href="css/taixiumd5.css?v=1.86">
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
@@ -30,11 +30,11 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.14.0/sweetalert2.min.js"></script>
-  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.87"></script>
-  <script src="Carrot-Framework-Web/cr_realtime.js?v=1.87"></script>
-  <script src="Carrot-Framework-Web/Carrot.js?v=1.87"></script>
-  <script src="Carrot-Framework-Web/cr_user.js?v=1.87"></script>
-  <script src="js/web.js?v=1.87"></script>
+  <script src="Carrot-Framework-Web/cr_firestore.js?v=1.86"></script>
+  <script src="Carrot-Framework-Web/cr_realtime.js?v=1.86"></script>
+  <script src="Carrot-Framework-Web/Carrot.js?v=1.86"></script>
+  <script src="Carrot-Framework-Web/cr_user.js?v=1.86"></script>
+  <script src="js/web.js?v=1.86"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
     import { getDatabase, ref, set,onValue,child,get,remove} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
@@ -52,28 +52,6 @@
 
 <body>
   <div id="preloader" style="display: none;" onclick="w.box_close();return false;"></div>
-  <header class="header">
-    <div class="header__content">
-      <a href="" onclick="w.show_home();return false;" class="header__logo">
-        <img src="images/logo_m2.gif" alt="">
-      </a>
-      <button class="header__btn" type="button" onclick="w.toggle_sidebar();return false;"><span></span> <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-
-  <div class="sidebar">
-    <a href="" class="sidebar__logo"><img src="images/logo_m2.gif" class="rounded" alt=""></a>
-    <div class="sidebar__user" id="sidebar_user_info"></div>
-    <ul class="sidebar__nav" data-scrollbar="true" tabindex="-1" style="overflow-y: auto;overflow-x: hidden;">
-      <div class="scroll-content" id="menu_main"></div>
-    </ul>
-    <div class="sidebar__copyright"><b>BANKCL</b>&nbsp;©&nbsp;2024&nbsp;-&nbsp;2026</div>
-  </div>
-  <main class="main">
-    <div class="container-fluid" id="page_contains"></div>
-  </main>
+  <button class="btn btn-lg btn-danger" onclick="w.show_game_tai_xiu_md5();">Start</button>
 </body>
-
 </html>

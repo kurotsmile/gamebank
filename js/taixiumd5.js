@@ -84,8 +84,11 @@ class TaiXiu_MD5{
             html_game+='<div class="btn">';
                 html_game+='<img onclick="taixiu.info();" class="info" src="images/btn_info.png"/>';
                 html_game+='<img onclick="taixiu.chart();" class="chart" src="images/btn_chart.png"/>';
+                html_game+='<img onclick="taixiu.question();" class="question" src="images/btn_question.png"/>';
+                html_game+='<img onclick="taixiu.history();" class="history" src="images/btn_history.png"/>';
             html_game+='</div>';
             html_game+='<div class="info">';
+                html_game+='<div id="timer_session" class="timer_session">00:00</div>';
                 html_game+='<div id="total_user_tai" class="txt_user tai">0</div>';
                 html_game+='<img id="txt_tai" class="txt tai" src="images/txt_tai.png"/>';
                 html_game+='<div id="txt_money_bet_total_tai" class="txt_money_bet_total tai">0</div>';
@@ -128,6 +131,7 @@ class TaiXiu_MD5{
 
             html_game+='</div>';
             html_game+='<div class="info">';
+                html_game+='<div id="name_session" class="txt_session">#name session</div>';
                 html_game+='<div id="total_user_xiu" class="txt_user xiu">0</div>';
                 html_game+='<img id="txt_xiu" class="txt xiu" src="images/txt_xiu.png"/>';
                 html_game+='<div id="txt_money_bet_total_xiu" class="txt_money_bet_total xiu">0</div>';
@@ -136,7 +140,9 @@ class TaiXiu_MD5{
             html_game+='</div>';
             html_game+='<div class="btn">';
                 html_game+='<img onclick="taixiu.close();" class="close" src="images/btn_close.png"/>';
+                html_game+='<img onclick="taixiu.rank();" class="rank" src="images/btn_rank.png"/>';
                 html_game+='<img onclick="taixiu.show_chat();" class="chat" src="images/btn_chat.png"/>';
+                html_game+='<img onclick="taixiu.show_chat();" class="hand" src="images/btn_hand_used.png"/>';
             html_game+='</div>';
         html_game+='</div>';
         html_game+='</div>';
@@ -154,6 +160,7 @@ class TaiXiu_MD5{
         $("#countdown").show();
         $("#guess").hide();
         $(".btn-bet").animate({ opacity: 1 }, 1000);
+        $("#name_session").html("#"+cr.create_id(10));
    
         if(timer_length==null)
             this.timeLeft=this.timeLeft_length;
@@ -288,6 +295,7 @@ class TaiXiu_MD5{
         $("#dice_history").html("");
         $(taixiu.emp_game).remove();
         taixiu.clear_thread();
+        if(taixiu.box_chat) $(taixiu.box_chat).remove();
     }
 
     clear_thread(){
@@ -531,7 +539,21 @@ class TaiXiu_MD5{
     }
 
     info(){
-        this.msg("Tài xỉu md5","Thông tin");
+        var html_info='';
+        html_info+='<p>Trò chơi Tài Xỉu MD5 là một trò chơi truyền thống nhưng với cách thức vận hành hiện đại và minh bạch hơn nhờ ứng dụng công nghệ mã hóa MD5. Trò chơi mang đến trải nghiệm quen thuộc của tài xỉu, nhưng với sự đảm bảo tính công bằng và tránh lừa đảo cho người chơi.</p>';
+        html_info+='<p>Cơ chế xác thực bằng mã hóa MD5</p>';
+        html_info+='<p>Một điểm nổi bật của Tài Xỉu MD5 là cơ chế xác thực kết quả phiên chơi dựa trên thuật toán mã hóa MD5, giúp người chơi tin tưởng vào tính minh bạch và độ tin cậy của trò chơi.</p>';
+        html_info+='<p>Mã hóa phiên bằng MD5: Mỗi phiên chơi sẽ được mã hóa bằng một chuỗi MD5 cố định ngay từ khi phiên bắt đầu, đảm bảo rằng kết quả không thể bị thay đổi sau khi đã công bố. Người chơi có thể kiểm tra tính xác thực của kết quả bằng cách sao chép chuỗi MD5 phiên đã mã hóa.</p>';
+        html_info+='<p>Kiểm tra mã MD5: Sau khi phiên kết thúc, người chơi có thể sao chép chuỗi mã MD5 và vào trang web https://md5.cz/ để kiểm tra xem chuỗi đó có khớp với kết quả mà trò chơi đã công bố hay không. Nếu chuỗi mã trùng khớp, điều đó chứng minh rằng kết quả phiên chơi là chính xác và không bị can thiệp.</p>';
+        html_info+='<p>Cách kiểm tra mã MD5:</p>';
+        html_info+='<p>Sao chép chuỗi mã MD5: Khi kết thúc một phiên, trò chơi sẽ cung cấp cho người chơi chuỗi mã MD5 liên quan đến kết quả của phiên đó.</p>';
+        html_info+='<p>Truy cập trang web kiểm tra MD5: Người chơi có thể truy cập trang web https://md5.cz/ để kiểm tra.</p>';
+        html_info+='<p>Dán mã MD5 vào ô kiểm tra trên trang web và bấm "Tính toán". Trang web sẽ so sánh kết quả mã MD5 với chuỗi bạn cung cấp.</p>';
+        html_info+='<p>Đối chiếu kết quả: Nếu chuỗi mã MD5 trùng khớp với kết quả công bố, trò chơi đã diễn ra công bằng và không có bất kỳ sự thao túng nào.</p>';
+        html_info+='<p>Tính minh bạch và bảo mật</p>';
+        html_info+='<p>Với cơ chế mã hóa MD5, Tài Xỉu MD5 đảm bảo rằng kết quả mỗi phiên chơi đều đã được xác định và không thể thay đổi. Người chơi hoàn toàn có thể tự mình kiểm chứng độ chính xác của trò chơi, tránh được mọi tình trạng lừa đảo hoặc thay đổi kết quả không mong muốn.</p>';
+        html_info+='<p>Hãy tham gia ngay Tài Xỉu MD5 để trải nghiệm cảm giác hồi hộp của trò chơi và sự yên tâm về tính công bằng mà công nghệ mã hóa hiện đại mang lại!</p>';
+        this.msg(html_info,"Thông tin");
     }
 
     msg(msg="",title="info"){
@@ -569,7 +591,36 @@ class TaiXiu_MD5{
     }
 
     chart(){
-        this.msg("Tài xỉu md5","Biểu đồ");
+        this.msg("","Biểu đồ");
+    }
+
+    question(){
+        var html_info='';
+        html_info+='<p>1. Luật chơi cơ bản:</p>';
+        html_info+='<p>Trò chơi sử dụng ba viên xí ngầu, mỗi viên có 6 mặt, tương ứng với các số từ 1 đến 6.</p>';
+        html_info+='<p>Sau khi người chơi đặt cược, ba viên xí ngầu sẽ được tung. Kết quả của trò chơi dựa vào tổng điểm của ba viên xí ngầu này.</p>';
+        html_info+='<p>2. Cách đặt cược:</p>';
+        html_info+='<p>Tài (Lớn): Nếu tổng điểm của ba viên xí ngầu từ 11 đến 17, người chơi đặt vào cửa "Tài" sẽ thắng.</p>';
+        html_info+='<p>Xỉu (Nhỏ): Nếu tổng điểm của ba viên xí ngầu từ 4 đến 10, người chơi đặt vào cửa "Xỉu" sẽ thắng.</p>';
+        html_info+='<p>Nếu ba viên xí ngầu ra ba số giống nhau (ví dụ: 1-1-1, 6-6-6), đây là "Bộ Ba". Khi ra bộ ba, tất cả người chơi đặt cược vào "Tài" hoặc "Xỉu" đều thua, trừ khi đặt vào cửa Bộ Ba.</p>';
+        html_info+='<p>3. Các hình thức đặt cược khác:</p>';
+        html_info+='<p>Ngoài cược "Tài" và "Xỉu", người chơi có thể tham gia vào các kiểu cược khác như:</p>';
+        html_info+='<p>Cược số cụ thể: Đặt cược vào một số cụ thể sẽ xuất hiện trên một hoặc nhiều viên xí ngầu.</p>';
+        html_info+='<p>Cược tổng điểm: Người chơi có thể cược vào tổng điểm cụ thể của ba viên xí ngầu, với tỷ lệ thưởng khác nhau dựa trên xác suất xuất hiện.</p>';
+        html_info+='<p>Cược bộ ba đồng nhất: Đặt cược rằng ba viên xí ngầu sẽ có cùng một số.</p>';
+        html_info+='<p>Cược bộ đôi: Đặt cược rằng sẽ có hai viên xí ngầu ra cùng một số.</p>';
+        html_info+='<p>4. Tỷ lệ thưởng:</p>';
+        html_info+='<p>Cửa Tài/Xỉu: Tỷ lệ thưởng là 1:1. Nếu bạn đặt cược 100.000 VND, bạn sẽ nhận được 200.000 VND (bao gồm tiền gốc) nếu thắng.</p>';
+        html_info+='<p>Cược số cụ thể: Tỷ lệ thưởng có thể lên đến 1:180 tùy thuộc vào loại cược.</p>';
+        this.msg(html_info,"Cách chơi");
+    }
+
+    history(){
+        this.msg("","Lịch sử cược");
+    }
+
+    rank(){
+        this.msg("","Bảng xếp hạng");
     }
 }
 
