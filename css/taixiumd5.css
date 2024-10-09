@@ -1,16 +1,18 @@
 #tx {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    width: 100%;
-    z-index: 1200;
-    height: 100%;
-    flex-wrap: wrap;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 1200;
+  height: 100%;
+  align-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
   
   #tx #game_tx{
     background-image: url('../images/tx_bk.png?v=13');
@@ -132,7 +134,7 @@
   
   #game_tx .btn .close {
     position: relative;
-    top: 2px;
+    top: 21px;
     left: -50px;
   }
   
@@ -142,7 +144,7 @@
 
   #game_tx .btn .rank {
     position: relative;
-    top: 6px;
+    top: 28px;
     left: 26px;
   }
   
@@ -152,7 +154,7 @@
   
   #game_tx .btn .chat{
     position: relative;
-    top: 57px;
+    top: 78px;
     right: -31px;
   }
   
@@ -204,7 +206,7 @@
   #game_tx .btn .hand{
     width: 66px;
     position: relative;
-    top: 67px;
+    top: 88px;
     left: -29px;
   }
   
@@ -615,6 +617,24 @@
     z-index: 1300;
 }
 
+#btn_copy_md5{
+  width: 70px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  top: 49px;
+  left: -93px;
+  cursor: pointer;
+}
+
+#btn_copy_md5:hover{
+  background-image: url('../images/btn_copy.png');
+}
+
+.swal2-container{
+  z-index: 3000;
+}
   /* Extra small devices (phones, 0px and up) */
   @media (max-width: 575.98px) {
     #tx{transform: scale(65%, 65%);}

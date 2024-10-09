@@ -156,6 +156,7 @@ class TaiXiu_MD5{
                 html_game+='<img onclick="taixiu.rank();" class="rank" src="images/btn_rank.png"/>';
                 html_game+='<img onclick="taixiu.show_chat();" class="chat" src="images/btn_chat.png"/>';
                 html_game+='<img id="btn_dice_hand" onclick="taixiu.hand();" class="hand" src="images/btn_hand_used.png"/>';
+                html_game+='<div id="btn_copy_md5" onclick="taixiu.copy_md5()" class="btn_copy_md5"></div>';
             html_game+='</div>';
         html_game+='</div>';
         html_game+='</div>';
@@ -164,6 +165,10 @@ class TaiXiu_MD5{
         $("body").append(taixiu.emp_game);
         $("#dice_md5").html(CryptoJS.MD5(cr.create_id()).toString());
         taixiu.update_dice_history();
+
+        $('img').on('dragstart', function(e) {
+            e.preventDefault();
+        });
     }
 
     play(timer_length=null){
@@ -730,6 +735,10 @@ class TaiXiu_MD5{
         obj_dice["b"]= Math.floor(Math.random() * 6) + 1;
         obj_dice["c"]= Math.floor(Math.random() * 6) + 1;
         return obj_dice;
+    }
+
+    copy_md5(){
+        cr.msg("Đã copy mã MD5 của phiên cược!","Copy","success");
     }
 }
 
