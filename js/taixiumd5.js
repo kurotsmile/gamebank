@@ -551,7 +551,16 @@ class TaiXiu_MD5{
         $("body").append(taixiu.box_msg);
 
         setTimeout(()=>{
-            $("#tx_msg").draggable();
+            $("#tx_msg").draggable({
+                start: function(event, ui) {
+                    $(this).css('transform', 'none');
+                },
+                drag: function(event, ui) {
+                },
+                stop: function(event, ui) {
+
+                }
+            });
         },300);
     }
 
