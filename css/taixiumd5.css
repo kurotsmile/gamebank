@@ -137,7 +137,7 @@
   
   #game_tx .btn .close {
     position: relative;
-    top: 37px;
+    top: 25px;
     left: -21px;
     background-image: url('../images/btn_close.png');
   }
@@ -216,7 +216,7 @@
   #game_tx .btn .hand{
     width: 66px;
     position: relative;
-    top: 97px;
+    top: 85px;
     left: 11px;
   }
 
