@@ -15,7 +15,7 @@
 }
   
   #tx #game_tx{
-    background-image: url('../images/tx_bk.png?v=13');
+    background-image: url('../images/tx_bk.png?v=15');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 794px;
@@ -360,30 +360,32 @@
     left: 36px;
   }
   
-  #dia #dice_history{
+  #tx div #dice_history{
     height: 22px;
     z-index: 60000;
     display: flex;
-    position: absolute;
+    position: relative;
+    top: -92px;
   }
   
-  #dia #dice_history .item{
+  #tx div #dice_history .item{
     width: 20px;
     height: 20px;
   }
   
-  #dia #dice_history .item.tai{
+  #tx div #dice_history .item.tai{
     background-image: url('../images/r_tai.png');
   }
   
-  #dia #dice_history .item.xiu{
+  #tx div #dice_history .item.xiu{
     background-image: url('../images/r_xiu.png');
   }
   
-  #dia #dice_md5{
-    position: absolute;
+  #tx div #dice_md5{
+    position: relative;
     color: #e3db76;
-    top: 637px;
+    top: -75px;
+    left: 58px;
     font-size: 14px;
     text-shadow: 2px 2px 0px #992604;
   }
@@ -401,11 +403,12 @@
   #dice_panel_bet{
     color: white;
     background-color: #00000042;
-    width: 547px;
-    position: absolute;
-    top: 548px;
+    width: auto;
+    position: relative;
+    top: -92px;
     display: none;
     z-index: 500;
+    text-align: center;
   }
 
   #dia #dice_roll{

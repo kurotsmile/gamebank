@@ -4,12 +4,12 @@ class TaiXiu_MD5{
     is_tai_bet=false;
     is_test_bet=true;
     is_hand=true;
+    is_show_pending_return=false;
 
     thread_game_play=null;
     thread_game_countdown=null;
     thread_game_pending_return=null;
     thread_game_return=null;
-    thread_effect=null;
 
     array_history=[];
 
@@ -63,7 +63,7 @@ class TaiXiu_MD5{
         $("#preloader").show();
         taixiu.laodAllEmp();
         taixiu.load_session();
-        this.thread_effect=setInterval(taixiu.createGoldenDot, 2000);
+        $("#tx").draggable();
     }
 
     load_session(){
@@ -110,8 +110,6 @@ class TaiXiu_MD5{
                 html_game+='<div id="txt_money_bet_tai" class="txt_money_bet">0</div>';
             html_game+='</div>';
             html_game+='<div id="dia">';
-                html_game+='<div id="dice_history"></div>';
-                html_game+='<div id="dice_md5"></div>';
                 html_game+='<div id="effect_c"></div>';
                 html_game+='<div id="dice">';
                     html_game+='<div id="all_dice">';
@@ -124,32 +122,13 @@ class TaiXiu_MD5{
                     html_game+='<div id="countdown"><i class="fas fa-spinner fa-spin"></i></div>';
                 html_game+='</div>';
 
-                html_game+='<div id="dice_panel_bet">';
-                    html_game+='<div class="row">';
-                    html_game+='<div class="col-12">';
-                        html_game+='<button onclick="taixiu.bet(10000)" class="btn-bet">10k</button>';
-                        html_game+='<button onclick="taixiu.bet(20000)" class="btn-bet">20k</button>';
-                        html_game+='<button onclick="taixiu.bet(30000)" class="btn-bet">30k</button>';
-                        html_game+='<button onclick="taixiu.bet(50000)" class="btn-bet">50k</button>';
-                        html_game+='<button onclick="taixiu.bet(100000)" class="btn-bet">100k</button>';
-                        html_game+='<button onclick="taixiu.bet(500000)" class="btn-bet">500k</button>';
-                        html_game+='<button onclick="taixiu.bet(1000000)" class="btn-bet">1M</button>';
-                    html_game+='</div>';
-                    html_game+='<div class="col-12">';
-                        html_game+='<button class="btnx2" onclick="taixiu.betx2();"><i class="fas fa-socks"></i> X2</button>';
-                        html_game+='<button class="btn-bet-done" onclick="taixiu.done_bet();return false;"><i class="fas fa-check-circle"></i> Đặt Cược</button>';
-                        html_game+='<button class="btnx2" onclick="taixiu.cancel_bet();return false;"><i class="fas fa-times-circle"></i> Hủy bỏ</button>';
-                    html_game+='</div>';
-                    html_game+='</div>';
-                html_game+='</div>';
-
             html_game+='</div>';
             html_game+='<div class="info">';
                 html_game+='<div id="name_session" class="txt_session">#name session</div>';
                 html_game+='<div id="total_user_xiu" class="txt_user xiu">0</div>';
                 html_game+='<img id="txt_xiu" class="txt xiu" src="images/txt_xiu.png"/>';
                 html_game+='<div id="txt_money_bet_total_xiu" class="txt_money_bet_total xiu">0</div>';
-                html_game+='<div id="btn-bet-xiu"  role="button" class="btn-bet xiu" onclick="taixiu.show_bet(false);return false;"></div>';
+                html_game+='<div id="btn-bet-xiu" role="button" class="btn-bet xiu" onclick="taixiu.show_bet(false);return false;"></div>';
                 html_game+='<div id="txt_money_bet_xiu" class="txt_money_bet">0</div>';
             html_game+='</div>';
             html_game+='<div class="btn">';
@@ -160,6 +139,30 @@ class TaiXiu_MD5{
                 html_game+='<div id="btn_copy_md5" onclick="taixiu.copy_md5()" class="btn_copy_md5"></div>';
             html_game+='</div>';
         html_game+='</div>';
+            html_game+='<div>';
+                html_game+='<div id="dice_history"></div>';
+                html_game+='<div id="dice_md5"></div>';
+
+                html_game+='<div id="dice_panel_bet">';
+                    html_game+='<div class="row">';
+                        html_game+='<div class="col-12">';
+                            html_game+='<button onclick="taixiu.bet(10000)" class="btn-bet">10k</button>';
+                            html_game+='<button onclick="taixiu.bet(20000)" class="btn-bet">20k</button>';
+                            html_game+='<button onclick="taixiu.bet(30000)" class="btn-bet">30k</button>';
+                            html_game+='<button onclick="taixiu.bet(50000)" class="btn-bet">50k</button>';
+                            html_game+='<button onclick="taixiu.bet(100000)" class="btn-bet">100k</button>';
+                            html_game+='<button onclick="taixiu.bet(500000)" class="btn-bet">500k</button>';
+                            html_game+='<button onclick="taixiu.bet(1000000)" class="btn-bet">1M</button>';
+                        html_game+='</div>';
+                        html_game+='<div class="col-12">';
+                            html_game+='<button class="btnx2" onclick="taixiu.betx2();"><i class="fas fa-socks"></i> X2</button>';
+                            html_game+='<button class="btn-bet-done" onclick="taixiu.done_bet();return false;"><i class="fas fa-check-circle"></i> Đặt Cược</button>';
+                            html_game+='<button class="btnx2" onclick="taixiu.cancel_bet();return false;"><i class="fas fa-times-circle"></i> Hủy bỏ</button>';
+                        html_game+='</div>';
+                    html_game+='</div>';
+                html_game+='</div>';
+
+            html_game+='</div>';
         html_game+='</div>';
 
         taixiu.emp_game=$(html_game);
@@ -186,10 +189,15 @@ class TaiXiu_MD5{
             this.timeLeft=this.timeLeft_length;
         else
             this.timeLeft=timer_length;
+
+        this.is_show_pending_return=false;
         this.total_bet_tai=0;
         this.total_bet_xiu=0;
         this.total_user_tai=0;
         this.total_user_xiu=0;
+
+        taixiu.money_bet=0;
+        taixiu.money_pending_bet=0;
         $("#txt_xiu").removeClass("zoom");
         $("#txt_tai").removeClass("zoom");
         $("#all_dice").hide();
@@ -226,6 +234,7 @@ class TaiXiu_MD5{
     }
 
     show_pending_return(){
+        this.is_show_pending_return=true;
         taixiu.cancel_bet();
         clearInterval(this.thread_game_countdown);
         $("#effect_c").hide();
@@ -264,7 +273,7 @@ class TaiXiu_MD5{
 
         $("#all_dice").show();
         taixiu.money_pending_bet=0;
-        taixiu.money_bet=0;
+
         $("#roll_dice").remove();
         
         taixiu.obj_h_temp={};
@@ -313,10 +322,16 @@ class TaiXiu_MD5{
         }
         taixiu.add_dice_history(taixiu.obj_h_temp);
         taixiu.is_play=false;
+        if(taixiu.money_bet!=0){
+            if(w.user_login!=null){
+                taixiu.obj_h_temp["money_bet"]=taixiu.money_bet;
+                taixiu.obj_h_temp["date"]=cr.getDateCur();
+                cr_realtime.add("tx","bet_history/"+w.user_login.username,taixiu.obj_h_temp);
+            }
+        }
     }
 
     close(){
-        if(this.thread_effect!=null) clearInterval(this.thread_effect);
         taixiu.is_play=false;
         $("#preloader").hide();
         $("#dice_history").html("");
@@ -351,6 +366,10 @@ class TaiXiu_MD5{
     }
 
     show_bet(is_tai=true){
+        if(taixiu.is_show_pending_return){
+            cr.msg("Đã hết thời gian cược xin vui lòng đợi phiên sau!","Cược","warning");
+            return;
+        }
         taixiu.is_tai_bet=is_tai;
         $("#dice_panel_bet").show();
         $("#btn-bet-tai").removeClass("block");
@@ -366,10 +385,14 @@ class TaiXiu_MD5{
             $("#txt_money_bet_tai").html("0 đ");
         }
         taixiu.update_ui();
+        $("#dice_history").hide();
+        $("#dice_md5").hide();
     }
 
     cancel_bet(){
         $("#dice_panel_bet").hide();
+        $("#dice_history").show();
+        $("#dice_md5").show();
         $("#btn-bet-tai").removeClass("block");
         $("#btn-bet-xiu").removeClass("block");
         if(taixiu.is_tai_bet){
@@ -380,6 +403,7 @@ class TaiXiu_MD5{
     }
 
     done_bet(){
+        var sel="";
         taixiu.money_bet=taixiu.money_pending_bet;
         taixiu.money_pending_bet=0;
         $("#dice_panel_bet").hide();
@@ -390,10 +414,13 @@ class TaiXiu_MD5{
             taixiu.close();
         }
         else{
-            if(taixiu.is_tai_bet)
-                cr_realtime.add("tx",taixiu.id_session+"/users/tai/"+w.user_login.username,taixiu.money_bet);
-            else
-                cr_realtime.add("tx",taixiu.id_session+"/users/xiu/"+w.user_login.username,taixiu.money_bet);
+            if(taixiu.is_tai_bet){
+                sel="tai";
+            }
+            else{
+                sel="xiu";
+            }
+            cr_realtime.add("tx",taixiu.id_session+"/users/"+sel+"/"+w.user_login.username,taixiu.money_bet);
         }
     }
 
@@ -416,17 +443,6 @@ class TaiXiu_MD5{
     }
 
     update_ui(){
-        var referenceDiv = $('#dia');
-        var referenceOffset = referenceDiv.offset();
-        $('#dice_panel_bet').css({
-            top: referenceOffset.top + referenceDiv.height() + 165 + 'px'
-        });
-        $('#dice_history').css({
-            top: referenceOffset.top + referenceDiv.height() + 136 + 'px'
-        });
-        $('#dice_md5').css({
-            top: referenceOffset.top + referenceDiv.height() + 176 + 'px'
-        });
         $("#txt_money_bet_total_tai").html(w.formatVND(this.total_bet_tai));
         $("#txt_money_bet_total_xiu").html(w.formatVND(this.total_bet_xiu));
         $("#total_user_tai").html(this.total_user_tai);
@@ -690,37 +706,25 @@ class TaiXiu_MD5{
     }
 
     history(){
-        this.msg("","Lịch sử cược");
+        var s_title="Lịch sử cược";
+        if(w.user_login!=null){
+            cr_realtime.list_one("tx","bet_history",datas=>{
+                alert(JSON.stringify(datas));
+                var html_history='';
+                $.each(datas,function(index,h){
+                    html_history+=JSON.stringify(h);
+                });
+                taixiu.msg(html_history,s_title);
+            },()=>{
+                taixiu.msg('<div class="w-100">Bạn chưa cược lần nào cả!</div>',s_title);
+            });
+        }else{
+            taixiu.msg("Đăng nhập để xem lịch sử cược!",s_title,"warning");
+        }
     }
 
     rank(){
         this.msg("","Bảng xếp hạng");
-    }
-
-    createGoldenDot(){
-        var l=Math.floor(Math.random() * 10) + 3;
-       
-           for (var i = 0; i < l; i++) {
-               var $goldenDot = $('<div class="golden-dot"></div>');
-               var w=Math.floor(Math.random() * 12) + 3;
-               $('body').append($goldenDot);
-               var startX = $('#dia').offset().left + 110;
-               var startY = $('#dia').offset().top-140;
-               $goldenDot.css({
-                   left: startX + 'px',
-                   top: startY + 'px',
-                   width:w+'px',
-                   height:w+'px'
-               });
-               var speed = 1500 + Math.random() * 1500;
-               $goldenDot.animate({
-                   top: startY - 300 + Math.random() * 100 + 'px', 
-                   left: startX + Math.random() * 100 - 10 + 'px', 
-                   opacity: 0  // Mờ dần
-               }, speed, function() {
-                   $(this).remove(); 
-               });
-           }
     }
 
     hand(){
