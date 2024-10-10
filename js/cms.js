@@ -269,20 +269,23 @@ cms.taixiu=(h=null)=>{
         html_page+='<div class="btn-toolbar mb-2 mb-md-0">';
         html_page+='<div class="btn-group mr-2">';
             html_page+='<button id="btn_createBettingSessions" onclick="cms.createBettingSessions('+h+');" class="btn btn-sm btn-outline-secondary"><i class="fas fa-dice-d6"></i> Tạo mới các phiên</button>';
+            html_page+='<button id="btn_deleteBettingSessions" onclick="cms.deleteBettingSessions('+h+');" class="btn btn-sm btn-outline-secondary"><i class="fas fa-trash"></i> Xóa tất cả</button>';
         html_page+='</div>';
     html_page+='</div>';
     html_page+='</div>';
 
     html_page+='<div class="row">';
     html_page+='<div class="col-12">';
+    var h_cur=new Date().getHours();
     for(var i=0;i<24;i++){
+        var s_icon_h='';
+        if(i==h_cur) s_icon_h='<i class="fas fa-clock"></i>';
         if(i.toString()==hours){
-            html_page+='<button onclick="cms.taixiu('+i+')" class="btn btn-sm btn-dark m-1">Hours '+i+'</button>';
+            html_page+='<button onclick="cms.taixiu('+i+')" class="btn btn-sm btn-dark m-1">'+s_icon_h+' Hours '+i+'</button>';
         }
         else{
-            html_page+='<button onclick="cms.taixiu('+i+')" class="btn btn-sm btn-light m-1">Hours '+i+'</button>';
+            html_page+='<button onclick="cms.taixiu('+i+')" class="btn btn-sm btn-light m-1">'+s_icon_h+' Hours '+i+'</button>';
         }
-            
     }
     html_page+='</div>';
     html_page+='</div>';
@@ -312,6 +315,7 @@ cms.taixiu=(h=null)=>{
         q.add_where("hour",h);
         q.set_limit(100);
         q.get_data(datas=>{
+            cms.data_bet_temp=datas;
             if(datas.length>0)
                 $("#btn_createBettingSessions").hide();
             else
@@ -322,6 +326,7 @@ cms.taixiu=(h=null)=>{
             });
     
             cms.check_list_attr_item_tx();
+
             cms.thread_check_timer=setInterval(()=>{
                 if($("#all_item_taixiu").length==0) clearInterval(cms.thread_check_timer);
                 cms.check_list_attr_item_tx();
@@ -330,16 +335,72 @@ cms.taixiu=(h=null)=>{
     }
 
    load_list_by_hour(hours);
-    //createBettingSessions(1);
 }
 
 cms.check_list_attr_item_tx=()=>{
+
+    function item_select_xucxac(id_field,label,val){
+        var html='';
+        html+='<label for="basic-url" class="form-label">'+label+'</label>';
+        html+='<div class="input-group mb-3">';
+        html+='<select class="form-select" id="'+id_field+'">';
+            for(var i=1;i<=6;i++){
+                if(val==i)
+                    html+='<option value="'+i+'" selected>'+i+'</option>';
+                else
+                    html+='<option value="'+i+'">'+i+'</option>';
+            }
+        html+='</select>';
+        html+='</div>';
+        var emp_select=$(html);
+        return emp_select;
+    }
+
     $("#all_item_taixiu tr").each(function(index,emp){
         var timer_start=$(emp).data("timer-start");
         $(emp).find(".col-btn").empty();
         var btn_edit=$('<button class="btn btn-sm btn-light"><i class="fas fa-edit"></i> Chỉnh sửa kết quả</button>');
         $(btn_edit).click(()=>{
-            alert(timer_start);
+            var id_session=$(emp).data("id");
+            var timer_end=$(emp).data("timer-end");
+            var timer_start=$(emp).data("timer-start");
+            var hour=$(emp).data("hour").toString();
+
+            var a=$(emp).data("a");
+            var b=$(emp).data("b");
+            var c=$(emp).data("c");
+
+            var htm_edit_bet='';
+            htm_edit_bet+='<div class="form" id="list_field_xucxac"></div>';
+            htm_edit_bet+='<div class="w-100"><button id="btn_bet_update" class="btn btn-success"><i class="fas fa-check"></i> Cập nhật</button></div>';
+            cms.box(htm_edit_bet,"Thay đổi kết quả",()=>{
+                $("#list_field_xucxac").append(item_select_xucxac('dice_a',"Xúc xắc A",parseInt(a)));
+                $("#list_field_xucxac").append(item_select_xucxac('dice_b',"Xúc xắc B",parseInt(b)));
+                $("#list_field_xucxac").append(item_select_xucxac('dice_c',"Xúc xắc C",parseInt(c)));
+                $("#btn_bet_update").click(()=>{
+                    var dice_a=parseInt($("#dice_a").val());
+                    var dice_b=parseInt($("#dice_b").val());
+                    var dice_c=parseInt($("#dice_c").val());
+
+                    var tx = {
+                        id: id_session,
+                        a: dice_a,
+                        b: dice_b,
+                        c: dice_c,
+                        time_start: timer_start,
+                        time_end: timer_end,
+                        hour:hour
+                    };
+
+                    cr_firestore.set(tx,"tx",id_session,()=>{
+                        cr.msg("Cập nhật kết quả thành công!","Dàng xếp kết quả","success");
+                        cms.close_box();
+                        cms.taixiu(hour);
+                    },()=>{
+                        cr.msg("Lỗi kết nối máy chủ!","Dàng xếp kết quả","error");
+                    })
+                });
+            });
         });
         $(emp).find(".col-btn").append(btn_edit);
 
@@ -372,7 +433,7 @@ cms.item_taixiu=(data)=>{
     }
     
     var html='';
-    html+='<tr data-timer-start="'+data.time_start+'">';
+    html+='<tr data-hour="'+data.hour+'" data-id="'+data.id+'" data-timer-start="'+data.time_start+'" data-timer-end="'+data.time_end+'" data-a="'+data.a+'" data-b="'+data.b+'" data-c="'+data.c+'">';
     html+='<td class="col-btn"></td>';
     html+='<td>'+data.id+'</td>';
     html+='<td class="col-status">'+cms.compareWithCurrentTime(data.time_start)+'</td>';
@@ -411,4 +472,13 @@ cms.createBettingSessions=(hours,min=1)=>{
         $("#all_item_taixiu").append(cms.item_taixiu(tx));
         cr_firestore.set(tx, "tx", tx.id); 
     }
+}
+
+cms.deleteBettingSessions=()=>{
+    $.each(cms.data_bet_temp,function(index,b){
+        cr_firestore.delete("tx",b.id);
+    });
+
+    cr.msg("Xóa thành công tất cả các phiên cược trong giờ","Xóa phiên cược","Success");
+    $("#all_item_taixiu").empty();
 }

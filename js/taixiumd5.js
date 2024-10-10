@@ -245,16 +245,22 @@ class TaiXiu_MD5{
     }
 
     show_return(data=null){
-        $("#guess").show();
-        $("#guess").css({
-            top:70,
-            left:50
-        });
-        $("#guess").draggable({
-            stop: function(event, ui) {
-                if(taixiu.is_play) taixiu.mo_dia_xong();
-            }
-        });
+
+        if(taixiu.is_hand){
+            $("#guess").show();
+            $("#guess").css({
+                top:70,
+                left:50
+            });
+            $("#guess").draggable({
+                stop: function(event, ui) {
+                    if(taixiu.is_play) taixiu.mo_dia_xong();
+                }
+            });
+        }else{
+            $("#guess").hide();
+        }
+        
 
         $("#all_dice").show();
         taixiu.money_pending_bet=0;
@@ -722,7 +728,7 @@ class TaiXiu_MD5{
             this.is_hand=false;
         else
             this.is_hand=true;
-        this.check_hand();
+        taixiu.check_hand();
     }
 
     check_hand(){
