@@ -9,7 +9,7 @@ class TaiXiu_MD5{
     thread_game_play=null;
     thread_game_countdown=null;
     thread_game_pending_return=null;
-    thread_game_return=null;
+    thread_game_mini_timer=null;
 
     array_history=[];
 
@@ -26,7 +26,11 @@ class TaiXiu_MD5{
     length_history_bet=17;
 
     timeLeft_length=10;
+    timeLeft_mo_dia_length=5;
+    timeleft_next_session=3;
+
     timeLeft =0;
+    timeLeft_mini=0;
 
     id_session=null;
     name_session=null;
@@ -98,10 +102,10 @@ class TaiXiu_MD5{
         var html_game='<div id="tx">';
         html_game+='<div id="game_tx">';
             html_game+='<div class="btn">';
-                html_game+='<div onclick="taixiu.info();" class="info" src="images/btn_info.png"/></div>';
-                html_game+='<div onclick="taixiu.chart();" class="chart" src="images/btn_chart.png"/></div>';
-                html_game+='<div onclick="taixiu.question();" class="question" src="images/btn_question.png"/></div>';
-                html_game+='<div onclick="taixiu.history();" class="history" src="images/btn_history.png"/></div>';
+                html_game+='<div onclick="taixiu.info();" class="info"></div>';
+                html_game+='<div onclick="taixiu.chart();" class="chart"></div>';
+                html_game+='<div onclick="taixiu.question();" class="question"></div>';
+                html_game+='<div onclick="taixiu.history();" class="history"></div>';
             html_game+='</div>';
             html_game+='<div class="info">';
                 html_game+='<div id="timer_session" class="timer_session">00:00</div>';
@@ -185,6 +189,7 @@ class TaiXiu_MD5{
         $("#countdown").show();
         $("#countdown").html('<i class="fas fa-spinner fa-spin"></i>');
         $("#guess").hide();
+        $("#timer_session").css("opacity","0");
         $(".btn-bet").animate({ opacity: 1 }, 1000);
   
         if(timer_length==null)
@@ -255,23 +260,21 @@ class TaiXiu_MD5{
         });
     }
 
-    show_return(data=null){
+    show_mini_timer(second,act_done=null){
+        $("#timer_session").html(second);
+        $("#timer_session").css("opacity","1");
+        taixiu.timeLeft_mini=second;
+        taixiu.thread_game_mini_timer=setInterval(()=>{
+            taixiu.timeLeft_mini--;
+            $("#timer_session").html(taixiu.timeLeft_mini.toString());
+            if(taixiu.timeLeft_mini<=0){
+                clearInterval(taixiu.thread_game_mini_timer);
+                if(act_done) act_done();
+            }
+        },(1000));
+    }
 
-        if(taixiu.is_hand){
-            $("#guess").show();
-            $("#guess").css({
-                top:70,
-                left:50
-            });
-            $("#guess").draggable({
-                stop: function(event, ui) {
-                    if(taixiu.is_play) taixiu.mo_dia_xong();
-                }
-            });
-        }else{
-            $("#guess").hide();
-        }
-        
+    show_return(data=null){
 
         $("#all_dice").show();
         taixiu.money_pending_bet=0;
@@ -304,14 +307,38 @@ class TaiXiu_MD5{
 
         $("#dice_md5").html(CryptoJS.MD5(cr.create_id()).toString());
 
-        taixiu.thread_game_return=setTimeout(() => {
-            $("#guess").hide();
-            taixiu.mo_dia_xong();
-            taixiu.thread_game_play=setTimeout(()=>{
+
+
+        if(taixiu.is_hand){
+            $("#guess").show();
+            $("#guess").css({
+                top:70,
+                left:50
+            });
+            $("#guess").draggable({
+                stop: function(event, ui) {
+                    if(taixiu.is_play) taixiu.mo_dia_xong();
+                }
+            });
+
+            taixiu.show_mini_timer(taixiu.timeLeft_mo_dia_length,()=>{
                 $("#guess").hide();
-                taixiu.load_session();
-            },6000);    
-        }, 3000);
+                taixiu.next_session(taixiu.timeleft_next_session);
+            });
+        }else{
+            $("#guess").hide();
+            setTimeout(()=>{
+                taixiu.next_session(taixiu.timeleft_next_session+3);
+            },3000); 
+        }
+    }
+
+    next_session(second){
+        taixiu.mo_dia_xong();
+        taixiu.show_mini_timer(second,()=>{
+            $("#guess").hide();
+            taixiu.load_session();
+        });
     }
 
     mo_dia_xong(){
@@ -349,7 +376,7 @@ class TaiXiu_MD5{
         if(taixiu.thread_game_play!=null)  clearTimeout(taixiu.thread_game_play);
         if(taixiu.thread_game_countdown!=null)  clearTimeout(taixiu.thread_game_countdown);
         if(taixiu.thread_game_pending_return!=null)  clearTimeout(taixiu.thread_game_pending_return);
-        if(taixiu.thread_game_return!=null) clearTimeout(taixiu.thread_game_return);
+        if(taixiu.thread_game_mini_timer!=null) clearTimeout(taixiu.thread_game_mini_timer);
     }
 
     add_dice_history(obj_h) {
@@ -717,10 +744,15 @@ class TaiXiu_MD5{
         function item_bet_history(data){
             var html_item='';
             html_item+='<tr>';
-            html_item+='<td><small style="font-size:10px">'+data.name_session+'<small></td>';
-            html_item+='<td>'+data.ketqua+'</td>';
+            html_item+='<td><small style="font-size:12px">'+data.name_session.replace("session","")+'<small></td>';
+            html_item+='<td>';
+            if(data.ketqua=="0")
+                html_item+='Tài';
+            else
+                html_item+='Xỉu';
+            html_item+='</td>';
             html_item+='<td>'+w.formatVND(data.money_bet)+'</td>';
-            html_item+='<td>'+data.date+'</td>';
+            html_item+='<td>'+w.formatDateVN(data.date)+'</td>';
             html_item+='</tr>';
             var emp_item=$(html_item);
             return emp_item;
@@ -734,7 +766,7 @@ class TaiXiu_MD5{
                 html_history+='<table class="table table-sm table-striped table-hover table-dark">';
                 html_history+='<thead>';
                 html_history+='<tr>';
-                    html_history+='<th scope="col">#</th>';
+                    html_history+='<th scope="col">#Phiên</th>';
                     html_history+='<th scope="col">Kết quả</th>';
                     html_history+='<th scope="col">Tiền cược</th>';
                     html_history+='<th scope="col">Thời gian</th>';

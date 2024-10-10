@@ -645,6 +645,23 @@ class Web{
         return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace("₫", "đ");
     }
 
+    formatDateVN(date_s) {
+        var date=new Date(date_s);
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+
+        day = day < 10 ? '0' + day : day;
+        month = month < 10 ? '0' + month : month;
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
+    }
+    
+
     show_game_tai_xiu_md5(){
         cr.msg_loading();
         

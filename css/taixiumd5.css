@@ -90,6 +90,7 @@
     padding-top: 3px;
     left: 59px;
     box-shadow: inset 0px 3px 2px darkgoldenrod;
+    opacity: 0;
 }
 
   #game_tx .info .txt{
@@ -638,14 +639,15 @@
 }
 
 #btn_copy_md5{
-  width: 70px;
-  height: 40px;
+  width: 70px !important;
+  height: 40px !important;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   position: relative;
   top: 49px;
   left: -93px;
   cursor: pointer;
+  z-index: 1000;
 }
 
 #btn_copy_md5:hover{
