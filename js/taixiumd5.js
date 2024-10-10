@@ -96,10 +96,10 @@ class TaiXiu_MD5{
         var html_game='<div id="tx">';
         html_game+='<div id="game_tx">';
             html_game+='<div class="btn">';
-                html_game+='<img onclick="taixiu.info();" class="info" src="images/btn_info.png"/>';
-                html_game+='<img onclick="taixiu.chart();" class="chart" src="images/btn_chart.png"/>';
-                html_game+='<img onclick="taixiu.question();" class="question" src="images/btn_question.png"/>';
-                html_game+='<img onclick="taixiu.history();" class="history" src="images/btn_history.png"/>';
+                html_game+='<div onclick="taixiu.info();" class="info" src="images/btn_info.png"/></div>';
+                html_game+='<div onclick="taixiu.chart();" class="chart" src="images/btn_chart.png"/></div>';
+                html_game+='<div onclick="taixiu.question();" class="question" src="images/btn_question.png"/></div>';
+                html_game+='<div onclick="taixiu.history();" class="history" src="images/btn_history.png"/></div>';
             html_game+='</div>';
             html_game+='<div class="info">';
                 html_game+='<div id="timer_session" class="timer_session">00:00</div>';
@@ -132,10 +132,10 @@ class TaiXiu_MD5{
                 html_game+='<div id="txt_money_bet_xiu" class="txt_money_bet">0</div>';
             html_game+='</div>';
             html_game+='<div class="btn">';
-                html_game+='<img onclick="taixiu.close();" class="close" src="images/btn_close.png"/>';
-                html_game+='<img onclick="taixiu.rank();" class="rank" src="images/btn_rank.png"/>';
-                html_game+='<img onclick="taixiu.show_chat();" class="chat" src="images/btn_chat.png"/>';
-                html_game+='<img id="btn_dice_hand" onclick="taixiu.hand();" class="hand" src="images/btn_hand_used.png"/>';
+                html_game+='<div onclick="taixiu.close();" class="close" src="images/btn_close.png"/></div>';
+                html_game+='<div onclick="taixiu.rank();" class="rank" src="images/btn_rank.png"/></div>';
+                html_game+='<div onclick="taixiu.show_chat();" class="chat" src="images/btn_chat.png"/></div>';
+                html_game+='<div id="btn_dice_hand" onclick="taixiu.hand();" class="hand used" src="images/btn_hand_used.png"/></div>';
                 html_game+='<div id="btn_copy_md5" onclick="taixiu.copy_md5()" class="btn_copy_md5"></div>';
             html_game+='</div>';
         html_game+='</div>';
@@ -716,10 +716,10 @@ class TaiXiu_MD5{
                 });
                 taixiu.msg(html_history,s_title);
             },()=>{
-                taixiu.msg('<div class="w-100">Bạn chưa cược lần nào cả!</div>',s_title);
+                taixiu.msg('<div class="w-100 text-center">Bạn chưa cược lần nào cả!</div>',s_title);
             });
         }else{
-            taixiu.msg("Đăng nhập để xem lịch sử cược!",s_title,"warning");
+            taixiu.msg('<div class="w-100 text-center">Đăng nhập để xem lịch sử cược!</div>',s_title,"warning");
         }
     }
 
@@ -737,9 +737,9 @@ class TaiXiu_MD5{
 
     check_hand(){
         if(this.is_hand)
-            $("#btn_dice_hand").attr("src","images/btn_hand_used.png");
+            $("#btn_dice_hand").addClass("used").removeClass("block");
         else
-            $("#btn_dice_hand").attr("src","images/btn_hand.png");
+            $("#btn_dice_hand").addClass("block").removeClass("used");
     }
 
     randomDice(){

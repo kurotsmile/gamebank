@@ -127,87 +127,104 @@
     text-align: center;
   }
 
-  #game_tx .btn img{
+  #game_tx .btn div{
     width: 68px;
     height: 68px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
   }
   
   #game_tx .btn .close {
     position: relative;
-    top: 21px;
-    left: -50px;
+    top: 37px;
+    left: -21px;
+    background-image: url('../images/btn_close.png');
   }
   
   #game_tx .btn .close:hover {
-    content: url('../images/btn_close_hover.png');
+    background-image: url('../images/btn_close_hover.png');
   }
 
   #game_tx .btn .rank {
     position: relative;
-    top: 28px;
-    left: 26px;
+    top: 39px;
+    left: 46px;
+    background-image: url('../images/btn_rank.png');
   }
   
   #game_tx .btn .rank:hover {
-    content: url('../images/btn_rank_hover.png');
+    background-image: url('../images/btn_rank_hover.png');
   }
   
   #game_tx .btn .chat{
     position: relative;
-    top: 78px;
-    right: -31px;
+    top: 81px;
+    right: -60px;
+    background-image: url('../images/btn_chat.png');
   }
   
   #game_tx .btn .chat:hover{
-    content: url('../images/btn_chat_hover.png');
+    background-image: url('../images/btn_chat_hover.png');
   }
   
   #game_tx .btn .info{
     width: 66px;
     position: relative;
-    top: 3px;
-    left: 59px;
+    top: 8px;
+    left: 83px;
+    background-image: url('../images/btn_info.png');
   }
   
   #game_tx .btn .info:hover{
-    content: url('../images/btn_info_hover.png');
+    background-image: url('../images/btn_info_hover.png');
   }
   
   #game_tx .btn .chart{
     position: relative;
     top: 14px;
-    left: -14px;
+    left: 12px;
+    background-image: url('../images/btn_chart.png');
   }
 
   #game_tx .btn .chart:hover{
-    content: url('../images/btn_chart_hover.png');
+    background-image: url('../images/btn_chart_hover.png');
   }
 
   #game_tx .btn .question{
     position: relative;
     top: 54px;
-    left: -37px;
+    left: 3px;
+    background-image: url('../images/btn_question.png');
   }
 
   #game_tx .btn .question:hover{
-    content: url('../images/btn_question_hover.png');
+    background-image: url('../images/btn_question_hover.png');
   }
 
   #game_tx .btn .history{
     position: relative;
     top: 59px;
-    left: 16px;
+    left: 64px;
+    background-image: url('../images/btn_history.png');
   }
 
   #game_tx .btn .history:hover{
-    content: url('../images/btn_history_hover.png');
+    background-image: url('../images/btn_history_hover.png');
   }
 
   #game_tx .btn .hand{
     width: 66px;
     position: relative;
-    top: 88px;
-    left: -29px;
+    top: 97px;
+    left: 11px;
+  }
+
+  #game_tx .btn .hand.used{
+    background-image: url('../images/btn_hand_used.png');
+  }
+
+  #game_tx .btn .hand.block{
+    background-image: url('../images/btn_hand.png');
   }
   
   .sprite_dice{
