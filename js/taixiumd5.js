@@ -53,9 +53,9 @@ class TaiXiu_MD5{
             obj_h["c"]=dice_random.c;
             obj_h["total"]=dice_random.a+dice_random.b+dice_random.c;
             if(obj_h.total>=10)
-                obj_h["ketqua"]=0;
-            else
                 obj_h["ketqua"]=1;
+            else
+                obj_h["ketqua"]=0;
             taixiu.array_history.push(obj_h);
         }
 
@@ -307,8 +307,6 @@ class TaiXiu_MD5{
 
         $("#dice_md5").html(CryptoJS.MD5(cr.create_id()).toString());
 
-
-
         if(taixiu.is_hand){
             $("#guess").show();
             $("#guess").css({
@@ -342,24 +340,61 @@ class TaiXiu_MD5{
     }
 
     mo_dia_xong(){
-        if(taixiu.obj_h_temp["total"]<=10){
+        var is_tai=false;
+        if(parseInt(taixiu.obj_h_temp["total"])<10){
             $("#txt_xiu").addClass("zoom");
             $("#txt_tai").removeClass("zoom");
             taixiu.obj_h_temp["ketqua"]=0;
+            is_tai=false;
         }else{
             $("#txt_tai").addClass("zoom");
             $("#txt_xiu").removeClass("zoom");
             taixiu.obj_h_temp["ketqua"]=1;
+            is_tai=true;
         }
         taixiu.add_dice_history(taixiu.obj_h_temp);
         taixiu.is_play=false;
         if(taixiu.money_bet!=0){
             if(w.user_login!=null){
+                if(taixiu.is_tai_bet)
+                    taixiu.obj_h_temp["bet"]="tai";
+                else
+                    taixiu.obj_h_temp["bet"]="xiu";
+
                 taixiu.obj_h_temp["money_bet"]=taixiu.money_bet;
                 taixiu.obj_h_temp["date"]=cr.getDateCur();
+
+                if(taixiu.is_tai_bet==is_tai){
+                    taixiu.obj_h_temp["money_reward"]=(taixiu.money_bet*2);
+                    taixiu.obj_h_temp["status"]="thang";
+                    taixiu.update_rank(taixiu.obj_h_temp.money_reward);
+                }
+                else{
+                    taixiu.obj_h_temp["status"]="thua";
+                    taixiu.obj_h_temp["money_reward"]=0;
+                }
                 cr_realtime.add("tx","bet_history/"+w.user_login.username+"/"+taixiu.name_session,taixiu.obj_h_temp);
             }
         }
+    }
+
+    update_rank(socer){
+        cr_realtime.getOne("tx","rank/"+w.user_login.username,data_dice=>{
+            var obj_rank={};
+            obj_rank["username"]=w.user_login.username;
+            obj_rank["date"]=cr.getDateCur();
+
+            if(data_dice==null){
+                obj_rank["money"]=socer;
+                cr_realtime.add("tx","rank/"+w.user_login.username,obj_rank);
+            }
+            else{
+                var new_socer=parseInt(data_dice.money)+socer;
+                obj_rank["money"]=new_socer;
+                cr_realtime.add("tx","rank/"+w.user_login.username,obj_rank);
+            }
+                
+        });
     }
 
     close(){
@@ -651,14 +686,9 @@ class TaiXiu_MD5{
 
         setTimeout(()=>{
             $("#tx_msg").draggable({
-                start: function(event, ui) {
-                    $(this).css('transform', 'none');
-                },
-                drag: function(event, ui) {
-                },
-                stop: function(event, ui) {
-
-                }
+                start: function(event, ui) {$(this).css('transform', 'none');},
+                drag: function(event, ui) {},
+                stop: function(event, ui) {}
             });
             if(act_done) act_done();
         },300);
@@ -746,12 +776,19 @@ class TaiXiu_MD5{
             html_item+='<tr>';
             html_item+='<td><small style="font-size:12px">'+data.name_session.replace("session","")+'<small></td>';
             html_item+='<td>';
-            if(data.ketqua=="0")
+            if(data.bet=="tai")
+                html_item+='Tài';
+            else
+                html_item+='Xỉu';
+            html_item+='</td>';
+            html_item+='<td>';
+            if(data.ketqua=="1")
                 html_item+='Tài';
             else
                 html_item+='Xỉu';
             html_item+='</td>';
             html_item+='<td>'+w.formatVND(data.money_bet)+'</td>';
+            html_item+='<td>'+w.formatVND(data.money_reward)+'</td>';
             html_item+='<td>'+w.formatDateVN(data.date)+'</td>';
             html_item+='</tr>';
             var emp_item=$(html_item);
@@ -761,14 +798,21 @@ class TaiXiu_MD5{
         var s_title="Lịch sử cược";
         if(w.user_login!=null){
             cr_realtime.list_one("tx/bet_history/"+w.user_login.username,datas=>{
+
+                datas.sort(function(a, b) {
+                    return new Date(b['date']) - new Date(a['date']);
+                });
+
                 var html_history='';
                 html_history+='<div class="table-responsive">';
                 html_history+='<table class="table table-sm table-striped table-hover table-dark">';
                 html_history+='<thead>';
                 html_history+='<tr>';
                     html_history+='<th scope="col">#Phiên</th>';
+                    html_history+='<th scope="col">Bạn Cược</th>';
                     html_history+='<th scope="col">Kết quả</th>';
                     html_history+='<th scope="col">Tiền cược</th>';
+                    html_history+='<th scope="col">Tiền thắng</th>';
                     html_history+='<th scope="col">Thời gian</th>';
                 html_history+='</tr>';
                 html_history+='</thead>';
@@ -789,7 +833,41 @@ class TaiXiu_MD5{
     }
 
     rank(){
-        this.msg("","Bảng xếp hạng");
+
+        function item_rank(data){
+            var html_item='';
+            html_item+='<tr>';
+                html_item+='<td>'+data.index+'</td>';
+                html_item+='<td>'+data.username+'</td>';
+                html_item+='<td>'+w.formatVND(data.money)+'</td>';
+            html_item+='</tr>';
+            var emp_item=$(html_item);
+            return emp_item;
+        }
+
+        var html_rank='';
+        html_rank+='<div class="table-responsive">';
+            html_rank+='<table class="table table-sm table-striped table-hover table-dark">';
+            html_rank+='<thead>';
+                html_rank+='<tr>';
+                    html_rank+='<th scope="col">Thứ hạng</th>';
+                    html_rank+='<th scope="col">Người chơi</th>';
+                    html_rank+='<th scope="col">Tiền thắng</th>';
+                html_rank+='</tr>';
+            html_rank+='</thead>';
+            html_rank+='<tbody id="all_item_rank"><tbody>';
+            html_rank+='</table>';
+        html_rank+='</div>';
+        this.msg(html_rank,"Bảng xếp hạng",()=>{
+            cr_realtime.list_one("tx/rank",datas=>{
+                $("#all_item_rank").empty();
+                datas.sort(function(a, b) { return parseInt(b.order) - parseInt(a.order);});
+                $.each(datas,function(index,r){
+                    r["index"]=(index+1);
+                    $("#all_item_rank").append(item_rank(r));
+                });
+            })
+        });
     }
 
     hand(){
