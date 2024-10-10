@@ -29,6 +29,7 @@ class TaiXiu_MD5{
     timeLeft =0;
 
     id_session=null;
+    name_session=null;
     data_session_cur=null;
 
     box_chat=null;
@@ -71,6 +72,7 @@ class TaiXiu_MD5{
         taixiu.getSession(data=>{
             if(data!=null){
                 taixiu.data_session_cur=data;
+                taixiu.name_session=taixiu.data_session_cur.id;
                 $("#name_session").html("#"+taixiu.data_session_cur.id.replace('session',''));
                 taixiu.play(taixiu.timeDifferenceInSeconds(data.time_end));
             }else{
@@ -277,6 +279,8 @@ class TaiXiu_MD5{
         $("#roll_dice").remove();
         
         taixiu.obj_h_temp={};
+        taixiu.obj_h_temp["id_session"]=this.id_session;
+        taixiu.obj_h_temp["name_session"]=this.name_session;
 
         if(data==null){
             var dice_random=taixiu.randomDice();
@@ -326,7 +330,7 @@ class TaiXiu_MD5{
             if(w.user_login!=null){
                 taixiu.obj_h_temp["money_bet"]=taixiu.money_bet;
                 taixiu.obj_h_temp["date"]=cr.getDateCur();
-                cr_realtime.add("tx","bet_history/"+w.user_login.username,taixiu.obj_h_temp);
+                cr_realtime.add("tx","bet_history/"+w.user_login.username+"/"+taixiu.name_session,taixiu.obj_h_temp);
             }
         }
     }
@@ -409,6 +413,8 @@ class TaiXiu_MD5{
         $("#dice_panel_bet").hide();
         $("#btn-bet-tai").removeClass("block");
         $("#btn-bet-xiu").removeClass("block");
+        $("#dice_history").show();
+        $("#dice_md5").show();
         if(w.user_login==null){
             cr.msg("Vui lòng đăng nhập để chơi!","Tài Xỉu MD5","warning");
             taixiu.close();
@@ -600,7 +606,7 @@ class TaiXiu_MD5{
         this.msg(html_info,"Thông tin");
     }
 
-    msg(msg="",title="info"){
+    msg(msg="",title="info",act_done=null){
         if(taixiu.box_msg!=null) $(taixiu.box_msg).remove();
         var html='';
         html+='<div id="tx_msg">';
@@ -627,6 +633,7 @@ class TaiXiu_MD5{
 
                 }
             });
+            if(act_done) act_done();
         },300);
     }
 
@@ -706,15 +713,41 @@ class TaiXiu_MD5{
     }
 
     history(){
+
+        function item_bet_history(data){
+            var html_item='';
+            html_item+='<tr>';
+            html_item+='<td><small style="font-size:10px">'+data.name_session+'<small></td>';
+            html_item+='<td>'+data.ketqua+'</td>';
+            html_item+='<td>'+w.formatVND(data.money_bet)+'</td>';
+            html_item+='<td>'+data.date+'</td>';
+            html_item+='</tr>';
+            var emp_item=$(html_item);
+            return emp_item;
+        }
+
         var s_title="Lịch sử cược";
         if(w.user_login!=null){
-            cr_realtime.list_one("tx","bet_history",datas=>{
-                alert(JSON.stringify(datas));
+            cr_realtime.list_one("tx/bet_history/"+w.user_login.username,datas=>{
                 var html_history='';
-                $.each(datas,function(index,h){
-                    html_history+=JSON.stringify(h);
+                html_history+='<div class="table-responsive">';
+                html_history+='<table class="table table-sm table-striped table-hover table-dark">';
+                html_history+='<thead>';
+                html_history+='<tr>';
+                    html_history+='<th scope="col">#</th>';
+                    html_history+='<th scope="col">Kết quả</th>';
+                    html_history+='<th scope="col">Tiền cược</th>';
+                    html_history+='<th scope="col">Thời gian</th>';
+                html_history+='</tr>';
+                html_history+='</thead>';
+                html_history+='<tbody id="all_item_bet_history"><tbody>';
+                html_history+='</table>';
+                html_history+='</div>';
+                taixiu.msg(html_history,s_title,()=>{
+                    $.each(datas,function(index,h){
+                        $("#all_item_bet_history").append(item_bet_history(h));
+                    });
                 });
-                taixiu.msg(html_history,s_title);
             },()=>{
                 taixiu.msg('<div class="w-100 text-center">Bạn chưa cược lần nào cả!</div>',s_title);
             });
